@@ -5,8 +5,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
 
 @Entity
+@Getter
 public class Member {
     @Id
     @NotBlank(message ="학번입력은 필수입니다.")

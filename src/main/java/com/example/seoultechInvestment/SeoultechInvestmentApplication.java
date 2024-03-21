@@ -5,7 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class SeoultechInvestmentApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(SeoultechInvestmentApplication.class, args);
 	}
