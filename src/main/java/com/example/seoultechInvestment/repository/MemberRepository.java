@@ -6,23 +6,24 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class memberRepository {
+public class MemberRepository {
         private final EntityManager entityManager;
         public void save(Member member) {
-                entityManager.persist(Member member);
+                entityManager.persist(member);
         }
-        public Member findByStId(Long stId) {
-                return (Member) entityManager.createQuery("select m from Member m where m.stId=:stId")
-                        .setParameter("stId", stId).setMaxResults(1).getResultList();
+        public Optional<Member> findByStId(Long stId) {
+                return Optional.ofNullable((Member) entityManager.createQuery("select m from Member m where m.stId=:stId")
+                        .setParameter("stId", stId).setMaxResults(1).getResultList());
         }
         public List<Member> findAll() {
                 return entityManager.createQuery("select m from Member m").getResultList();
         }
         public Long delete(Member member) {
-                entityManager.remove(Member member);
+                entityManager.remove(member);
                 return member.getStId();
         }
 }

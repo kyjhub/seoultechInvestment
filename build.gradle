@@ -25,13 +25,13 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-//	implementation 'mysql:mysql-connector-java'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
+	testCompileOnly 'org.projectlombok:lombok'	//test에서 @Slf4j 사용위한
+	testAnnotationProcessor 'org.projectlombok:lombok'	//test에서 @Slf4j 사용위한
 	compileOnly 'org.projectlombok:lombok'
-//	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
