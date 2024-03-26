@@ -16,8 +16,8 @@ public class MemberRepository {
                 entityManager.persist(member);
         }
         public Optional<Member> findByStId(Long stId) {
-                return Optional.of((Member) entityManager.createQuery("select m from Member m where m.stId=:stId")
-                        .setParameter("stId", stId).setMaxResults(1).getResultList());
+                return Optional.of((Member)entityManager.createQuery("select m from Member m where m.stId=:stId")
+                        .setParameter("stId", stId).getSingleResult());
         }
         public List<Member> findAll() {
                 return entityManager.createQuery("select m from Member m").getResultList();
