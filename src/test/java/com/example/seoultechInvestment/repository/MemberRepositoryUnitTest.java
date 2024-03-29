@@ -18,10 +18,9 @@ import java.util.Optional;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class RepositoryUnitTest {
+class MemberRepositoryUnitTest {
     @Autowired
     private MemberRepository memberRepository;
-
     @Test
     @Order(1)
     @DisplayName("save, findByStId 메서드 단위 테스트")

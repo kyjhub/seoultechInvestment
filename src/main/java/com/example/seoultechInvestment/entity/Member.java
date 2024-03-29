@@ -18,12 +18,12 @@ public class Member {
     @Id
     @NotNull(message ="학번입력은 필수입니다.")
     @Column(unique = true, length = 8)
-    Long stId;
+    private Long stId;
     @NotBlank(message ="이름은 필수입니다.")
-    String name;
+    private String name;
     @NotBlank(message ="학과는 필수입니다.")
-    String Department;
+    private String Department;
     //학교 이메일도 필요
 
-    String stGalleryNickname; //cam empty
+    private String stGalleryNickname; //cam empty
 }
