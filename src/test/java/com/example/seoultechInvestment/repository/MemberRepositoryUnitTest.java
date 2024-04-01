@@ -10,6 +10,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +29,7 @@ class MemberRepositoryUnitTest {
     public void findByStId() {
         log.info("findByStId 테스트 실행");
         //given
-        Member member = new Member(21101165L, "권용준", "컴퓨터공학과", "권용준");
+        Member member = Member.builder().stId(21101165L).name("권용준").Department("컴퓨터공학과").stGalleryNickname("권용준").build();
         //when
         memberRepository.save(member);
         //then
@@ -35,7 +37,7 @@ class MemberRepositoryUnitTest {
         Optional<Member> findMember = memberRepository.findByStId(stId);
         Long findStId = findMember.get().getStId();
 
-        Assertions.assertThat(stId).isEqualTo(findStId);
+        Assertions.assertThat(stId).isSameAs(findStId);
         log.info("findByStId 테스트 끝");
     }
 
@@ -45,9 +47,10 @@ class MemberRepositoryUnitTest {
     public void findAll() {
         log.info("findAll 테스트 실행");
         //given
-        Member member1 = new Member(21101165L, "권용준", "컴퓨터공학과", "권용준");
-        Member member2 = new Member(21101164L, "김곽붕", "컴퓨터공학과", "김곽붕");
-        Member member3 = new Member(21101163L, "안곽붕", "컴퓨터공학과", "안곽붕");
+        Member member1 = Member.builder().stId(21101165L).name("권용준").Department("컴퓨터공학과").stGalleryNickname("권용준").build();
+        Member member2 = Member.builder().stId(21101164L).name("김곽붕").Department("컴퓨터공학과").stGalleryNickname("김곽붕").build();
+        Member member3 = Member.builder().stId(21101163L).name("인곽붕").Department("컴퓨터공학과").stGalleryNickname("인곽붕").build();
+        HashSet<Member> members = new HashSet<>(Arrays.asList(member1, member2, member3));
         //when
         memberRepository.save(member1);
         memberRepository.save(member2);
@@ -55,7 +58,9 @@ class MemberRepositoryUnitTest {
         //then
         List<Member> findAllMember = memberRepository.findAll();
         for (Member member : findAllMember) {
-            System.out.println(member.getName());
+            if (!members.contains(member)) {
+                throw new NullPointerException();
+            } else continue;
         }
     }
 
@@ -65,7 +70,7 @@ class MemberRepositoryUnitTest {
     public void delete() {
         log.info("delete 테스트 실행");
         //given
-        Member member1 = new Member(21101165L, "권용준", "컴퓨터공학과", "권용준");
+        Member member1 = Member.builder().stId(21101165L).name("권용준").Department("컴퓨터공학과").stGalleryNickname("권용준").build();
         Long stId = member1.getStId();
         memberRepository.save(member1);
         //when

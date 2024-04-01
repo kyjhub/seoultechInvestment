@@ -7,12 +7,12 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
 public class Member {
     @Id
@@ -24,6 +24,13 @@ public class Member {
     @NotBlank(message ="학과는 필수입니다.")
     private String Department;
     //학교 이메일도 필요
-
     private String stGalleryNickname; //cam empty
+
+    @Builder
+    Member(Long stId, String name, String Department, String stGalleryNickname) {
+        this.stId = stId;
+        this.name = name;
+        this.Department = Department;
+        this.stGalleryNickname = stGalleryNickname;
+    }
 }

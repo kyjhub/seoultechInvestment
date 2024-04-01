@@ -18,15 +18,15 @@ public class StockRepository {
     public void save(Stock stock) {
         entityManager.persist(stock);
     }
-    public Optional<Stock> findByTicker(Stock stock) {
-        UUID findId = stock.getId();
+    public Optional<Stock> findById(UUID uuid) {
         return Optional.ofNullable((Stock) entityManager.createQuery("select s from Stock s where s.id=:primaryKey").
-                setParameter("primaryKey", findId).getSingleResult());
+                setParameter("primaryKey", uuid).getSingleResult());
     }
     public List<Stock> findAll() {
         return (List<Stock>) entityManager.createQuery("select s from Stock s").getResultList();
     }
-    public void delete(Stock stock) {
+    public UUID delete(Stock stock) {
         entityManager.remove(stock);
+        return stock.getId();
     }
 }
