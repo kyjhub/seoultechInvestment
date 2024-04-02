@@ -28,7 +28,7 @@ dependencies {
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
-
+	implementation 'org.springframework.boot:spring-boot-devtools' //서버 재시작 없이 뷰템플릿 반영하기
 	testCompileOnly 'org.projectlombok:lombok'	//test에서 @Slf4j 사용위한
 	testAnnotationProcessor 'org.projectlombok:lombok'	//test에서 @Slf4j 사용위한
 	compileOnly 'org.projectlombok:lombok'

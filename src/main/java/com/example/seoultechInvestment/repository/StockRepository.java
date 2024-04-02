@@ -25,6 +25,11 @@ public class StockRepository {
     public List<Stock> findAll() {
         return (List<Stock>) entityManager.createQuery("select s from Stock s").getResultList();
     }
+
+    public List<Stock> findUndefinedStocks() {
+        return (List<Stock>) entityManager.createQuery("select s from Stock s where s.sellPrice=:sellPrice and s.rateOfReturn=:rateOfReturn")
+                .setParameter("sellPrice", null).setParameter("rateOfReturn", null).getResultList();
+    }
     public UUID delete(Stock stock) {
         entityManager.remove(stock);
         return stock.getId();

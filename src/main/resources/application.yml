@@ -4,6 +4,9 @@ spring:
     url: jdbc:mysql://localhost:3306/sti?serverTimezone=Asia/Seoul
     username: root
     password: 1234
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
   jpa:
     hibernate:
       ddl-auto: create-drop

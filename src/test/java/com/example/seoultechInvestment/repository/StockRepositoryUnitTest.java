@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 @Slf4j
 @Import({StockRepository.class})
@@ -60,8 +61,32 @@ class StockRepositoryUnitTest {
             } else continue;
         }
     }
+
     @Test
     @Order(3)
+    @DisplayName("findUndefinedStocks 메서드 단위 테스트")
+    public void findUndefinedStocks() {
+        //given
+        Stock stock1 = Stock.builder().tickerName("01234").localDate(LocalDate.of(2024, 3, 15)).tp(4600L)
+                .build();
+        Stock stock2 = Stock.builder().tickerName("06088").localDate(LocalDate.of(2024, 3, 29)).tp(10000L)
+                .build();
+        Stock stock3 = Stock.builder().tickerName("03588").localDate(LocalDate.of(2024, 3, 29)).tp(4000L)
+                .sellPrice(4000L).rateOfReturn(0D).build();
+        stockRepository.save(stock1);
+        stockRepository.save(stock2);
+        stockRepository.save(stock3);
+        //when
+        List<Stock> undefinedStocks = stockRepository.findUndefinedStocks();
+        //then
+        Long n = undefinedStocks.stream().filter(undefinedStock -> undefinedStock.getSellPrice() != null)
+                .filter(undefinedStock -> Double.valueOf(undefinedStock.getRateOfReturn()) != null)
+                .count();
+        Assertions.assertThat(n).isEqualTo(0);
+    }
+
+    @Test
+    @Order(4)
     @DisplayName("delete 메서드 단위 테스트")
     public void delete() {
         //given
@@ -75,7 +100,7 @@ class StockRepositoryUnitTest {
     }
 
     @Test
-    @Order(4)
+    @Order(5)
     @DisplayName("비즈니스로직 단위 테스트")
     public void businessLogicUnitTest() {
         //given
