@@ -16,12 +16,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Member {
     @Id
-    @NotNull(message ="학번입력은 필수입니다.")
-    @Column(unique = true, length = 8)
     private Long stId;
-    @NotBlank(message ="이름은 필수입니다.")
     private String name;
-    @NotBlank(message ="학과는 필수입니다.")
     private String Department;
     //학교 이메일도 필요
     private String stGalleryNickname; //cam empty
