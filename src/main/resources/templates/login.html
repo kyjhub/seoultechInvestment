@@ -6,7 +6,7 @@
     <title>login</title>
 </head>
 <body>
-<h1>로그인</h1>
+<h1 style="text-align: center">로그인</h1>
 <div style="text-align: center">
 <form action="/login" name="loginMember" th:object="${memberForm}" method="post">
     <legend>로그인</legend>
@@ -33,6 +33,7 @@
         <label th:for="studentId">고닉</label>
         <input type="text" th:field="*{stGalleryNickname}" placeholder="고닉"></input>
     </div>
+    <button type="submit">제출</button>
 </form>
 </div>
 </body>
