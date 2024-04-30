@@ -12,38 +12,36 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.List;
-
 @Controller
 @Slf4j
 @RequiredArgsConstructor
-public class LoginController {
+public class SignUpController {
     private final MemberService memberService;
-    @PostMapping("/join")//회원가입
-    public String join(Model model, @Valid MemberDTO memberDTO, 
-                        BindingResult bindingResult) {//errors -> bindingResult로 교체
+
+    @PostMapping("/signUp")//회원가입
+    public String join(Model model, @Valid MemberDTO memberDTO,
+                       BindingResult bindingResult) {//errors -> bindingResult로 교체
         if (bindingResult.hasErrors()) {
             for (ObjectError error : bindingResult.getFieldErrors()) {
                 log.error(error.toString());
             }
             return "redirect:/login";
         }
-        //컨트롤러에서 엔티티에 접근하면 안된다고 했던거같은데
+        //멤버 등록
         if (memberDTO.getStGalleryNickname() != null) {
             Member newMember = Member.builder().stId(memberDTO.getStId()).name(memberDTO.getName()).
-                    Department(memberDTO.getDepartment()).stGalleryNickname(memberDTO.getStGalleryNickname()).build();
+                    Department(memberDTO.getDepartment()).stGalleryNickname(memberDTO.getStGalleryNickname()).
+                    email(memberDTO.getEmail()).build();
             memberService.enroll(newMember);
-        }
-        else {
+        } else {
             Member newMember = Member.builder().stId(memberDTO.getStId()).name(memberDTO.getName()).
-                Department(memberDTO.getDepartment()).build();
+                    Department(memberDTO.getDepartment()).email(memberDTO.getEmail()).build();
             memberService.enroll(newMember);
         }
-        return "stInvestmentHome";
     }
-    @PostMapping("/login")
-    public String login(Model model) {
 
-        return "join";
+    @PostMapping("/signUp/certificationEmail")
+    public String emailVerification() {
+
     }
 }

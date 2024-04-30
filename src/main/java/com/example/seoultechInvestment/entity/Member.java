@@ -19,14 +19,15 @@ public class Member {
     private Long stId;
     private String name;
     private String Department;
-    //학교 이메일도 필요
+    private String email;
     private String stGalleryNickname; //cam empty
 
     @Builder
-    Member(Long stId, String name, String Department, String stGalleryNickname) {
+    Member(Long stId, String name, String Department, String stGalleryNickname, String email) {
         this.stId = stId;
         this.name = name;
         this.Department = Department;
+        this.email = email;
         this.stGalleryNickname = stGalleryNickname;
     }
 }

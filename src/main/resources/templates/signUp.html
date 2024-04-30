@@ -5,11 +5,17 @@
     <meta charset="UTF-8">
     <title>login</title>
 </head>
+<script language="javascript">
+    function emailPopup() {
+        // ev는 이 팝업창의 이름 또는 별칭
+        window.open("emailVerify.html","ev","width=400,height=300,left=100,top=50");
+    }
+</script>
 <body>
-<h1 style="text-align: center">로그인</h1>
+<h1 style="text-align: center">회원가입</h1>
 <div style="text-align: center">
-<form action="/login" name="loginMember" th:object="${memberForm}" method="post">
-    <legend>로그인</legend>
+<form action="/signUp" name="signUp" th:object="${memberForm}" method="post">
+    <legend>회원가입</legend>
     <div>
         <label th:for="studentId">학번</label>
         <input type="text" th:field="*{stId}" placeholder="학번"></input>
@@ -18,19 +24,27 @@
     </div>
 <!--    <span>학교이메일 : </span>-->
     <div>
-        <label th:for="studentId">학과</label>
+        <label th:for="email">과기대이메일</label>
+        <input type="text" th:field="*{email}" placeholder="곽메일"></input>
+        <p th:if="${#fields.hasErrors('email')}"
+           th:errors="*{email}">이메일 입력하라고!!!</p>
+        <button type="submit" onclick="emailPopup();">인증</button>
+    </div>
+
+    <div>
+        <label th:for="department">학과</label>
         <input type="text" th:field="*{department}" placeholder="학과"></input>
         <p th:if="${#fields.hasErrors('department')}"
            th:errors="*{stId}">학과 입력하라고!!!</p>
     </div>
     <div>
-        <label th:for="studentId">이름</label>
+        <label th:for="name">이름</label>
         <input type="text" th:field="*{name}" placeholder="이름"></input>
         <p th:if="${#fields.hasErrors('name')}"
            th:errors="*{stId}">이름 입력하라고!!!</p>
     </div>
     <div>
-        <label th:for="studentId">고닉</label>
+        <label th:for="stGalleryNickname">고닉</label>
         <input type="text" th:field="*{stGalleryNickname}" placeholder="고닉"></input>
     </div>
     <button type="submit">제출</button>
