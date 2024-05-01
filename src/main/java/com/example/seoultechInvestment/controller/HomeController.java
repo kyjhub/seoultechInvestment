@@ -1,5 +1,6 @@
 package com.example.seoultechInvestment.controller;
 
+import com.example.seoultechInvestment.DTO.AthEmailDTO;
 import com.example.seoultechInvestment.DTO.MemberDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,7 @@ public class HomeController {
     @GetMapping("/home")
     public String login(Model model) {
         model.addAttribute("memberForm", new MemberDTO());
+        model.addAttribute("athEmailForm", new AthEmailDTO());
         return "signUp";
     }
 }

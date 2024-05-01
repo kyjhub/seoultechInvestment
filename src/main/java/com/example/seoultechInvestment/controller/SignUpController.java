@@ -38,10 +38,17 @@ public class SignUpController {
                     Department(memberDTO.getDepartment()).email(memberDTO.getEmail()).build();
             memberService.enroll(newMember);
         }
+
+        return "";
     }
 
-    @PostMapping("/signUp/certificationEmail")
-    public String emailVerification() {
+    @PostMapping("/email")//이메일 입력하고 인증버튼 누르면 여기에서 인증번호 보내주면 팝업창에서 인증
+    public void getEmail() {
 
+    }
+
+    @PostMapping("/athEmail")   // 인증번호 오면 검증하는 단계
+    public String authenticationEmail() {
+        return "forward:/signUp.html";
     }
 }

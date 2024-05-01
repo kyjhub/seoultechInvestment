@@ -29,7 +29,7 @@ class MemberRepositoryUnitTest {
     public void findByStId() {
         log.info("findByStId 테스트 실행");
         //given
-        Member member = Member.builder().stId(21101165L).name("권용준").Department("컴퓨터공학과").stGalleryNickname("권용준").build();
+        Member member = Member.builder().stId(21101165L).name("권용준").Department("컴퓨터공학과").stGalleryNickname("권용준").email("harryjun43@naver.com").build();
         //when
         memberRepository.save(member);
         //then
@@ -47,9 +47,9 @@ class MemberRepositoryUnitTest {
     public void findAll() {
         log.info("findAll 테스트 실행");
         //given
-        Member member1 = Member.builder().stId(21101165L).name("권용준").Department("컴퓨터공학과").stGalleryNickname("권용준").build();
-        Member member2 = Member.builder().stId(21101164L).name("김곽붕").Department("컴퓨터공학과").stGalleryNickname("김곽붕").build();
-        Member member3 = Member.builder().stId(21101163L).name("인곽붕").Department("컴퓨터공학과").stGalleryNickname("인곽붕").build();
+        Member member1 = Member.builder().stId(21101165L).name("권용준").Department("컴퓨터공학과").stGalleryNickname("권용준").email("harryjun43@naver.com").build();
+        Member member2 = Member.builder().stId(21101164L).name("김곽붕").Department("컴퓨터공학과").stGalleryNickname("김곽붕").email("harryjun43@naver.com").build();
+        Member member3 = Member.builder().stId(21101163L).name("인곽붕").Department("컴퓨터공학과").stGalleryNickname("인곽붕").email("harryjun43@naver.com").build();
         HashSet<Member> members = new HashSet<>(Arrays.asList(member1, member2, member3));
         //when
         memberRepository.save(member1);
