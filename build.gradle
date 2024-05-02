@@ -34,6 +34,14 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	//======JavaMailApi를 직접 사용하기 위한 의존성======
+	implementation 'javax.mail:mail:1.4.7'
+	// Spring Context Support
+	implementation 'org.springframework:spring-context-support:5.3.9'
+	//=======================================================================
+	//=======Spring Boot에서 제공하는 편리한 이메일 전송 기능을 위한 의존성으로, 스프링 생태계 내에서 통합되고 설정이 간단하게 처리=====
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.6.3'
+	//==================================================================================================
 }
 
 tasks.named('test') {
