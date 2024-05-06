@@ -17,6 +17,10 @@ spring:
         storage_dialect: innodb
         format_sql: true
     database: mysql
+  data:
+    redis:
+      port: 6379
+      host: localhost
 logging:
   level:
     org.hibernate.SQL: debug

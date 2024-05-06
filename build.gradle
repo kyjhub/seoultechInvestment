@@ -42,6 +42,8 @@ dependencies {
 	//=======Spring Boot에서 제공하는 편리한 이메일 전송 기능을 위한 의존성으로, 스프링 생태계 내에서 통합되고 설정이 간단하게 처리=====
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.6.3'
 	//==================================================================================================
+	//redis 추가
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 }
 
 tasks.named('test') {
