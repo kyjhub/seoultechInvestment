@@ -5,6 +5,8 @@ import com.example.seoultechInvestment.DTO.MemberDTO;
 import com.example.seoultechInvestment.entity.Member;
 import com.example.seoultechInvestment.service.MailService;
 import com.example.seoultechInvestment.service.MemberService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +16,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.UUID;
 
 @Controller
 @Slf4j
@@ -46,8 +50,17 @@ public class SignUpController {
     }
 
     @PostMapping("/email")//이메일 입력하고 인증버튼 누르면 여기에서 인증번호 보내주면 팝업창에서 인증
-    public void getEmail(@RequestBody @Valid EmailDTO emailDTO) {
+    public void getEmail(@RequestBody @Valid EmailDTO emailDTO, HttpServletResponse response) {
         System.out.println("보낼 이메일 : " + emailDTO.getEmail());
+        String emailId = UUID.randomUUID().toString();
+        //redis에 email과 eamilId같이 저장 코드 작성
+        //클라이언트가 인증번호 입력하면 서버측에서 클라 이메일 쿠키에서 uuid랑 인증번호 대조
+        //비교해서 인증작업 완료
+        
+        //쿠키 생성 후 저장
+        Cookie emailCookie = new Cookie("EMAIL_COOKIE_NAME", emailId);
+        response.addCookie(emailCookie);
+        //joinEmail 메소드 안에 이메일 전송 코드 있음.
         mailService.joinEmail(emailDTO.getEmail());
     }
 
