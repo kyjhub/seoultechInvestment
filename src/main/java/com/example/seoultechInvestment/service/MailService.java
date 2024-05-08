@@ -13,7 +13,10 @@ import java.util.Random;
 public class MailService {
     @Autowired
     private JavaMailSender mailSender;
-    private int authNumber;
+    @Autowired
+    private RedisUtil redisUtil;
+
+    private int athNumber;
 
     //임의의 6자리 양수를 반환합니다.
     public void makeRandomNumber() {
@@ -23,11 +26,11 @@ public class MailService {
             randomNumber += Integer.toString(r.nextInt(10));
         }
 
-        authNumber = Integer.parseInt(randomNumber);
+        athNumber = Integer.parseInt(randomNumber);
     }
 
     //mail을 어디서 보내는지, 어디로 보내는지 , 인증 번호를 html 형식으로 어떻게 보내는지 작성합니다.
-    public void joinEmail(String emailAccount) {
+    public void joinEmail(String emailAccount, String uuid) {
         makeRandomNumber();
         String setFrom = "harryjun43@naver.com"; // email-config에 설정한 자신의 이메일 주소를 입력
         String toMail = emailAccount;
@@ -35,15 +38,15 @@ public class MailService {
         String content =
                 "seoultechInvestment를 방문해주셔서 감사합니다." + 	//html 형식으로 작성 !
                         "<br><br>" +
-                        "인증 번호는 " + authNumber + "입니다." +
+                        "인증 번호는 " + athNumber + "입니다." +
                         "<br>" +
                         "인증번호를 제대로 입력해주세요"; //이메일 내용 삽입
-        mailSend(setFrom, toMail, title, content);
+        mailSend(setFrom, toMail, title, content, uuid);
 //        return Integer.toString(authNumber);
     }
 
     //이메일을 전송합니다.
-    public void mailSend(String setFrom, String toMail, String title, String content) {
+    public void mailSend(String setFrom, String toMail, String title, String content, String uuid) {
         MimeMessage message = mailSender.createMimeMessage();//JavaMailSender 객체를 사용하여 MimeMessage 객체를 생성
         try {
             MimeMessageHelper helper = new MimeMessageHelper(message,true,"utf-8");//이메일 메시지와 관련된 설정을 수행합니다.
@@ -57,7 +60,16 @@ public class MailService {
             // 이러한 경우 MessagingException이 발생
             e.printStackTrace();//e.printStackTrace()는 예외를 기본 오류 스트림에 출력하는 메서드
         }
+        redisUtil.setDataExpire(uuid, String.valueOf(athNumber), 90L);
+    }
 
-
+    public boolean checkAthNum(String emailUUid, String athNum) {
+        if (redisUtil.getData(emailUUid) == null) {
+            return false;
+        } else if (redisUtil.getData(emailUUid).equals(athNum)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
