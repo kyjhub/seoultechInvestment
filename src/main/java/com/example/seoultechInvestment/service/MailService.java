@@ -29,8 +29,9 @@ public class MailService {
         athNumber = Integer.parseInt(randomNumber);
     }
 
+    //검증을 위해 잠시 반환형 String으로
     //mail을 어디서 보내는지, 어디로 보내는지 , 인증 번호를 html 형식으로 어떻게 보내는지 작성합니다.
-    public void joinEmail(String emailAccount, String uuid) {
+    public String joinEmail(String emailAccount, String uuid) {
         makeRandomNumber();
         String setFrom = "harryjun43@naver.com"; // email-config에 설정한 자신의 이메일 주소를 입력
         String toMail = emailAccount;
@@ -42,7 +43,7 @@ public class MailService {
                         "<br>" +
                         "인증번호를 제대로 입력해주세요"; //이메일 내용 삽입
         mailSend(setFrom, toMail, title, content, uuid);
-//        return Integer.toString(authNumber);
+        return Integer.toString(athNumber);
     }
 
     //이메일을 전송합니다.

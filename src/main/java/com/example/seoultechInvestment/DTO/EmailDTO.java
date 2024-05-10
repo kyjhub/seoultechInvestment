@@ -8,5 +8,5 @@ import lombok.Data;
 public class EmailDTO {
     @Email
     @NotBlank(message = "이메일 입력은 필수입니다.")
-    public String email;
+    private String email;
 }
