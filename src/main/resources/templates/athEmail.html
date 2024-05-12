@@ -2,9 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>곽메일 인증</title>
+    <title>Title</title>
 </head>
 <body>
-
+<form action="/email" name="athEmail" th:object="${athForm}" method="post">
+    <div>
+        <label th:for="email">이메일</label>
+        <input type="text" th:field="*{email}" placeholder="이메일"></input>
+        <p th:if="${#fields.hasErrors('email')}"
+           th:errors="*{email}">이메일을 입력하세요</p>
+    </div>
+    <button type="submit">인증번호 받기</button>
+</form>
+<form action="/athEmail" name="athNum" th:object="${athForm}" method="post">
+    <div>
+        <label th:for="studentId">인증번호</label>
+        <input type="text" th:field="*{athNum}" placeholder="인증번호"></input>
+        <p th:if="${#fields.hasErrors('athNum')}"
+           th:errors="*{athNum}">인증번호를 입력하세요</p>
+    </div>
+    <button type="submit">인증하기</button>
+</form>
 </body>
 </html>

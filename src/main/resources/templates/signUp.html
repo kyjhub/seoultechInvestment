@@ -3,46 +3,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>login</title>
 </head>
-<script language="javascript">
-    function emailPopup() {
-        // ev는 이 팝업창의 이름 또는 별칭
-        window.open("athEmail.html","ev","width=400,height=300,left=100,top=50");
+<script type="text/javascript">
+    function athPopup() {
+        // athEmailPopup은 팝업창의 이름 또는 별칭
+        window.open("athPopUp","athEmailPopup","width=400,height=300,left=100,top=50");
     }
 </script>
 <body>
 <h1 style="text-align: center">회원가입</h1>
 <div style="text-align: center">
+
+    <div>
+        <label>이메일 인증은 필수입니다.</label><br>
+        <button onclick="athPopup();">이메일 인증하기</button>
+    </div>
+
 <form action="/signUp" name="signUpMember" th:object="${memberForm}" method="post">
     <legend>회원가입</legend>
     <div>
         <label th:for="studentId">학번</label>
         <input type="text" th:field="*{stId}" placeholder="학번"></input>
         <p th:if="${#fields.hasErrors('stId')}"
-            th:errors="*{stId}">학번 입력하라고!!!</p>
+            th:errors="*{stId}">학번 입력하세요</p>
     </div>
 <!--    <span>학교이메일 : </span>-->
-    <form action="/email" name="authenticationMember" th:object="${athEmailForm}" method="post">
-        <div>
-            <label th:for="email">과기대이메일</label>
-            <input type="text" th:field="*{email}" placeholder="곽메일"></input>
-            <p th:if="${#fields.hasErrors('email')}"
-               th:errors="*{email}">이메일 입력하라고!!!</p>
-            <button type="submit" onclick="emailPopup();">이메일 인증하기</button>
-        </div>
-    </form>
     <div>
         <label th:for="department">학과</label>
         <input type="text" th:field="*{department}" placeholder="학과"></input>
         <p th:if="${#fields.hasErrors('department')}"
-           th:errors="*{stId}">학과 입력하라고!!!</p>
+           th:errors="*{stId}">학과 입력하세요</p>
     </div>
     <div>
         <label th:for="name">이름</label>
         <input type="text" th:field="*{name}" placeholder="이름"></input>
         <p th:if="${#fields.hasErrors('name')}"
-           th:errors="*{stId}">이름 입력하라고!!!</p>
+           th:errors="*{stId}">이름 입력하세요</p>
     </div>
     <div>
         <label th:for="stGalleryNickname">고닉</label>

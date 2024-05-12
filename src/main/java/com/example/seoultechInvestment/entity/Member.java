@@ -19,15 +19,13 @@ public class Member {
     private Long stId;
     private String name;
     private String Department;
-    private String email;
     private String stGalleryNickname; //cam empty
 
     @Builder
-    Member(Long stId, String name, String Department, String stGalleryNickname, String email) {
+    Member(Long stId, String name, String Department, String stGalleryNickname) {
         this.stId = stId;
         this.name = name;
         this.Department = Department;
-        this.email = email;
         this.stGalleryNickname = stGalleryNickname;
     }
 }

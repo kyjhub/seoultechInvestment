@@ -23,6 +23,7 @@ spring:
       host: localhost
 logging:
   level:
+    web: debug
     org.hibernate.SQL: debug
     #logging.level.com.god.bo.test=info
     #logging.level.com.god.bo.test.controller=debug
