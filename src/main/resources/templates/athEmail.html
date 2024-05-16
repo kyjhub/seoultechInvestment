@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js">
+        function getValueInTextAndSendRequest() { //email 입력값 변수에 저장
+            let inputEmail = document.getElementById("data1").value;
+            console.log(inputEmail)
+            axios.post("https://localhost:8080/email?email="+String(inputEmail)
+             ).then(function(response){
+                let athNum = response.data; //서버가 제공한 응답데이터
+                console.log(athNum);
+            });
+        }
+    </script>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
@@ -8,18 +20,15 @@
 <form action="/email" name="athEmail" th:object="${athForm}" method="post">
     <div>
         <label th:for="email">이메일</label>
-        <input type="text" th:field="*{email}" placeholder="이메일"></input>
+        <input type="text" id="data1" th:field="*{email}" placeholder="이메일"></input>
         <p th:if="${#fields.hasErrors('email')}"
            th:errors="*{email}">이메일을 입력하세요</p>
     </div>
-    <button type="submit">인증번호 받기</button>
+    <button type="submit" onclick="getValueInTextAndSendRequest();">인증번호 받기</button>
 </form>
-<form action="/athEmail" name="athNum" th:object="${athForm}" method="post">
+<form action="/athEmail" method="post">
     <div>
-        <label th:for="studentId">인증번호</label>
-        <input type="text" th:field="*{athNum}" placeholder="인증번호"></input>
-        <p th:if="${#fields.hasErrors('athNum')}"
-           th:errors="*{athNum}">인증번호를 입력하세요</p>
+
     </div>
     <button type="submit">인증하기</button>
 </form>

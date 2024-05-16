@@ -12,8 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URLDecoder;
 
 @Controller
 @Slf4j
@@ -63,12 +64,11 @@ public class SignUpController {
 //    }
 
     @PostMapping("/email")
-    public String getEmail(@Valid AthDTO athDTO, Model model) {
-        log.debug("보낼 이메일 : " + athDTO.getEmail());
-        mailService.joinEmail(athDTO.getEmail());
-        model.addAttribute("athForm", new AthDTO(athDTO.getEmail()));
-        //여기서 모델을 새로 만들어서 AthDTO에 이메일 주소만 입력해서 다시 보내줘야하나?
-        return "redirect:/athEmail";
+    @ResponseBody
+    public String getEmail(@RequestParam("email") String emailAcc) {
+        System.out.println(emailAcc);
+        log.debug("보낼 이메일 : " + emailAcc);
+        return mailService.joinEmail(emailAcc);
     }
 
     @GetMapping("/athEmail")
