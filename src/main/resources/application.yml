@@ -23,8 +23,7 @@ spring:
       host: localhost
 logging:
   level:
-    web: debug
+    com.example.seoultechInvestment.controller: debug
+    org.springframework.web: debug
     org.hibernate.SQL: debug
-    #logging.level.com.god.bo.test=info
-    #logging.level.com.god.bo.test.controller=debug
     #각 패키지에 디폴트 로깅 레벨을 지정할 수 있다.

@@ -63,11 +63,10 @@ public class SignUpController {
 //        //여기서 인증번호를 위해 model.addAttribute해야하나?
 //    }
 
-    @PostMapping("/email")
+    @PostMapping(value="/email", consumes =  "application/x-www-form-urlencoded")
     @ResponseBody
-    public String getEmail(@RequestParam("email") String emailAcc) {
-        System.out.println(emailAcc);
-        log.debug("보낼 이메일 : " + emailAcc);
+    public String getEmail(@Valid AthDTO athDTO) {
+        String emailAcc = athDTO.getEmail();
         return mailService.joinEmail(emailAcc);
     }
 

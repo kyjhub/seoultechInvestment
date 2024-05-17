@@ -5,9 +5,21 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js">
         function getValueInTextAndSendRequest() { //email 입력값 변수에 저장
             let inputEmail = document.getElementById("data1").value;
-            console.log(inputEmail)
-            axios.post("https://localhost:8080/email?email="+String(inputEmail)
-             ).then(function(response){
+            console.log(inputEmail);
+            const data={
+                email: inputEmail,
+                athNum: null
+            }
+            const config = {
+                header:{
+                    'Content-Type': 'application/json',
+                }
+            }
+            axios.post("https://localhost:8080/email",
+                JSON.stringify(data),
+                config
+            )
+                .then(function(response){
                 let athNum = response.data; //서버가 제공한 응답데이터
                 console.log(athNum);
             });
