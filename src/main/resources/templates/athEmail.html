@@ -3,15 +3,16 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js">
-        function getValueInTextAndSendRequest() { //email 입력값 변수에 저장
-            let inputEmail = document.getElementById("data1").value;
-            console.log(inputEmail);
-            const data={
+        let inputEmail = inputEmail = document.getElementById("data1").value;
+        let realAthNum = 0;
+        let inputAthNum = document.getElementById("data2").value;
+        function postEmailInText() { //email 입력값 변수에 저장
+            const data = {
                 email: inputEmail,
                 athNum: null
             }
             const config = {
-                header:{
+                header: {
                     'Content-Type': 'application/json',
                 }
             }
@@ -19,11 +20,32 @@
                 JSON.stringify(data),
                 config
             )
-                .then(function(response){
-                let athNum = response.data; //서버가 제공한 응답데이터
-                console.log(athNum);
-            });
+                .then(function (response) {
+                    realAthNum = response.data; //서버가 제공한 응답데이터
+                });
         }
+        function postReusltOfAth() {
+            let result = false;
+            if (realAthNum == inputAthNum) {
+                result = true;
+            }
+            const data={
+                resultOfAth: result,
+            }
+            const config={
+                header: {
+                    'Content-Type': 'application/json',
+                }
+            }
+            axios.post("https://localhost:8080/resultOfAth",
+                JSON.stringify(data),
+                config
+            )
+                .then(function (response) {
+                    realAthNum = response.data; //서버가 제공한 응답데이터
+                });
+        }
+
     </script>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -34,14 +56,14 @@
         <label>이메일</label>
         <input type="text" id="data1" placeholder="이메일을 입력하세요"></input>
     </div>
-    <button type="submit" onclick="getValueInTextAndSendRequest();">인증번호 받기</button>
+    <button type="submit" onclick="postEmailInText();">인증번호 받기</button>
 </form>
 <form>
     <div>
         <label>인증번호</label>
         <input type="text" id="data2" placeholder="인증번호를 입력하세요"></input>
     </div>
-    <button type="submit">인증하기</button>
+    <button type="submit" onclick="postReusltOfAth">인증하기</button>
 </form>
 </body>
 </html>
