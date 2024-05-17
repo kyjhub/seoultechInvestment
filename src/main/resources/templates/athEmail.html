@@ -29,18 +29,17 @@
     <title>Title</title>
 </head>
 <body>
-<form action="/email" name="athEmail" th:object="${athForm}" method="post">
+<form name="athEmail">
     <div>
-        <label th:for="email">이메일</label>
-        <input type="text" id="data1" th:field="*{email}" placeholder="이메일"></input>
-        <p th:if="${#fields.hasErrors('email')}"
-           th:errors="*{email}">이메일을 입력하세요</p>
+        <label>이메일</label>
+        <input type="text" id="data1" placeholder="이메일을 입력하세요"></input>
     </div>
     <button type="submit" onclick="getValueInTextAndSendRequest();">인증번호 받기</button>
 </form>
-<form action="/athEmail" method="post">
+<form>
     <div>
-
+        <label>인증번호</label>
+        <input type="text" id="data2" placeholder="인증번호를 입력하세요"></input>
     </div>
     <button type="submit">인증하기</button>
 </form>

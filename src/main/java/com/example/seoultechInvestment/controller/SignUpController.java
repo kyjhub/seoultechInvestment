@@ -65,14 +65,13 @@ public class SignUpController {
 
     @PostMapping(value="/email", consumes =  "application/x-www-form-urlencoded")
     @ResponseBody
-    public String getEmail(@Valid AthDTO athDTO) {
+    public String getEmail(AthDTO athDTO) {
         String emailAcc = athDTO.getEmail();
         return mailService.joinEmail(emailAcc);
     }
 
     @GetMapping("/athEmail")
-    public String redirectToAthEmail(@Valid AthDTO athDTO, Model model) {
-        model.addAttribute("athForm", new AthDTO(athDTO.getEmail()));
+    public String redirectToAthEmail(@Valid AthDTO athDTO) {
         return "/athEmail";
     }
 //    @PostMapping("/athEmail")   // 인증번호 오면 검증하는 단계
@@ -100,9 +99,8 @@ public class SignUpController {
 //    }
 
     @GetMapping("/athPopUp")
-    public String getAthEmail(Model model) {
+    public String getAthEmail() {
         log.debug("athPopUp.html is getMapped correctly");
-        model.addAttribute("athForm", new AthDTO());
         return "athEmail";
     }
 }
