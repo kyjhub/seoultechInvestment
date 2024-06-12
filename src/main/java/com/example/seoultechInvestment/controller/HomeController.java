@@ -14,9 +14,8 @@ public class HomeController {
     }
 
     @GetMapping("/join")
-    public String login(Model model) {
-        model.addAttribute("memberForm", new MemberDTO());
-        model.addAttribute("athEmailForm", new AthDTO());
-        return "signUp";
+    public String login() {
+//        model.addAttribute("athEmailForm", new AthDTO());
+        return "authEmail";
     }
 }

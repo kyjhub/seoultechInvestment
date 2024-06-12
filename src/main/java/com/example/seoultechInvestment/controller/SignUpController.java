@@ -6,6 +6,7 @@ import com.example.seoultechInvestment.entity.Member;
 import com.example.seoultechInvestment.service.MailService;
 import com.example.seoultechInvestment.service.MemberService;
 import jakarta.validation.Valid;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -13,8 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.URLDecoder;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @Slf4j
@@ -23,6 +23,13 @@ public class SignUpController {
     private final MemberService memberService;
     private final MailService mailService;
 
+    @GetMapping("signUp")
+    public String getSignUp(Model model) {
+        log.debug("GetMapping of signUp.html");
+        model.addAttribute("memberForm", new MemberDTO());
+        return "signUp";
+    }
+
     @PostMapping("/signUp")//회원가입
     public String join(Model model, @Valid MemberDTO memberDTO,
                        BindingResult bindingResult) {//errors -> bindingResult로 교체
@@ -30,7 +37,7 @@ public class SignUpController {
             for (ObjectError error : bindingResult.getFieldErrors()) {
                 log.error(error.toString());
             }
-            return "redirect:/login";
+            return "redirect:/signUp";
         }
         //멤버 등록
         if (memberDTO.getStGalleryNickname() != null) {
@@ -45,7 +52,12 @@ public class SignUpController {
 
         return "";
     }
-
+    @GetMapping("/resultOfAth")
+    @ResponseBody
+    public String finalAth(Model model) {
+        log.debug("resultOfAth getMapping success");
+        return "http://localhost:8080/signUp";
+    }
     @PostMapping("/email")
     @ResponseBody
     public String getEmail(@RequestBody AthDTO athDTO) {
@@ -53,16 +65,5 @@ public class SignUpController {
         String emailAcc = athDTO.getEmail();
         log.debug("입력받은 이메일 : " + emailAcc);
         return mailService.joinEmail(emailAcc);
-    }
-
-    @GetMapping("/athPopUp")
-    public String getAthEmail() {
-        log.debug("athPopUp.html is getMapped correctly");
-        return "athEmail";
-    }
-
-    @GetMapping("/resultOfAth")
-    public String finalAth() {
-            return "signUp";
     }
 }

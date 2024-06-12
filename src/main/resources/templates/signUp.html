@@ -6,20 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>login</title>
 </head>
-<script type="text/javascript">
-    function athPopup() {
-        // athEmailPopup은 팝업창의 이름 또는 별칭
-        window.open("athPopUp","athEmailPopup","width=400,height=300,left=100,top=50");
-    }
-</script>
+<!--<script type="text/javascript">-->
+<!--    function athPopup() {-->
+<!--        // athEmailPopup은 팝업창의 이름 또는 별칭-->
+<!--        window.open("athPopUp","athEmailPopup","width=400,height=300,left=100,top=50");-->
+<!--    }-->
+<!--</script>-->
 <body>
 <h1 style="text-align: center">회원가입</h1>
 <div style="text-align: center">
-
-    <div>
-        <label>이메일 인증은 필수입니다.</label><br>
-        <button onclick="athPopup();">이메일 인증하기</button>
-    </div>
 
 <form action="/signUp" name="signUpMember" th:object="${memberForm}" method="post">
     <legend>회원가입</legend>

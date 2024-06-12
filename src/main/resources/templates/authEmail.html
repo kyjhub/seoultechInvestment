@@ -51,14 +51,14 @@
         event.preventDefault();
         inputAthNum = Number(document.getElementById("authNumInput").value);
         if (realAthNum === inputAthNum) {
-            axios.get("http://localhost:8080/resultOfAth")
-                .then(function (response) {});
-            window.close();
             alert("이메일 인증을 성공했습니다. 회원가입을 해주세요.");
+            axios.get("http://localhost:8080/resultOfAth"
+            ).then(function (response) {
+                location.href = response.toString();
+            });
         }
         else{
             alert("인증번호가 틀렸습니다.");
-            window.local.replace("http://localhost:8080/athPopUp");
         }
     }
     document.addEventListener('DOMContentLoaded', function () {
