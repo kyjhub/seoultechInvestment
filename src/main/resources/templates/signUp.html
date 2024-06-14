@@ -19,6 +19,7 @@
 <form action="/signUp" name="signUpMember" th:object="${memberForm}" method="post">
     <legend>회원가입</legend>
     <div>
+        <p>학번이 로그인 아이디입니다.</p>
         <label th:for="studentId">학번</label>
         <input type="text" th:field="*{stId}" placeholder="학번"></input>
         <p th:if="${#fields.hasErrors('stId')}"
@@ -36,6 +37,10 @@
         <input type="text" th:field="*{name}" placeholder="이름"></input>
         <p th:if="${#fields.hasErrors('name')}"
            th:errors="*{stId}">이름 입력하세요</p>
+    </div>
+    <div>
+        <label th:for="password">비밀번호</label>
+        <input type="text" th:field="*{password}" placeholder="비밀번호"></input>
     </div>
     <div>
         <label th:for="stGalleryNickname">고닉</label>

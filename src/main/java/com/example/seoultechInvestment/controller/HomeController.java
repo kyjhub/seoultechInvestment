@@ -1,9 +1,6 @@
 package com.example.seoultechInvestment.controller;
 
-import com.example.seoultechInvestment.DTO.AthDTO;
-import com.example.seoultechInvestment.DTO.MemberDTO;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller

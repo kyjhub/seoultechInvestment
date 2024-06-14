@@ -4,13 +4,17 @@ import com.example.seoultechInvestment.entity.Member;
 import com.example.seoultechInvestment.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 @RequiredArgsConstructor
 @Service
+@Transactional(readOnly = true)
 public class MemberService {
     private final MemberRepository memberRepository;
+
+    @Transactional
     public void enroll(Member member) {
         Long newStId = member.getStId();
         List<Member> allMember = memberRepository.findAll();
