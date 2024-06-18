@@ -1,6 +1,7 @@
 package com.example.seoultechInvestment.controller;
 
 import com.example.seoultechInvestment.DTO.AthDTO;
+import com.example.seoultechInvestment.DTO.SignInDTO;
 import com.example.seoultechInvestment.DTO.SignUpDTO;
 import com.example.seoultechInvestment.entity.Member;
 import com.example.seoultechInvestment.service.MailService;
@@ -49,7 +50,7 @@ public class SignUpController {
             memberService.enroll(newMember);
         }
 
-        model.addAttribute("memberForm", new SignUpDTO());
+        model.addAttribute("memberForm", new SignInDTO());
         return "signIn";
     }
     @PostMapping("/email")
