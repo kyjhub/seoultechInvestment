@@ -65,8 +65,10 @@ public class SignUpController {
 
     @PostMapping(value="/email", consumes =  "application/x-www-form-urlencoded")
     @ResponseBody
-    public String getEmail(AthDTO athDTO) {
+    public String getEmail( AthDTO athDTO) {
+        log.debug("getEmail 함수 실행");
         String emailAcc = athDTO.getEmail();
+        log.debug("전달받은 객체: " + athDTO.toString());
         return mailService.joinEmail(emailAcc);
     }
 
