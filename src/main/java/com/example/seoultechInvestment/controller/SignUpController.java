@@ -1,7 +1,8 @@
 package com.example.seoultechInvestment.controller;
 
 import com.example.seoultechInvestment.DTO.AthDTO;
-import com.example.seoultechInvestment.DTO.MemberDTO;
+import com.example.seoultechInvestment.DTO.SignInDTO;
+import com.example.seoultechInvestment.DTO.SignUpDTO;
 import com.example.seoultechInvestment.entity.Member;
 import com.example.seoultechInvestment.service.MailService;
 import com.example.seoultechInvestment.service.MemberService;
@@ -14,8 +15,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URLDecoder;
-
 @Controller
 @Slf4j
 @RequiredArgsConstructor
@@ -23,86 +22,43 @@ public class SignUpController {
     private final MemberService memberService;
     private final MailService mailService;
 
+    @GetMapping("signUp")
+    public String getSignUp(Model model) {
+        log.debug("GetMapping of signUp.html");
+        model.addAttribute("memberForm", new SignUpDTO());
+        return "signUp";
+    }
+
+    //이메일 인증 페이지를 거쳐서만 들어오도록 제한해야함.
     @PostMapping("/signUp")//회원가입
-    public String join(Model model, @Valid MemberDTO memberDTO,
+    public String join(Model model, @Valid SignUpDTO signUpDTO,
                        BindingResult bindingResult) {//errors -> bindingResult로 교체
         if (bindingResult.hasErrors()) {
             for (ObjectError error : bindingResult.getFieldErrors()) {
                 log.error(error.toString());
             }
-            return "redirect:/login";
+            return "redirect:/signUp";
         }
         //멤버 등록
-        if (memberDTO.getStGalleryNickname() != null) {
-            Member newMember = Member.builder().stId(memberDTO.getStId()).name(memberDTO.getName()).
-                    Department(memberDTO.getDepartment()).stGalleryNickname(memberDTO.getStGalleryNickname()).build();
+        if (signUpDTO.getStGalleryNickname() != null) {
+            Member newMember = Member.builder().stId(signUpDTO.getStId()).name(signUpDTO.getName()).
+                    Department(signUpDTO.getDepartment()).stGalleryNickname(signUpDTO.getStGalleryNickname()).build();
             memberService.enroll(newMember);
         } else {
-            Member newMember = Member.builder().stId(memberDTO.getStId()).name(memberDTO.getName()).
-                    Department(memberDTO.getDepartment()).build();
+            Member newMember = Member.builder().stId(signUpDTO.getStId()).name(signUpDTO.getName()).
+                    Department(signUpDTO.getDepartment()).build();
             memberService.enroll(newMember);
         }
 
-        return "";
+        model.addAttribute("memberForm", new SignInDTO());
+        return "signIn";
     }
-
-//    @PostMapping("/email")//이메일 입력하고 인증버튼 누르면 여기에서 인증번호 보내주면 팝업창에서 인증
-//    public void getEmail(@RequestBody @Valid EmailDTO emailDTO, HttpServletResponse response) {
-//        System.out.println("보낼 이메일 : " + emailDTO.getEmail());
-//        String emailUUid = UUID.randomUUID().toString();
-//        //redis에 email과 eamilId같이 저장 코드 작성
-//
-//        //클라이언트가 인증번호 입력하면 서버측에서 클라 이메일 쿠키에서 uuid랑 인증번호 대조
-//        //비교해서 인증작업 완료
-//
-//        //쿠키 생성 후 저장
-//        Cookie emailCookie = new Cookie("EMAIL_COOKIE_NAME", emailUUid);
-//        response.addCookie(emailCookie);
-//        //joinEmail 메소드 안에 이메일 전송 코드 있음.
-//        mailService.joinEmail(emailDTO.getEmail(), emailUUid);
-//        //여기서 인증번호를 위해 model.addAttribute해야하나?
-//    }
-
-    @PostMapping(value="/email", consumes =  "application/x-www-form-urlencoded")
+    @PostMapping("/email")
     @ResponseBody
-    public String getEmail( AthDTO athDTO) {
-        log.debug("getEmail 함수 실행");
+    public String getEmail(@RequestBody AthDTO athDTO) {
+        log.debug("email PostMapping 성공");
         String emailAcc = athDTO.getEmail();
-        log.debug("전달받은 객체: " + athDTO.toString());
+        log.debug("입력받은 이메일 : " + emailAcc);
         return mailService.joinEmail(emailAcc);
-    }
-
-    @GetMapping("/athEmail")
-    public String redirectToAthEmail(@Valid AthDTO athDTO) {
-        return "/athEmail";
-    }
-//    @PostMapping("/athEmail")   // 인증번호 오면 검증하는 단계
-//    public String authenticationEmail(@RequestBody @Valid String athNumber, HttpServletRequest request) {
-//        Cookie emailCookie = Arrays.stream(request.getCookies()).filter(c -> c.getName().equals("EMAIL_COOKIE_NAME")).findAny().orElse(null);
-//        String emailUUid = emailCookie.getValue(); //getvalue가 nullPointerException 오류 날 수 있음
-//        boolean checkAthNum = mailService.checkAthNum(emailUUid, athNumber);
-//        if (checkAthNum) {
-//            return "forward:/signUp.html";  //인증완료, forward해서 회원가입에서 입력중이던 회원정보들 유지
-//        } else {
-//            throw new NullPointerException("이메일 인증에서 에러 발생!");
-//        }
-//    }
-
-//    @PostMapping("/athEmail")   // 인증번호 오면 검증하는 단계
-//    public String authenticationEmail(@RequestBody @Valid String athNumber, HttpServletRequest request) {
-//        Cookie emailCookie = Arrays.stream(request.getCookies()).filter(c -> c.getName().equals("EMAIL_COOKIE_NAME")).findAny().orElse(null);
-//        String emailUUid = emailCookie.getValue(); //getvalue가 nullPointerException 오류 날 수 있음
-//        boolean checkAthNum = mailService.checkAthNum(emailUUid, athNumber);
-//        if (checkAthNum) {
-//            return "forward:/signUp.html";  //인증완료, forward해서 회원가입에서 입력중이던 회원정보들 유지
-//        } else {
-//            throw new NullPointerException("이메일 인증에서 에러 발생!");
-//        }
-//    }
-
-    @GetMapping("/athPopUp")
-    public String getAthEmail() {
-        log.debug("athPopUp.html is getMapped correctly");
-        return "athEmail";
     }
 }

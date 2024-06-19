@@ -1,9 +1,6 @@
 package com.example.seoultechInvestment.controller;
 
-import com.example.seoultechInvestment.DTO.AthDTO;
-import com.example.seoultechInvestment.DTO.MemberDTO;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
@@ -14,9 +11,8 @@ public class HomeController {
     }
 
     @GetMapping("/join")
-    public String login(Model model) {
-        model.addAttribute("memberForm", new MemberDTO());
-        model.addAttribute("athEmailForm", new AthDTO());
-        return "signUp";
+    public String login() {
+//        model.addAttribute("athEmailForm", new AthDTO());
+        return "authEmail";
     }
 }
