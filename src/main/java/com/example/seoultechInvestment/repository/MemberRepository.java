@@ -4,6 +4,7 @@ import com.example.seoultechInvestment.entity.Member;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +12,9 @@ import java.util.Optional;
 @Repository
 @RequiredArgsConstructor
 public class MemberRepository {
+
         private final EntityManager entityManager;
+
         public void save(Member member) {
                 entityManager.persist(member);
         }

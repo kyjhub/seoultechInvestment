@@ -4,6 +4,7 @@ import com.example.seoultechInvestment.entity.Stock;
 import com.example.seoultechInvestment.repository.StockRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -12,6 +13,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class StockService {
     private final StockRepository stockRepository;
+    @Transactional
     public void enroll(Stock stock) {
         List<Stock> undefinedStocks = stockRepository.findUndefinedStocks();
         for (Stock undefinedStock : undefinedStocks) {
@@ -19,6 +21,7 @@ public class StockService {
                 throw new IllegalStateException("아직 이전 예측이 존재합니다.");
             }
         }
+        stockRepository.save(stock);
     }
     public Stock findById(UUID uuid) {
         return (Stock) stockRepository.findById(uuid).get();

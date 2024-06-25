@@ -63,13 +63,13 @@ public class MailService {
         redisUtil.setDataExpire(mailAcc, String.valueOf(athNumber), 90L);
     }
 
-    public boolean checkAthNum(String mailAcc, String athNum) {
-        if (redisUtil.getData(mailAcc) == null) {
-            return false;
-        } else if (redisUtil.getData(mailAcc).equals(athNum)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+//    public boolean checkAthNum(String mailAcc, String athNum) {
+//        if (redisUtil.getData(mailAcc) == null) {
+//            return false;
+//        } else if (redisUtil.getData(mailAcc).equals(athNum)) {
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
 }

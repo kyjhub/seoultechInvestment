@@ -22,7 +22,7 @@ public class SignUpController {
     private final MemberService memberService;
     private final MailService mailService;
 
-    @GetMapping("signUp")
+    @GetMapping("/signUp")
     public String getSignUp(Model model) {
         log.debug("GetMapping of signUp.html");
         model.addAttribute("memberForm", new SignUpDTO());

@@ -1,8 +1,10 @@
 package com.example.seoultechInvestment.controller;
 
+import com.example.seoultechInvestment.DTO.SignInDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
@@ -21,5 +23,11 @@ public class HomeController {
     public String login() {
 //        model.addAttribute("athEmailForm", new AthDTO());
         return "authEmail";
+    }
+
+    @GetMapping("/login")
+    public String getLogin(Model model) {
+        model.addAttribute("memberForm", new SignInDTO());
+        return "signIn";
     }
 }
