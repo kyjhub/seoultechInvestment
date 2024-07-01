@@ -35,7 +35,11 @@ public class SignInController {
         HttpSession session = httpServletRequest.getSession();
         session.setAttribute("loginMember", loginMember);
 
-        return "stInvestmentHome";
+        // 관리자는 관리자용 화면으로 접속
+        if (loginMember.getStId() == 21101165L && loginMember.getPassword().equals("1234")) {
+            return "homeOfAdmin";
+        }
+        else return "stInvestmentHome";
     }
 
     @PostMapping("/logout")

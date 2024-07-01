@@ -30,4 +30,9 @@ public class HomeController {
         model.addAttribute("memberForm", new SignInDTO());
         return "signIn";
     }
+
+    @GetMapping("/stInvestmentHome")
+    public String stInvestmentHome(Model model) {
+        return "stInvestmentHome";
+    }
 }
