@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>종목등록</title>
+</head>
+<body>
+<h1 style="text-align: center">종목 등록</h1>
+<div style="text-align: center">
+    <form action="/stock/enroll" name="enrollStock" th:object="${newStock}" method="post">
+        <div>
+            <label th:for="tickerName">종목명</label>
+            <input type="text" th:field="*{tickerName}" placeholder="종목명"></input>
+            <p th:if="${#fields.hasErrors('tickerName')}"
+               th:errors="*{tickerName}">종목을 입력하세요</p>
+        </div>
+
+        <div>
+            <label th:for="tp">목표 매도가</label>
+            <input type="text" th:field="*{tp}" placeholder="목표 매도가"></input>
+            <p th:if="${#fields.hasErrors('tp')}"
+               th:errors="*{tp}">목표 매도가를 입력하세요</p>
+        </div>
+
+        <div>
+            <label th:for="period">예상 기간</label>
+            <input type="text" th:field="*{predictedPeriod}" placeholder="예상 기간"></input>
+            <p th:if="${#fields.hasErrors('predictedPeriod')}"
+               th:errors="*{predictedPeriod}">예상 기간을 입력하세요</p>
+        </div>
+        <button type="submit">등록</button>
+    </form>
+</div>
+
+</body>
+</html>

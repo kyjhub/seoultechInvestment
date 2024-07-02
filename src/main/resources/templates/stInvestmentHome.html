@@ -27,7 +27,23 @@
             </fieldset>
         </div>
         <br>
-        <button onclick="location.href='http://localhost:8080/'">홈으로 가기</button>
+        <button onclick="location.href='http://localhost:8080/performanceList'">이전 추천종목 성과</button>
 </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        let tickerName;
+        let tp;
+        let period;
+
+        const config = {
+            headers:{"Content-Type": 'application/json'}
+        }
+
+        function getEnrollStock(event){
+            event.preventDefault();
+            axios.get("http://localhost:8080/email")
+        }
+    </script>
 </body>
 </html>

@@ -20,13 +20,13 @@ public class HomeController {
     }
 
     @GetMapping("/join")
-    public String login() {
+    public String authEmail() {
 //        model.addAttribute("athEmailForm", new AthDTO());
         return "authEmail";
     }
 
     @GetMapping("/login")
-    public String getLogin(Model model) {
+    public String authEmail(Model model) {
         model.addAttribute("memberForm", new SignInDTO());
         return "signIn";
     }
