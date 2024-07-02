@@ -15,7 +15,7 @@ public class StockService {
     private final StockRepository stockRepository;
     @Transactional
     public void enroll(Stock stock) {
-        List<Stock> undefinedStocks = stockRepository.findUndefinedStocks();
+        List<Stock> undefinedStocks = stockRepository.findOnGoingStocks();
         for (Stock undefinedStock : undefinedStocks) {
             if (stock.getTickerName() == undefinedStock.getTickerName()) {
                 throw new IllegalStateException("아직 이전 예측이 존재합니다.");
@@ -29,4 +29,15 @@ public class StockService {
     public List<Stock> findAll() {
         return stockRepository.findAll();
     }
+
+    public Stock findRecentStocks() {
+        List<Stock> recentStocks = stockRepository.findRecentStocks();
+        Stock findStock = recentStocks.get(0);
+        for(Stock stock : recentStocks) {
+            if (findStock.getEnrollDate().isAfter(stock.getEnrollDate())) {
+                findStock = stock.clone();
+            }
+        }
+    }
+
 }

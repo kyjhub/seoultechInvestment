@@ -36,14 +36,17 @@
         let tp;
         let period;
 
-        const config = {
-            headers:{"Content-Type": 'application/json'}
-        }
+        axios({
+            method: "get",
+            url: "http://localhost:8080/stock/enroll",
+            responseType: "application/json"
+        }).then(function (response){
+            let object = JSON.parse(response);
+            tickerName = object.tickerName;
+            tp = object.tp;
+            period = object.tp;
+        })
 
-        function getEnrollStock(event){
-            event.preventDefault();
-            axios.get("http://localhost:8080/email")
-        }
     </script>
 </body>
 </html>

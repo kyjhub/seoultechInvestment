@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -23,13 +24,13 @@ public class StockController {
     private final StockService stockService;
 
     @GetMapping("/stock")
-    public String enrollStock(Model model){
+    public String enrollStock(Model model) {
         model.addAttribute("newStock", new EnrollStockDTO());
         return "enrollStock";
     }
 
     @PostMapping("/stock/enroll")
-    public String enrollStock(@Valid EnrollStockDTO enrollStockDTO, BindingResult bindingResult){
+    public String enrollStock(@Valid EnrollStockDTO enrollStockDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             for (ObjectError error : bindingResult.getFieldErrors()) {
                 log.error(error.toString());
@@ -45,5 +46,10 @@ public class StockController {
         stockService.enroll(stock);
 
         return "stInvestmentHome";
+    }
+
+    @GetMapping("/stock/enroll")
+    public String presentStock() {
+        stockService.
     }
 }

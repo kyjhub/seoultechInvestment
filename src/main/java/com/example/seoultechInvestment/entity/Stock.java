@@ -37,6 +37,17 @@ public class Stock {
         this.predictedPeriod = predictedPeriod;
     }
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        Stock cloneStock = (Stock)super.clone();
+        cloneStock.builder().enrollDate(this.enrollDate).
+                predictedPeriod(this.predictedPeriod).
+                tp(this.tp).rateOfReturn(this.rateOfReturn).
+                sellPrice(this.sellPrice).tickerName(this.tickerName).build();
+        cloneStock.id = this.id;    // id를 이렇게 넣어줘도 되는건가? 위험한거 아닌가?
+        return cloneStock;
+    }
+
     //==비즈니스 로직==//
     public void initSellPrice(Long sellPrice) {
         this.sellPrice = sellPrice;

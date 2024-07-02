@@ -3,7 +3,6 @@ package com.example.seoultechInvestment.repository;
 import com.example.seoultechInvestment.entity.Stock;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -26,9 +25,13 @@ public class StockRepository {
         return (List<Stock>) entityManager.createQuery("select s from Stock s").getResultList();
     }
 
-    public List<Stock> findUndefinedStocks() {
+    public List<Stock> findOnGoingStocks() {
         return (List<Stock>) entityManager.createQuery("select s from Stock s where s.sellPrice=:sellPrice and s.rateOfReturn=:rateOfReturn")
                 .setParameter("sellPrice", null).setParameter("rateOfReturn", null).getResultList();
+    }
+    public List<Stock> findRecentStocks() {
+        return entityManager.createQuery("select s from Stock s where s.enrollDate.getYear()=:thisYear")
+                .setParameter("thisYear", LocalDate.now().getYear()).getResultList();
     }
     public UUID delete(Stock stock) {
         entityManager.remove(stock);
