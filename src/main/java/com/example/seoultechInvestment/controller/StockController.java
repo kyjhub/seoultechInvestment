@@ -12,9 +12,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Controller
 @Slf4j
@@ -49,7 +49,8 @@ public class StockController {
     }
 
     @GetMapping("/stock/enroll")
-    public String presentStock() {
-        stockService.
+    @ResponseBody
+    public Stock presentStock() {
+        return stockService.findRecentStock();
     }
 }

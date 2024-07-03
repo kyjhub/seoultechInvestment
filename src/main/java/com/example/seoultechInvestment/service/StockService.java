@@ -30,14 +30,15 @@ public class StockService {
         return stockRepository.findAll();
     }
 
-    public Stock findRecentStocks() {
+    public Stock findRecentStock() {
         List<Stock> recentStocks = stockRepository.findRecentStocks();
         Stock findStock = recentStocks.get(0);
         for(Stock stock : recentStocks) {
             if (findStock.getEnrollDate().isAfter(stock.getEnrollDate())) {
-                findStock = stock.clone();
+                findStock = stock.toBuilder().build();  // deepCopy
             }
         }
+        return findStock;
     }
 
 }

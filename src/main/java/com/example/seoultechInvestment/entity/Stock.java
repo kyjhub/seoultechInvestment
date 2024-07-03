@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,9 @@ import java.util.UUID;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Stock {
+@AllArgsConstructor
+@Builder(toBuilder = true)
+public class Stock{
     @Id
     @GeneratedValue
     private UUID id;
@@ -27,18 +30,8 @@ public class Stock {
     private Long sellPrice; //판매가 <= 이건 후에 판매하면 업데이트
     private double rateOfReturn; //수익률 <= 이것도 후에 판매하면 업데이트
 
-    @Builder
-    Stock(String tickerName, LocalDate enrollDate, Long tp, Long sellPrice, double rateOfReturn, String predictedPeriod) {
-        this.tickerName = tickerName;
-        this.enrollDate = enrollDate;
-        this.tp = tp;
-        this.sellPrice = sellPrice;
-        this.rateOfReturn = rateOfReturn;
-        this.predictedPeriod = predictedPeriod;
-    }
-
     @Override
-    public Object clone() throws CloneNotSupportedException {
+    public Stock clone() throws CloneNotSupportedException {
         Stock cloneStock = (Stock)super.clone();
         cloneStock.builder().enrollDate(this.enrollDate).
                 predictedPeriod(this.predictedPeriod).
