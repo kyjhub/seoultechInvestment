@@ -30,7 +30,7 @@ class StockRepositoryUnitTest {
     @DisplayName("save, findByTicker 메서드 단위 테스트")
     public void findByTicker() {
         //given
-        Stock stock = Stock.builder().tickerName("ETHUSDT").localDate(LocalDate.of(2024, 3, 15)).tp(4600L)
+        Stock stock = Stock.builder().tickerName("ETHUSDT").enrollDate(LocalDate.of(2024, 3, 15)).tp(4600L)
                 .sellPrice(4000L).rateOfReturn(30L).build();
         //when
         stockRepository.save(stock);
@@ -44,9 +44,9 @@ class StockRepositoryUnitTest {
     @DisplayName("findAll 메서드 단위 테스트")
     public void findALl() {
         //given
-        Stock stock1 = Stock.builder().tickerName("ETHUSDT").localDate(LocalDate.of(2024, 3, 15)).tp(4600L)
+        Stock stock1 = Stock.builder().tickerName("ETHUSDT").enrollDate(LocalDate.of(2024, 3, 15)).tp(4600L)
                 .build();
-        Stock stock2 = Stock.builder().tickerName("s&p500인버스").localDate(LocalDate.of(2024, 3, 29)).tp(10000L)
+        Stock stock2 = Stock.builder().tickerName("s&p500인버스").enrollDate(LocalDate.of(2024, 3, 29)).tp(10000L)
                 .build();
         HashSet<Stock> stocks = new HashSet<>(Arrays.asList(stock1, stock2));
         //when
@@ -66,11 +66,11 @@ class StockRepositoryUnitTest {
     @DisplayName("findUndefinedStocks 메서드 단위 테스트")
     public void findOnGoingStocks() {
         //given
-        Stock stock1 = Stock.builder().tickerName("01234").localDate(LocalDate.of(2024, 3, 15)).tp(4600L)
+        Stock stock1 = Stock.builder().tickerName("01234").enrollDate(LocalDate.of(2024, 3, 15)).tp(4600L)
                 .build();
-        Stock stock2 = Stock.builder().tickerName("06088").localDate(LocalDate.of(2024, 3, 29)).tp(10000L)
+        Stock stock2 = Stock.builder().tickerName("06088").enrollDate(LocalDate.of(2024, 3, 29)).tp(10000L)
                 .build();
-        Stock stock3 = Stock.builder().tickerName("03588").localDate(LocalDate.of(2024, 3, 29)).tp(4000L)
+        Stock stock3 = Stock.builder().tickerName("03588").enrollDate(LocalDate.of(2024, 3, 29)).tp(4000L)
                 .sellPrice(4000L).rateOfReturn(0D).build();
         stockRepository.save(stock1);
         stockRepository.save(stock2);
@@ -89,7 +89,7 @@ class StockRepositoryUnitTest {
     @DisplayName("delete 메서드 단위 테스트")
     public void delete() {
         //given
-        Stock stock = Stock.builder().tickerName("ETHUSDT").localDate(LocalDate.of(2024, 3, 15)).tp(4600L)
+        Stock stock = Stock.builder().tickerName("ETHUSDT").enrollDate(LocalDate.of(2024, 3, 15)).tp(4600L)
                 .build();
         stockRepository.save(stock);
         //when
@@ -103,7 +103,7 @@ class StockRepositoryUnitTest {
     @DisplayName("비즈니스로직 단위 테스트")
     public void businessLogicUnitTest() {
         //given
-        Stock stock1 = Stock.builder().tickerName("ETHUSDT").localDate(LocalDate.of(2024, 3, 15)).tp(4600L)
+        Stock stock1 = Stock.builder().tickerName("ETHUSDT").enrollDate(LocalDate.of(2024, 3, 15)).tp(4600L)
                 .build();
         //when
         stock1.initSellPrice(4000L);
@@ -113,5 +113,16 @@ class StockRepositoryUnitTest {
         Assertions.assertThat(4000L).isEqualTo(findSellPrice);
         double findRateOfReturn = stock1.getRateOfReturn();
         Assertions.assertThat(30D).isEqualTo(findRateOfReturn);
+    }
+
+    @Test
+    @Order(6)
+    @DisplayName("findRecentStocks 메서드 단위 테스트")
+    public void findRecentStockTest(){
+        log.info("올해 연도 : " + Integer.toString(LocalDate.now().getYear()));
+        Stock stock1 = Stock.builder().tickerName("ETHUSDT").enrollDate(LocalDate.now()).tp(6000L)
+                .predictedPeriod("5months")
+                .build();
+        log.info("쿼리 결과 : "+ stockRepository.findRecentStocks());
     }
 }

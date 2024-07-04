@@ -30,8 +30,14 @@ public class StockRepository {
                 .setParameter("sellPrice", null).setParameter("rateOfReturn", null).getResultList();
     }
     public List<Stock> findRecentStocks() {
-        return entityManager.createQuery("select s from Stock s where s.enrollDate.getYear()=:thisYear")
-                .setParameter("thisYear", LocalDate.now().getYear()).getResultList();
+        return entityManager.createQuery("select s from Stock s where SUBSTRING(s.enrollDate, 1, 4) =:thisYear")  //.getYear()
+                .setParameter("thisYear", Integer.toString(LocalDate.now().getYear())).getResultList();
+    }
+
+    public List<Stock> findRecentStocksTwo() {
+        String thisYear = "2024";
+        return entityManager.createQuery("select s from Stock s where SUBSTRING(cast(s.enrollDate as string ), 1, 4) =:thisYear")  //.getYear()
+                .setParameter("thisYear", thisYear).getResultList();
     }
     public UUID delete(Stock stock) {
         entityManager.remove(stock);

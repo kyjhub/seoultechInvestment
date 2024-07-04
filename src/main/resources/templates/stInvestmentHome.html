@@ -11,19 +11,21 @@
         let tickerName;
         let tp;
         let period;
-
+        let enrollDate;
         axios({
             method: "get",
             url: "http://localhost:8080/stock/enroll",
-            responseType: "application/json"
+            responseType: "json"
         }).then(function (response){
-            let object = JSON.parse(response);
+            const object = JSON.parse(response);
             tickerName = object.tickerName;
             tp = object.tp;
-            period = object.period;
+            period = object.predictedPeriod;
+            enrollDate = object.enrollDate;
         })
 
-        document.write("<div style=\"text-align: center\">\n" +
+        document.write(
+            "<div style=\"text-align: center\">\n" +
             "    <div>\n" +
             "\n" +
             "        <h3>현재 추천 종목</h3>\n" +
@@ -31,9 +33,10 @@
             "        <div>\n" +
             "            <fieldset>\n" +
             "            <legend><b> 스윙 목적 </b></legend><br>\n" +
-            "            종목명 : " + tickername + "<br><br>\n" +
-            "            목표가 : 50,4000 <br><br>\n" +
-            "            예상기간 : 3개월 이상 <br><br>\n" +
+            "            종목명 : " + tickerName + "<br><br>\n" +
+            "            목표가 : " + tp +"<br><br>\n" +
+            "            예상기간 : " + period + "<br><br>\n" +
+            "            등록날짜 : " + enrollDate + "<br><br>\n" +
             "            </fieldset>\n" +
             "        </div>\n" +
             "        <br>\n" +

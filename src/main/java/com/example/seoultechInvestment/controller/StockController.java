@@ -50,7 +50,8 @@ public class StockController {
 
     @GetMapping("/stock/enroll")
     @ResponseBody
-    public Stock presentStock() {
+    public EnrollStockDTO presentStock() {
+        log.info("/stock/enroll is getMapped");
         return stockService.findRecentStock();
     }
 }

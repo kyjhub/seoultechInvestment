@@ -1,5 +1,6 @@
 package com.example.seoultechInvestment.service;
 
+import com.example.seoultechInvestment.DTO.EnrollStockDTO;
 import com.example.seoultechInvestment.entity.Stock;
 import com.example.seoultechInvestment.repository.StockRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ public class StockService {
         return stockRepository.findAll();
     }
 
-    public Stock findRecentStock() {
+    public EnrollStockDTO findRecentStock() {
         List<Stock> recentStocks = stockRepository.findRecentStocks();
         Stock findStock = recentStocks.get(0);
         for(Stock stock : recentStocks) {
@@ -38,7 +39,11 @@ public class StockService {
                 findStock = stock.toBuilder().build();  // deepCopy
             }
         }
-        return findStock;
+        EnrollStockDTO findStockDTO = EnrollStockDTO.builder().tickerName(findStock.getTickerName()).
+                tp(findStock.getTp()).
+                enrollDate(findStock.getEnrollDate()).
+                predictedPeriod(findStock.getPredictedPeriod()).build();
+        return findStockDTO;
     }
 
 }
