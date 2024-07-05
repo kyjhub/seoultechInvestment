@@ -119,10 +119,14 @@ class StockRepositoryUnitTest {
     @Order(6)
     @DisplayName("findRecentStocks 메서드 단위 테스트")
     public void findRecentStockTest(){
+        //when
         log.info("올해 연도 : " + Integer.toString(LocalDate.now().getYear()));
         Stock stock1 = Stock.builder().tickerName("ETHUSDT").enrollDate(LocalDate.now()).tp(6000L)
                 .predictedPeriod("5months")
                 .build();
-        log.info("쿼리 결과 : "+ stockRepository.findRecentStocks());
+
+        //then
+        log.info("쿼리 결과 : "+ stockRepository.findRecentStocksTwo());
+        Assertions.assertThat(stockRepository.findRecentStocksTwo().size()).isEqualTo(2);
     }
 }
