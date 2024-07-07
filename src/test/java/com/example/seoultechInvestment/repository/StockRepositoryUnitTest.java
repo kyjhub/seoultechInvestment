@@ -124,9 +124,16 @@ class StockRepositoryUnitTest {
         Stock stock1 = Stock.builder().tickerName("ETHUSDT").enrollDate(LocalDate.now()).tp(6000L)
                 .predictedPeriod("5months")
                 .build();
+        Stock stock2 = Stock.builder().tickerName("BTCUSDT").enrollDate(LocalDate.of(2023, 3, 5)).tp(20000L)
+                .predictedPeriod("5months")
+                .build();
+        stockRepository.save(stock1);
+        stockRepository.save(stock2);
 
         //then
-        log.info("쿼리 결과 : "+ stockRepository.findRecentStocksTwo());
-        Assertions.assertThat(stockRepository.findRecentStocksTwo().size()).isEqualTo(2);
+        log.info("나왔어야할 결과 : " + stockRepository.findAll());
+        log.info("쿼리 결과 : "+ stockRepository.findRecentStocks());
+
+        Assertions.assertThat(stockRepository.findRecentStocks().size()).isEqualTo(1);
     }
 }

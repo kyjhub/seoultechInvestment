@@ -52,6 +52,9 @@ public class StockController {
     @ResponseBody
     public EnrollStockDTO presentStock() {
         log.info("/stock/enroll is getMapped");
-        return stockService.findRecentStock();
+
+        EnrollStockDTO recentStock = stockService.findRecentStock();
+        log.info("보낼 데이터 : " + recentStock);
+        return recentStock;
     }
 }

@@ -1,8 +1,10 @@
 package com.example.seoultechInvestment.repository;
 
 import com.example.seoultechInvestment.entity.Stock;
+import io.lettuce.core.dynamic.annotation.Param;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -29,16 +31,14 @@ public class StockRepository {
         return (List<Stock>) entityManager.createQuery("select s from Stock s where s.sellPrice=:sellPrice and s.rateOfReturn=:rateOfReturn")
                 .setParameter("sellPrice", null).setParameter("rateOfReturn", null).getResultList();
     }
-    public List<Stock> findRecentStocks() {
-        return entityManager.createQuery("select s from Stock s where SUBSTRING(s.enrollDate, 1, 4) =:thisYear")  //.getYear()
-                .setParameter("thisYear", Integer.toString(LocalDate.now().getYear())).getResultList();
-    }
 
-    public List<Stock> findRecentStocksTwo() {
-        String thisYear = "2024";
-        return entityManager.createQuery("select s from Stock s where SUBSTRING(cast(s.enrollDate as string ), 1, 4) =:thisYear")  //.getYear()
+    // SUBSTRING(cast(s.enrollDate AS string ) , 0, 3)
+    public List<Stock> findRecentStocks() {
+        int thisYear = 2024;
+        return entityManager.createQuery("select s from Stock s where function('YEAR', s.enrollDate) =:thisYear")  //.getYear()
                 .setParameter("thisYear", thisYear).getResultList();
     }
+
     public UUID delete(Stock stock) {
         entityManager.remove(stock);
         return stock.getId();

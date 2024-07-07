@@ -34,7 +34,7 @@ public class InitDB {
     public void initStock(){
         log.info("Stock 초기화 실행");
         Stock initStock = Stock.builder().tickerName("네이버").tp(100000L).enrollDate(LocalDate.now())
-                .predictedPeriod("3m")
+                .predictedPeriod("3M")
                 .build();
         stockRepository.save(initStock);
     }
