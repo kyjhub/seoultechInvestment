@@ -33,7 +33,7 @@ public class InitDB {
     @Transactional
     public void initStock(){
         log.info("Stock 초기화 실행");
-        Stock initStock = Stock.builder().tickerName("네이버").tp(100000L).enrollDate(LocalDate.now())
+        Stock initStock = Stock.builder().tickerName("LG화학").tp(540000L).enrollDate(LocalDate.now())
                 .predictedPeriod("3M")
                 .build();
         stockRepository.save(initStock);
