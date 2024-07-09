@@ -39,7 +39,7 @@ public class HomeController {
     }
 
     @GetMapping("/stInvestmentHome")
-    public String stInvestmentHome(Model model) {
+    public String stInvestmentHome() {
         return "stInvestmentHome";
     }
 }

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -28,9 +29,50 @@
             <p th:if="${#fields.hasErrors('predictedPeriod')}"
                th:errors="*{predictedPeriod}">예상 기간을 입력하세요</p>
         </div>
+
         <button type="submit">등록</button>
     </form>
 </div>
+<!--<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>-->
+<!--<script>-->
+<!--    let tickerName;-->
+<!--    let tp;-->
+<!--    let period;-->
+<!--    let date;-->
 
+<!--    const today = new Date();-->
+<!--    const year = today.getFullYear();-->
+<!--    const month = (today.getMonth()+1).toString().padStart(2,'0');-->
+<!--    const day = today.getDate().toString().padStart(2, '0');-->
+<!--    date = `${year}-${month}-${day}`;-->
+
+<!--    const config = {-->
+<!--        headers:{"Content-Type": 'application/json'}-->
+<!--    }-->
+
+<!--    async function postStockInfo(){-->
+<!--        tickerName = document.getElementById("tickerNameInput").value;-->
+<!--        tp = document.getElementById("tpInput").value;-->
+<!--        period = document.getElementById("periodInput").value;-->
+
+<!--        const data = {-->
+<!--            tickerName : tickerName,-->
+<!--            tp : tp,-->
+<!--            predictedPeriod : period,-->
+<!--            enrollDate : date-->
+<!--        }-->
+<!--        let response = await axios.post("http://localhost:8080/stock/enroll",-->
+<!--            JSON.stringify(data),-->
+<!--            config-->
+<!--        );-->
+<!--    }-->
+
+<!--    document.addEventListener('DOMContentLoaded', async function () {-->
+<!--        await document.getElementById('enrollBtn').addEventListener('click', postStockInfo);-->
+<!--        await document.getElementById('enrollBtn').addEventListener('click', () =>-->
+<!--            location.href="stInvestmentHome.html"-->
+<!--        );-->
+<!--    });-->
+<!--</script>-->
 </body>
 </html>

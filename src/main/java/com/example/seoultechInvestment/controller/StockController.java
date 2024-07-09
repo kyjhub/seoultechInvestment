@@ -1,6 +1,7 @@
 package com.example.seoultechInvestment.controller;
 
 import com.example.seoultechInvestment.DTO.EnrollStockDTO;
+import com.example.seoultechInvestment.DTO.StockDTO;
 import com.example.seoultechInvestment.entity.Stock;
 import com.example.seoultechInvestment.service.StockService;
 import jakarta.validation.Valid;
@@ -35,25 +36,25 @@ public class StockController {
             for (ObjectError error : bindingResult.getFieldErrors()) {
                 log.error(error.toString());
             }
-            return "redirect:/enrollStock";
+            log.info("stock.html 로 연결");
+            return "/enrollStock";
         }
 
-        Stock stock = Stock.builder().tickerName(enrollStockDTO.getTickerName()).
+        StockDTO stockDTO = StockDTO.builder().tickerName(enrollStockDTO.getTickerName()).
                 enrollDate(LocalDate.now()).
                 tp(enrollStockDTO.getTp()).
                 predictedPeriod(enrollStockDTO.getPredictedPeriod()).
                 build();
-        stockService.enroll(stock);
-
-        return "stInvestmentHome";
+        stockService.enroll(stockDTO);
+        return "/stInvestmentHome";
     }
 
     @GetMapping("/stock/enroll")
     @ResponseBody
-    public EnrollStockDTO presentStock() {
+    public StockDTO presentStock() {
         log.info("/stock/enroll is getMapped");
 
-        EnrollStockDTO recentStock = stockService.findRecentStock();
+        StockDTO recentStock = stockService.findRecentStock();
         log.info("보낼 데이터 : " + recentStock);
         return recentStock;
     }

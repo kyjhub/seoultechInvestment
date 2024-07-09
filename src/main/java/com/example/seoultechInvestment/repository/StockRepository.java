@@ -43,4 +43,8 @@ public class StockRepository {
         entityManager.remove(stock);
         return stock.getId();
     }
+
+    public void flush(){
+        entityManager.flush();
+    }
 }
