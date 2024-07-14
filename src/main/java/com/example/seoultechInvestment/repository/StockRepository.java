@@ -28,7 +28,7 @@ public class StockRepository {
     }
 
     public List<Stock> findOnGoingStocks() {
-        return (List<Stock>) entityManager.createQuery("select s from Stock s where s.sellPrice=:sellPrice and s.rateOfReturn=:rateOfReturn")
+        return (List<Stock>) entityManager.createQuery("select s from Stock s where s.sellPrice=:sellPrice and s.earningRate=:rateOfReturn")
                 .setParameter("sellPrice", null).setParameter("rateOfReturn", null).getResultList();
     }
 
@@ -46,5 +46,11 @@ public class StockRepository {
 
     public void flush(){
         entityManager.flush();
+    }
+
+    public List<Stock> findCompletedStocks() {
+        return entityManager.createQuery("select s from Stock s where s.earningRate!=:zero")
+                .setParameter("zero", 0.0)
+                .getResultList();
     }
 }

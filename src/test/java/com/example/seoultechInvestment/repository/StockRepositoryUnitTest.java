@@ -79,7 +79,7 @@ class StockRepositoryUnitTest {
         List<Stock> undefinedStocks = stockRepository.findOnGoingStocks();
         //then
         Long n = undefinedStocks.stream().filter(undefinedStock -> undefinedStock.getSellPrice() != null)
-                .filter(undefinedStock -> Double.valueOf(undefinedStock.getRateOfReturn()) != null)
+                .filter(undefinedStock -> Double.valueOf(undefinedStock.getEarningRate()) != null)
                 .count();
         Assertions.assertThat(n).isEqualTo(0);
     }
@@ -111,7 +111,7 @@ class StockRepositoryUnitTest {
         //then
         Long findSellPrice = stock1.getSellPrice();
         Assertions.assertThat(4000L).isEqualTo(findSellPrice);
-        double findRateOfReturn = stock1.getRateOfReturn();
+        double findRateOfReturn = stock1.getEarningRate();
         Assertions.assertThat(30D).isEqualTo(findRateOfReturn);
     }
 

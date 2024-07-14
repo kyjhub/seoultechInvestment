@@ -13,15 +13,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequiredArgsConstructor
 public class HomeController {
     private final LoginService loginService;
+
     @GetMapping("/")
     public String home(HttpServletRequest httpServletRequest) {
 
         HttpSession session = httpServletRequest.getSession(false);
         if (session != null) {
-            if (loginService.administratorLogin(session)){
+            if (loginService.administratorLogin(session)) {
                 return "homeOfAdmin";
-            }
-            else return "stInvestmentHome";
+            } else return "stInvestmentHome";
         }
         return "home";
     }
@@ -41,5 +41,10 @@ public class HomeController {
     @GetMapping("/stInvestmentHome")
     public String stInvestmentHome() {
         return "stInvestmentHome";
+    }
+
+    @GetMapping("/performanceList")
+    public String performanceList() {
+        return "performanceList";
     }
 }

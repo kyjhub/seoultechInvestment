@@ -12,5 +12,47 @@
         <h1>성과 목록</h1>
 
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        let title = {
+            "name":"tickerName",
+            "date":"enrollDate",
+            "tp":"tp",
+            "term":"predictedPeriod",
+            "rate":"earningRate"
+        }
+        async function getPerformanceList() {
+            let response = await axios.get("http://localhost:8080/stock/resultList",{
+                headers: {'Content-type' : 'application/json'}
+            });
+            let objList = response.data;
+        }
+
+        let listObj = getPerformanceList();
+
+        let $table = document.createElement('table');
+
+        for(let i in title)
+        {
+            let $th = document.createElement('th');
+            let $tr = document.createElement('tr');
+            $tr.innerHTML = title[i];
+            $th.appendChild($tr);
+            $table.appendChild($th);
+        }
+
+        listObj.map(list=>{
+            let $tr = document.createElement('tr');
+            for(let i in list){
+                let $td = document.createElement('td');
+                $td.innerHTML = list[i];
+                $tr.appendChild($td);
+                $table.appendChild($tr);
+            }
+        })
+
+        document.body.appendChild($table);
+    </script>
 </body>
 </html>

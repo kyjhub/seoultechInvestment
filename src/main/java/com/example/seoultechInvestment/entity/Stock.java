@@ -3,13 +3,10 @@ package com.example.seoultechInvestment.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -28,14 +25,14 @@ public class Stock{
     private Long tp;    //예상 최소도달가
     private String predictedPeriod;
     private Long sellPrice; //판매가 <= 이건 후에 판매하면 업데이트
-    private double rateOfReturn; //수익률 <= 이것도 후에 판매하면 업데이트
+    private double earningRate; //수익률 <= 이것도 후에 판매하면 업데이트
 
     @Override
     public Stock clone() throws CloneNotSupportedException {
         Stock cloneStock = (Stock)super.clone();
         cloneStock.builder().enrollDate(this.enrollDate).
                 predictedPeriod(this.predictedPeriod).
-                tp(this.tp).rateOfReturn(this.rateOfReturn).
+                tp(this.tp).earningRate(this.earningRate).
                 sellPrice(this.sellPrice).tickerName(this.tickerName).build();
         cloneStock.id = this.id;    // id를 이렇게 넣어줘도 되는건가? 위험한거 아닌가?
         return cloneStock;
@@ -45,7 +42,7 @@ public class Stock{
     public void initSellPrice(Long sellPrice) {
         this.sellPrice = sellPrice;
     }
-    public void initRateOfReturn(Double rateOfReturn) {
-        this.rateOfReturn = rateOfReturn;
+    public void initEarningRate(Double earningRate) {
+        this.earningRate = earningRate;
     }
 }

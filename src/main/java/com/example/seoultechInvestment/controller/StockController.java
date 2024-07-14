@@ -1,8 +1,8 @@
 package com.example.seoultechInvestment.controller;
 
+import com.example.seoultechInvestment.DTO.AccomplishedStockDTO;
 import com.example.seoultechInvestment.DTO.EnrollStockDTO;
-import com.example.seoultechInvestment.DTO.StockDTO;
-import com.example.seoultechInvestment.entity.Stock;
+import com.example.seoultechInvestment.DTO.OnGoingStockDTO;
 import com.example.seoultechInvestment.service.StockService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -40,22 +41,35 @@ public class StockController {
             return "/enrollStock";
         }
 
-        StockDTO stockDTO = StockDTO.builder().tickerName(enrollStockDTO.getTickerName()).
+        OnGoingStockDTO onGoingStockDTO = OnGoingStockDTO.builder().tickerName(enrollStockDTO.getTickerName()).
                 enrollDate(LocalDate.now()).
                 tp(enrollStockDTO.getTp()).
                 predictedPeriod(enrollStockDTO.getPredictedPeriod()).
                 build();
-        stockService.enroll(stockDTO);
+        stockService.enroll(onGoingStockDTO);
         return "/stInvestmentHome";
     }
 
     @GetMapping("/stock/enroll")
     @ResponseBody
-    public StockDTO presentStock() {
+    public OnGoingStockDTO presentStock() {
         log.info("/stock/enroll is getMapped");
 
-        StockDTO recentStock = stockService.findRecentStock();
+        OnGoingStockDTO recentStock = stockService.findRecentStock();
         log.info("보낼 데이터 : " + recentStock);
         return recentStock;
+    }
+
+    @GetMapping("/stock/resultList")
+    @ResponseBody
+    public List<AccomplishedStockDTO> resultList() {
+        log.info(" 추천종목 성과 기록 요청");
+        return stockService.findResult();
+    }
+
+    @GetMapping("/stock/result/enroll")
+    public String resultEnroll(Model model) {
+        model.addAttribute("finishedStock", new AccomplishedStockDTO());
+        return "enrollEarningRate";
     }
 }
