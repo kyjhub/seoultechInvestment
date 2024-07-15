@@ -24,7 +24,7 @@ public class Stock{
     private LocalDate enrollDate;
     private Long tp;    //예상 최소도달가
     private String predictedPeriod;
-    private Long sellPrice; //판매가 <= 이건 후에 판매하면 업데이트
+    private Double sellPrice; //판매가 <= 이건 후에 판매하면 업데이트
     private double earningRate; //수익률 <= 이것도 후에 판매하면 업데이트
 
     @Override
@@ -39,7 +39,7 @@ public class Stock{
     }
 
     //==비즈니스 로직==//
-    public void initSellPrice(Long sellPrice) {
+    public void initSellPrice(Double sellPrice) {
         this.sellPrice = sellPrice;
     }
     public void initEarningRate(Double earningRate) {

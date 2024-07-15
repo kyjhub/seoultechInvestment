@@ -21,6 +21,12 @@
             <p th:if="${#fields.hasErrors('earningRate')}"
                th:errors="*{earningRate}">수익률 입력하세요</p>
         </div>
+        <div>
+            <label th:for="sellPrice">매도가</label>
+            <input type="text" th:field="*{sellPrice}" placeholder="수익률"></input>
+            <p th:if="${#fields.hasErrors('sellPrice')}"
+               th:errors="*{sellPrice}">수익률 입력하세요</p>
+        </div>
         <button type="submit">제출</button>
     </form>
 </div>

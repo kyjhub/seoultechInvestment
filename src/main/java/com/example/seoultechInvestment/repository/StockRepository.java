@@ -43,8 +43,7 @@ public class StockRepository {
     }
 
     public List<Stock> findOngoingStocks(){
-        return entityManager.createQuery("select s from Stock s where s.earningRate=:num")
-                .setParameter("num", 0.0)
+        return entityManager.createQuery("select s from Stock s where s.sellPrice=null")
                 .getResultList();
     }
 
@@ -58,15 +57,13 @@ public class StockRepository {
     }
 
     public Stock findStockByNameAndDate(String name, LocalDate date){
-        return (Stock) entityManager.createQuery("select s from Stock s where s.tickerName=:name" +
-                "and s.enrollDate=:date").
+        return (Stock) entityManager.createQuery("select s from Stock s where s.tickerName=:name and s.enrollDate=:date").
                 setParameter("name", name).
                 setParameter("date", date).
                 getSingleResult();
     }
     public List<Stock> findCompletedStocks() {
-        return entityManager.createQuery("select s from Stock s where s.earningRate!=:zero")
-                .setParameter("zero", 0.0)
+        return entityManager.createQuery("select s from Stock s where s.sellPrice!=null")
                 .getResultList();
     }
 }
