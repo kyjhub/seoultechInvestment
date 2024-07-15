@@ -1,5 +1,6 @@
 package com.example.seoultechInvestment.repository;
 
+import com.example.seoultechInvestment.DTO.OnGoingStockDTO;
 import com.example.seoultechInvestment.entity.Stock;
 import io.lettuce.core.dynamic.annotation.Param;
 import jakarta.persistence.EntityManager;
@@ -32,11 +33,19 @@ public class StockRepository {
                 .setParameter("sellPrice", null).setParameter("rateOfReturn", null).getResultList();
     }
 
-    // SUBSTRING(cast(s.enrollDate AS string ) , 0, 3)
+    /**
+     * 당일부터 등록한지 1년전까지 기한 반환하는 함수도 작성
+     * */
     public List<Stock> findRecentStocks() {
         int thisYear = 2024;
         return entityManager.createQuery("select s from Stock s where function('YEAR', s.enrollDate) =:thisYear")  //.getYear()
                 .setParameter("thisYear", thisYear).getResultList();
+    }
+
+    public List<Stock> findOngoingStocks(){
+        return entityManager.createQuery("select s from Stock s where s.earningRate=:num")
+                .setParameter("num", 0.0)
+                .getResultList();
     }
 
     public UUID delete(Stock stock) {
@@ -48,6 +57,13 @@ public class StockRepository {
         entityManager.flush();
     }
 
+    public Stock findStockByNameAndDate(String name, LocalDate date){
+        return (Stock) entityManager.createQuery("select s from Stock s where s.tickerName=:name" +
+                "and s.enrollDate=:date").
+                setParameter("name", name).
+                setParameter("date", date).
+                getSingleResult();
+    }
     public List<Stock> findCompletedStocks() {
         return entityManager.createQuery("select s from Stock s where s.earningRate!=:zero")
                 .setParameter("zero", 0.0)

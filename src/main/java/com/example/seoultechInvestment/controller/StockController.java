@@ -1,6 +1,7 @@
 package com.example.seoultechInvestment.controller;
 
 import com.example.seoultechInvestment.DTO.AccomplishedStockDTO;
+import com.example.seoultechInvestment.DTO.EnrollEarningRateDTO;
 import com.example.seoultechInvestment.DTO.EnrollStockDTO;
 import com.example.seoultechInvestment.DTO.OnGoingStockDTO;
 import com.example.seoultechInvestment.service.StockService;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -46,16 +48,16 @@ public class StockController {
                 tp(enrollStockDTO.getTp()).
                 predictedPeriod(enrollStockDTO.getPredictedPeriod()).
                 build();
-        stockService.enroll(onGoingStockDTO);
+        stockService.enrollOnGoingStock(onGoingStockDTO);
         return "/stInvestmentHome";
     }
 
-    @GetMapping("/stock/enroll")
+    @GetMapping("/stock/OngoingStocks")
     @ResponseBody
     public OnGoingStockDTO presentStock() {
         log.info("/stock/enroll is getMapped");
 
-        OnGoingStockDTO recentStock = stockService.findRecentStock();
+        OnGoingStockDTO recentStock = stockService.findOnGoingStockDTO();
         log.info("보낼 데이터 : " + recentStock);
         return recentStock;
     }
@@ -64,12 +66,17 @@ public class StockController {
     @ResponseBody
     public List<AccomplishedStockDTO> resultList() {
         log.info(" 추천종목 성과 기록 요청");
-        return stockService.findResult();
+        return stockService.findFinishedStocks();
     }
 
     @GetMapping("/stock/result/enroll")
-    public String resultEnroll(Model model) {
+    public String getEnrollResultForm(Model model) {
         model.addAttribute("finishedStock", new AccomplishedStockDTO());
         return "enrollEarningRate";
+    }
+    @PostMapping("/stock/result/enroll")
+    public String EnrollResult(@ModelAttribute EnrollEarningRateDTO enrollEarningRateDTO){
+        stockService.modify(enrollEarningRateDTO);
+        return "performanceList";
     }
 }

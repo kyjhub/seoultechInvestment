@@ -5,6 +5,24 @@
     <title>결과 기록</title>
 </head>
 <body>
+<h1 style="text-align: center">수익률 등록</h1>
+<div style="text-align: center">
 
+    <form action="/stock/result/enroll" name="resultStock" th:object="${finishedStock}" method="post">
+        <div>
+            <label th:for="name">종목명</label>
+            <input type="text" th:field="*{tickerName}" placeholder="종목명"></input>
+            <p th:if="${#fields.hasErrors('tickerName')}"
+               th:errors="*{tickerName}">종목명 입력하세요</p>
+        </div>
+        <div>
+            <label th:for="rate">수익률</label>
+            <input type="text" th:field="*{earningRate}" placeholder="수익률"></input>
+            <p th:if="${#fields.hasErrors('earningRate')}"
+               th:errors="*{earningRate}">수익률 입력하세요</p>
+        </div>
+        <button type="submit">제출</button>
+    </form>
+</div>
 </body>
 </html>

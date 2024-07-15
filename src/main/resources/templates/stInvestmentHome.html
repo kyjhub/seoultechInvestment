@@ -45,7 +45,7 @@
         }
         async function getData(){
             try {
-                let response = await axios.get("http://localhost:8080/stock/enroll",{
+                let response = await axios.get("http://localhost:8080/stock/OngoingStocks",{
                     headers: {'Content-type' : 'application/json'}
                 });
                 let data = response.data;
