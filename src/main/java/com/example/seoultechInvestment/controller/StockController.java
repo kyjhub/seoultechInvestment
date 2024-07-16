@@ -65,13 +65,13 @@ public class StockController {
     @GetMapping("/stock/resultList")
     @ResponseBody
     public List<AccomplishedStockDTO> resultList() {
-        log.info(" 추천종목 성과 기록 요청");
+        log.info("추천종목 성과 기록 요청");
         return stockService.findFinishedStocks();
     }
 
     @GetMapping("/stock/result/enroll")
     public String getEnrollResultForm(Model model) {
-        model.addAttribute("finishedStock", new AccomplishedStockDTO());
+        model.addAttribute("finishedStock", new EnrollEarningRateDTO());
         return "enrollEarningRate";
     }
     @PostMapping("/stock/result/enroll")

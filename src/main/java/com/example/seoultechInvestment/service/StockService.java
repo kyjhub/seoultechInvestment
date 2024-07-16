@@ -68,7 +68,7 @@ public class StockService {
 
     public List<AccomplishedStockDTO> findFinishedStocks() {
         List<Stock> completedStocks = stockRepository.findCompletedStocks();
-        return convertStocksToDTOList(completedStocks);
+        return convertStocksToAccomplishedStockDTOList(completedStocks);
     }
 
     /**
@@ -108,7 +108,7 @@ public class StockService {
         OnGoingStockDTO findOnGoingStockDTO = OnGoingStockDTO.builder().tickerName(findStock.getTickerName()).
                 tp(findStock.getTp()).
                 enrollDate(findStock.getEnrollDate()).
-                predictedPeriod(findStock.getPredictedPeriod()).build();
+                predictedPeriod(findStock.getHoldTerm()).build();
         return findOnGoingStockDTO;
     }
     public List<OnGoingStockDTO> convertOnGoingStocksToDTOList(List<Stock> findOngoingStocks) {
@@ -116,26 +116,25 @@ public class StockService {
         for(Stock stock : findOngoingStocks){
             OnGoingStockDTO copyOnGoingStock = OnGoingStockDTO.builder().tickerName(stock.getTickerName())
                     .tp(stock.getTp())
-                    .predictedPeriod(stock.getPredictedPeriod())
+                    .predictedPeriod(stock.getHoldTerm())
                     .enrollDate(stock.getEnrollDate())
                     .build();
             onGoingStockDTOs.add(copyOnGoingStock);
         }
         return onGoingStockDTOs;
     }
-    public AccomplishedStockDTO convertStockToDTO(Stock stock) {
+    public AccomplishedStockDTO convertStockToAccomplishedStockDTO(Stock stock) {
         return AccomplishedStockDTO.builder().tickerName(stock.getTickerName()).
-                tp(stock.getTp()).
                 enrollDate(stock.getEnrollDate()).
-                predictedPeriod(stock.getPredictedPeriod()).
+                predictedPeriod(stock.getHoldTerm()).
                 earningRate(stock.getEarningRate()).build();
 
     }
 
-    public List<AccomplishedStockDTO> convertStocksToDTOList(List<Stock> stockList) {
+    public List<AccomplishedStockDTO> convertStocksToAccomplishedStockDTOList(List<Stock> stockList) {
         List<AccomplishedStockDTO> copyComStockDTOs = List.of();
         for (Stock stock : stockList) {
-            AccomplishedStockDTO accomplishedStockDTO = convertStockToDTO(stock);
+            AccomplishedStockDTO accomplishedStockDTO = convertStockToAccomplishedStockDTO(stock);
             copyComStockDTOs.add(accomplishedStockDTO);
         }
         return copyComStockDTOs;

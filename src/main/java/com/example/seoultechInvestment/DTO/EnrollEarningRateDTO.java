@@ -13,6 +13,10 @@ import lombok.NoArgsConstructor;
 public class EnrollEarningRateDTO {
     @NotBlank(message = "종목명이 입력되지 않았습니다.")
     private String tickerName;
+    @NotBlank()
+    private double sellPrice;
     @NotBlank
-    private Double earningRate;
+    private double earningRate;
+    @NotBlank
+    private double entryPrice;
 }
