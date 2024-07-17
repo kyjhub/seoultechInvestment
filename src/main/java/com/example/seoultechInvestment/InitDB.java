@@ -1,7 +1,10 @@
 package com.example.seoultechInvestment;
 
+import com.example.seoultechInvestment.entity.Investment;
 import com.example.seoultechInvestment.entity.Member;
+import com.example.seoultechInvestment.entity.ProgressStatus;
 import com.example.seoultechInvestment.entity.Stock;
+import com.example.seoultechInvestment.repository.InvestmentRepository;
 import com.example.seoultechInvestment.repository.MemberRepository;
 import com.example.seoultechInvestment.repository.StockRepository;
 import jakarta.transaction.Transactional;
@@ -18,7 +21,7 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class InitDB {
     private final MemberRepository memberRepository;
-    private final StockRepository stockRepository;
+    private final InvestmentRepository investmentRepository;
 
     @EventListener(ApplicationReadyEvent.class)
     @Transactional
@@ -32,10 +35,17 @@ public class InitDB {
     @EventListener(ApplicationReadyEvent.class)
     @Transactional
     public void initStock(){
-        log.info("Stock 초기화 실행");
-        Stock initStock = Stock.builder().tickerName("LG화학").tp(540000L).enrollDate(LocalDate.of(2024, 6, 20))
-                .predictedPeriod("3M")
+        log.info("완성된 투자종목 초기화 실행");
+        Investment prebuiltEndedInv = Investment.builder().enrollDate(LocalDate.of(2024, 3, 24))
+                .stock(Stock.builder().tickerName("엘지화학").build())
+                .holdTerm("180D").sellPrice(500000).earningRate(50)
+                .status(ProgressStatus.SUCCESS).build();
+        log.info("진행중 투자종목 초기화 실행");
+        Investment prebuiltOnGoingInv = Investment.builder().stock(Stock.builder().tickerName("iova").build())
+                .status(ProgressStatus.ONGOING).tp(80)
+                .entryPrice(8.49).enrollDate(LocalDate.of(2024, 6, 16))
                 .build();
-        stockRepository.save(initStock);
+        investmentRepository.save(prebuiltEndedInv);
+        investmentRepository.save(prebuiltOnGoingInv);
     }
 }

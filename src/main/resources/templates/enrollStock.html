@@ -6,7 +6,7 @@
     <title>종목등록</title>
 </head>
 <body>
-<h1 style="text-align: center">종목 등록</h1>
+<h1 style="text-align: center">투자 종목 등록</h1>
 <div style="text-align: center">
     <form action="/stock/enroll" name="enrollStock" th:object="${newStock}" method="post">
         <div>
@@ -17,17 +17,17 @@
         </div>
 
         <div>
-            <label th:for="tp">목표 매도가</label>
-            <input type="text" th:field="*{tp}" placeholder="목표 매도가"></input>
+            <label th:for="tp">최소 도달가</label>
+            <input type="text" th:field="*{tp}" placeholder="최소 도달가"></input>
             <p th:if="${#fields.hasErrors('tp')}"
-               th:errors="*{tp}">목표 매도가를 입력하세요</p>
+               th:errors="*{tp}">최소 도달가를 입력하세요</p>
         </div>
 
         <div>
-            <label th:for="period">예상 기간</label>
-            <input type="text" th:field="*{predictedPeriod}" placeholder="예상 기간"></input>
-            <p th:if="${#fields.hasErrors('predictedPeriod')}"
-               th:errors="*{predictedPeriod}">예상 기간을 입력하세요</p>
+            <label th:for="entryPrice">진입가</label>
+            <input type="text" th:field="*{entryPrice}" placeholder="진입가"></input>
+            <p th:if="${#fields.hasErrors('entryPrice')}"
+               th:errors="*{entryPrice}">진입가를 입력하세요</p>
         </div>
 
         <button type="submit">등록</button>

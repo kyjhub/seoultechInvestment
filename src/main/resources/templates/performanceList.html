@@ -16,17 +16,18 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
         let title = {
-            "name":"tickerName",
             "date":"enrollDate",
-            "tp":"tp",
-            "term":"predictedPeriod",
-            "rate":"earningRate"
+            "name":"tickerName",
+            "holdTerm" : "holdTerm",
+            "sellPrice" : "sellPrice",
+            "rate":"earningRate",
+            "ProgressStatus" : "status"
         }
         async function getPerformanceList() {
-            let response = await axios.get("http://localhost:8080/stock/resultList",{
+            let response = await axios.get("http://localhost:8080/stock/result",{
                 headers: {'Content-type' : 'application/json'}
             });
-            let objList = response.data;
+           return response.data;
         }
 
         let listObj = getPerformanceList();

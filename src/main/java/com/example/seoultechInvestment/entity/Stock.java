@@ -13,19 +13,22 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder(toBuilder = true)
+@Builder
 public class Stock{
     @Id
     @GeneratedValue
     private UUID id;
     private String tickerName; //티커명은 트레이딩뷰 기준
 
-    @Override
-    public Stock clone() throws CloneNotSupportedException {
-        Stock cloneStock = (Stock)super.clone();
-        cloneStock.builder().tickerName(this.tickerName).
-                build();
-        cloneStock.id = this.id;    // id를 이렇게 넣어줘도 되는건가? 위험한거 아닌가?
-        return cloneStock;
+    public Stock(String tickerName){
+        this.tickerName = tickerName;
     }
+//    @Override
+//    public Stock clone() throws CloneNotSupportedException {
+//        Stock cloneStock = (Stock)super.clone();
+//        cloneStock.builder().tickerName(this.tickerName).
+//                build();
+//        cloneStock.id = this.id;    // id를 이렇게 넣어줘도 되는건가? 위험한거 아닌가?
+//        return cloneStock;
+//    }
 }

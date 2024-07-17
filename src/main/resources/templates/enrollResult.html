@@ -8,7 +8,7 @@
 <h1 style="text-align: center">수익률 등록</h1>
 <div style="text-align: center">
 
-    <form action="/stock/result/enroll" name="resultStock" th:object="${finishedStock}" method="post">
+    <form action="/stock/result/enroll" name="resultStock" th:object="${endedInv}" method="post">
         <div>
             <label th:for="name">종목명</label>
             <input type="text" th:field="*{tickerName}" placeholder="종목명"></input>
@@ -16,10 +16,10 @@
                th:errors="*{tickerName}">종목명 입력하세요</p>
         </div>
         <div>
-            <label th:for="sellPrice">진입가</label>
-            <input type="text" th:field="*{entryPrice}" placeholder="매도가"></input>
+            <label th:for="holdTerm">보유 기간</label>
+            <input type="text" th:field="*{holdTerm}" placeholder="보유 기간"></input>
             <p th:if="${#fields.hasErrors('sellPrice')}"
-               th:errors="*{entryPrice}">진입가 입력하세요</p>
+               th:errors="*{holdTerm}">보유기간을 입력하세요</p>
         </div>
         <div>
             <label th:for="sellPrice">매도가</label>
@@ -28,10 +28,10 @@
                th:errors="*{sellPrice}">매도가 입력하세요</p>
         </div>
         <div>
-            <label th:for="rate">수익률</label>
-            <input type="text" th:field="*{earningRate}" placeholder="수익률"></input>
-            <p th:if="${#fields.hasErrors('earningRate')}"
-               th:errors="*{earningRate}">수익률 입력하세요</p>
+            <label th:for="status">진행상태</label>
+            <input type="text" th:field="*{status}" placeholder="진행상태"></input>
+            <p th:if="${#fields.hasErrors('status')}"
+               th:errors="*{status}">진행상태를 입력하세요</p>
         </div>
         <button type="submit">제출</button>
     </form>

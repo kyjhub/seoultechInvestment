@@ -7,59 +7,54 @@
 </head>
 <body>
     <div style="text-align: center">
-        <div>
-            <h3>현재 추천 종목</h3>
-            <div>
-                <fieldset>
-                    <legend><b> 스윙 목적 </b></legend><br>
-                    종목명 : <div id="tickerName"></div> <br>
-                    목표가 : <div id="tp"></div><br>
-                    예상기간 : <div id="period"></div> <br>
-                    등록날짜 : <div id="enrollDate"></div> <br>
-                </fieldset>
-            </div>
-            <br>
-            <div>
-                <fieldset>
-                    <legend><b> 10년 장투 목적 </b></legend><br>
-                    종목명 : 코스피200, 코스닥 150 <br><br>
-                </fieldset>
-            </div>
-            <br>
+
             <button onclick="location.href='http://localhost:8080/performanceList'">이전 추천종목 성과</button>
-        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-        let tickerName;
-        let tp;
-        let period;
-        let enrollDate;
-
-        function assignValue(){
-                document.getElementById("tickerName").innerText=tickerName;
-                document.getElementById("tp").innerHTML=tp;
-                document.getElementById("period").innerHTML=period;
-                document.getElementById("enrollDate").innerHTML=enrollDate;
+        let title = {
+            "name":"tickerName",
+            "date":"enrollDate",
+            "tp":"tp",
+            "entryPrice":"entryPrice"
         }
+
         async function getData(){
             try {
-                let response = await axios.get("http://localhost:8080/stock/OngoingStocks",{
+                let response = await axios.get("http://localhost:8080/stock/onGoing",{
                     headers: {'Content-type' : 'application/json'}
                 });
-                let data = response.data;
-                tickerName = data.tickerName;
-                tp = data.tp;
-                period = data.predictedPeriod;
-                enrollDate = data.enrollDate;
-                await assignValue();
+                return response.data;
             }catch (err){
                 console.log(err);
             }
         }
 
-        getData();
+        let listObj = getData();
+
+        let $table = document.createElement('table');
+
+        for(let i in title)
+        {
+            let $th = document.createElement('th');
+            let $tr = document.createElement('tr');
+            $tr.innerHTML = title[i];
+            $th.appendChild($tr);
+            $table.appendChild($th);
+        }
+
+        listObj.map(list=>{
+            let $tr = document.createElement('tr');
+            for(let i in list){
+                let $td = document.createElement('td');
+                $td.innerHTML = list[i];
+                $tr.appendChild($td);
+                $table.appendChild($tr);
+            }
+        })
+
+        document.body.appendChild($table);
 
         </script>
 </body>

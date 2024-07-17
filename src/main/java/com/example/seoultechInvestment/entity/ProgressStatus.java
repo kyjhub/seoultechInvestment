@@ -1,5 +1,5 @@
 package com.example.seoultechInvestment.entity;
 
-public enum progressStatus {
+public enum ProgressStatus {
     ONGOING, SUCCESS, FAIL
 }
