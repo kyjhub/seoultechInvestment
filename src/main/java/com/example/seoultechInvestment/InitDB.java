@@ -45,7 +45,12 @@ public class InitDB {
                 .status(ProgressStatus.ONGOING).tp(80)
                 .entryPrice(8.49).enrollDate(LocalDate.of(2024, 6, 16))
                 .build();
+        Investment prebuiltOnGoingInv2 = Investment.builder().stock(Stock.builder().tickerName("pfe").build())
+                .status(ProgressStatus.ONGOING).tp(36)
+                .entryPrice(35).enrollDate(LocalDate.of(2023, 5, 13))
+                .build();
         investmentRepository.save(prebuiltEndedInv);
         investmentRepository.save(prebuiltOnGoingInv);
+        investmentRepository.save(prebuiltOnGoingInv2);
     }
 }

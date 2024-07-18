@@ -14,11 +14,12 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
         let title = {
-            "name":"tickerName",
-            "date":"enrollDate",
-            "tp":"tp",
-            "entryPrice":"entryPrice"
+            "name":"enrollDate",
+            "date":"entryPrice",
+            "tp":"tickerName",
+            "entryPrice":"tp"
         }
+        let listObj;
 
         async function getData(){
             try {
@@ -31,7 +32,8 @@
             }
         }
 
-        let listObj = getData();
+         listObj = getData();
+        console.log(listObj);
 
         let $table = document.createElement('table');
 
@@ -44,7 +46,7 @@
             $table.appendChild($th);
         }
 
-        listObj.map(list=>{
+        listObj.map(list => {
             let $tr = document.createElement('tr');
             for(let i in list){
                 let $td = document.createElement('td');
