@@ -3,23 +3,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <style>
+        table {
+            margin-left:auto;
+            margin-right:auto;
+        }
+
+        table, td, th {
+            border-collapse : collapse;
+            border : 1px solid black;
+        };
+    </style>
     <title>Title</title>
 </head>
 <body>
-    <div style="text-align: center">
+<!--    <div style="text-align: center">-->
 
-            <button onclick="location.href='http://localhost:8080/performanceList'">이전 추천종목 성과</button>
-    </div>
+<!--            <button onclick="location.href='http://localhost:8080/performanceList'">이전 추천종목 성과</button>-->
+<!--    </div>-->
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
         let title = {
-            "name":"enrollDate",
-            "date":"entryPrice",
-            "tp":"tickerName",
-            "entryPrice":"tp"
+            "enrollDate":"등록일",
+            "tickerName":"종목명(트레이딩뷰 기준)",
+            "entryPrice":"진입가",
+            "tp":"최소 도달가"
         }
-        let listObj;
 
         async function getData(){
             try {
@@ -32,31 +42,49 @@
             }
         }
 
-         listObj = getData();
-        console.log(listObj);
+         getData().then(listObj => {
+             console.log(typeof(listObj));
+             console.log(listObj);
 
-        let $table = document.createElement('table');
+             let $screen = document.createElement('div');
+             $screen.setAttribute('style', 'text-align: center');
 
-        for(let i in title)
-        {
-            let $th = document.createElement('th');
-            let $tr = document.createElement('tr');
-            $tr.innerHTML = title[i];
-            $th.appendChild($tr);
-            $table.appendChild($th);
-        }
 
-        listObj.map(list => {
-            let $tr = document.createElement('tr');
-            for(let i in list){
-                let $td = document.createElement('td');
-                $td.innerHTML = list[i];
-                $tr.appendChild($td);
-                $table.appendChild($tr);
-            }
-        })
+             let $table = document.createElement('table');
+             // $table.setAttribute("border", "1px solid black");
 
-        document.body.appendChild($table);
+             for(let i in title)
+             {
+                 let $th = document.createElement('th');
+                 let $tr = document.createElement('tr');
+                 $tr.innerHTML = title[i];
+                 $th.append($tr);
+                 $table.append($th);
+             }
+
+             listObj.map(list => {
+                 console.log(list);
+                 let $tr = document.createElement('tr');
+                 for(let i in list){
+                     let $td = document.createElement('td');
+                     $td.innerHTML = list[i];
+                     $tr.append($td);
+                     $table.append($tr);
+                 }
+             })
+
+             $screen.appendChild($table);
+             document.body.appendChild($table);
+
+             let $btn = document.createElement('button');
+             $btn.setAttribute('onclick', 'location.href=\'http://localhost:8080/performanceList\'');
+             $btn.innerHTML='이전 추천종목 성과';
+
+             $screen.appendChild(document.createElement('br'));
+             $screen.appendChild($btn);
+             document.body.appendChild($screen);
+         })
+
 
         </script>
 </body>
