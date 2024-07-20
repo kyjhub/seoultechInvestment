@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <style>
+        h1 { text-align: center}
+        div { text-align: center}
         table {
             margin-left:auto;
             margin-right:auto;
@@ -12,11 +14,12 @@
         table, td, th {
             border-collapse : collapse;
             border : 1px solid black;
-        };
+        }
     </style>
     <title>Title</title>
 </head>
 <body>
+<h1>진행중인 투자 종목</h1>
 <!--    <div style="text-align: center">-->
 
 <!--            <button onclick="location.href='http://localhost:8080/performanceList'">이전 추천종목 성과</button>-->
@@ -43,12 +46,8 @@
         }
 
          getData().then(listObj => {
-             console.log(typeof(listObj));
-             console.log(listObj);
 
              let $screen = document.createElement('div');
-             $screen.setAttribute('style', 'text-align: center');
-
 
              let $table = document.createElement('table');
              // $table.setAttribute("border", "1px solid black");
@@ -82,6 +81,7 @@
 
              $screen.appendChild(document.createElement('br'));
              $screen.appendChild($btn);
+
              document.body.appendChild($screen);
          })
 

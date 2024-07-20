@@ -2,11 +2,10 @@ package com.example.seoultechInvestment;
 
 import com.example.seoultechInvestment.entity.Investment;
 import com.example.seoultechInvestment.entity.Member;
-import com.example.seoultechInvestment.entity.ProgressStatus;
+import com.example.seoultechInvestment.Enum.ProgressStatus;
 import com.example.seoultechInvestment.entity.Stock;
 import com.example.seoultechInvestment.repository.InvestmentRepository;
 import com.example.seoultechInvestment.repository.MemberRepository;
-import com.example.seoultechInvestment.repository.StockRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +39,11 @@ public class InitDB {
                 .stock(Stock.builder().tickerName("엘지화학").build())
                 .holdTerm("180D").sellPrice(500000).earningRate(50)
                 .status(ProgressStatus.SUCCESS).build();
+        Investment prebuiltEndedInv2 = Investment.builder().enrollDate(LocalDate.of(2024, 7, 1))
+                .stock(Stock.builder().tickerName("233740").build())
+                .holdTerm("60D").sellPrice(11000).earningRate(13)
+                .status(ProgressStatus.SUCCESS).build();
+
         log.info("진행중 투자종목 초기화 실행");
         Investment prebuiltOnGoingInv = Investment.builder().stock(Stock.builder().tickerName("iova").build())
                 .status(ProgressStatus.ONGOING).tp(80)
@@ -50,6 +54,7 @@ public class InitDB {
                 .entryPrice(35).enrollDate(LocalDate.of(2023, 5, 13))
                 .build();
         investmentRepository.save(prebuiltEndedInv);
+        investmentRepository.save(prebuiltEndedInv2);
         investmentRepository.save(prebuiltOnGoingInv);
         investmentRepository.save(prebuiltOnGoingInv2);
     }

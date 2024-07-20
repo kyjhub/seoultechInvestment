@@ -20,8 +20,8 @@ public class OnGoingInvDTO {
     private LocalDate enrollDate;
     @NotBlank(message = "종목명이 입력되지 않았습니다.")
     private String tickerName;
-    @NotNull(message = "tp값이 입력되지 않았습니다.")
-    private double tp;
     @NotNull
     private double entryPrice;
+    @NotNull(message = "tp값이 입력되지 않았습니다.")
+    private double tp;
 }

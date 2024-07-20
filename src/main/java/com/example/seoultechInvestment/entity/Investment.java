@@ -1,5 +1,6 @@
 package com.example.seoultechInvestment.entity;
 
+import com.example.seoultechInvestment.Enum.ProgressStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -2,58 +2,78 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <style>
+        h1 { text-align: center}
+        div { text-align: center}
+        table {
+            margin-left:auto;
+            margin-right:auto;
+        }
+        table, td, th {
+            border-collapse : collapse;
+            border : 1px solid black;
+        }
+        </style>
     <title>성과</title>
-<!--    <style>-->
-<!--        h1 { text-align: center}-->
-<!--    </style>-->
 </head>
 <body>
-    <div style="text-align: center">
         <h1>성과 목록</h1>
-
-    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
         let title = {
-            "date":"enrollDate",
-            "name":"tickerName",
-            "holdTerm" : "holdTerm",
-            "sellPrice" : "sellPrice",
-            "rate":"earningRate",
-            "ProgressStatus" : "status"
+            "enrollDate":"등록일",
+            "tickerName":"종목명",
+            "holdTerm" : "보유 기간",
+            "sellPrice" : "매도가",
+            "earningRate":"수익률",
+            "status" : "진행상황"
         }
         async function getPerformanceList() {
-            let response = await axios.get("http://localhost:8080/stock/result",{
-                headers: {'Content-type' : 'application/json'}
-            });
-           return response.data;
-        }
-
-        let listObj = getPerformanceList();
-
-        let $table = document.createElement('table');
-
-        for(let i in title)
-        {
-            let $th = document.createElement('th');
-            let $tr = document.createElement('tr');
-            $tr.innerHTML = title[i];
-            $th.appendChild($tr);
-            $table.appendChild($th);
-        }
-
-        listObj.map(list=>{
-            let $tr = document.createElement('tr');
-            for(let i in list){
-                let $td = document.createElement('td');
-                $td.innerHTML = list[i];
-                $tr.appendChild($td);
-                $table.appendChild($tr);
+            try {
+                let response = await axios.get("http://localhost:8080/stock/result", {
+                    headers: {'Content-type': 'application/json'}
+                });
+                return response.data;
+            } catch (e) {
+                console.log(e);
             }
+        }
+
+        getPerformanceList().then(listObj => {
+
+            console.log(listObj);
+
+            let $screen = document.createElement('div');
+
+            let $table = document.createElement('table');
+
+            for(let i in title)
+            {
+                let $th = document.createElement('th');
+                let $tr = document.createElement('tr');
+                $tr.innerHTML = title[i];
+                $th.append($tr);
+                $table.append($th);
+            }
+
+            listObj.map(list => {
+                console.log(list);
+                let $tr = document.createElement('tr');
+                for(let i in list){
+                    let $td = document.createElement('td');
+                    $td.innerHTML = list[i];
+                    $tr.append($td);
+                    $table.append($tr);
+                }
+            })
+
+            $screen.appendChild($table);
+            document.body.appendChild($table);
+
+            document.body.appendChild($screen);
         })
 
-        document.body.appendChild($table);
     </script>
 </body>
 </html>

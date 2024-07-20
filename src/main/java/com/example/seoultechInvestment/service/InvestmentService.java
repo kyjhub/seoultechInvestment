@@ -5,7 +5,7 @@ import com.example.seoultechInvestment.DTO.EndedInvDTOfromFront;
 import com.example.seoultechInvestment.DTO.EnrollDTO;
 import com.example.seoultechInvestment.DTO.OnGoingInvDTO;
 import com.example.seoultechInvestment.entity.Investment;
-import com.example.seoultechInvestment.entity.ProgressStatus;
+import com.example.seoultechInvestment.Enum.ProgressStatus;
 import com.example.seoultechInvestment.entity.Stock;
 import com.example.seoultechInvestment.repository.InvestmentRepository;
 import jakarta.transaction.Transactional;
@@ -15,8 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor

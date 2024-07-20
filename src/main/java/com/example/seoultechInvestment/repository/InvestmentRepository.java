@@ -1,7 +1,7 @@
 package com.example.seoultechInvestment.repository;
 
 import com.example.seoultechInvestment.entity.Investment;
-import com.example.seoultechInvestment.entity.ProgressStatus;
+import com.example.seoultechInvestment.Enum.ProgressStatus;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -36,7 +36,7 @@ public class InvestmentRepository {
     }
 
     public List<Investment> findEndedInvestments() {
-        return (List<Investment>) entityManager.createQuery("select i from Investment i where i.status!=status")
+        return (List<Investment>) entityManager.createQuery("select i from Investment i where i.status!=:status")
                 .setParameter("status", ProgressStatus.ONGOING)
                 .getResultList();
     }

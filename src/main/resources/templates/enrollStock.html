@@ -18,18 +18,20 @@
 
         <div>
             <label th:for="tp">최소 도달가</label>
-            <input type="text" th:field="*{tp}" placeholder="최소 도달가"></input>
+            <input type="text" onfocus="if(this.value == 0.0) this.value=''"
+                   th:field="*{tp}" placeholder="최소 도달가"></input>
             <p th:if="${#fields.hasErrors('tp')}"
                th:errors="*{tp}">최소 도달가를 입력하세요</p>
         </div>
 
         <div>
             <label th:for="entryPrice">진입가</label>
-            <input type="text" th:field="*{entryPrice}" placeholder="진입가"></input>
+            <input type="text" onfocus="if(this.value == 0.0) this.value=''"
+                   th:field="*{entryPrice}" placeholder="진입가"></input>
             <p th:if="${#fields.hasErrors('entryPrice')}"
                th:errors="*{entryPrice}">진입가를 입력하세요</p>
         </div>
-
+        <br>
         <button type="submit">등록</button>
     </form>
 </div>

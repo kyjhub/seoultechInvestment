@@ -23,16 +23,21 @@
         </div>
         <div>
             <label th:for="sellPrice">매도가</label>
-            <input type="text" th:field="*{sellPrice}" placeholder="매도가"></input>
+            <input type="number" onfocus="if(this.value == 0.0) this.value=''"
+                   th:field="*{sellPrice}" placeholder="매도가"></input>
             <p th:if="${#fields.hasErrors('sellPrice')}"
                th:errors="*{sellPrice}">매도가 입력하세요</p>
         </div>
         <div>
-            <label th:for="status">진행상태</label>
-            <input type="text" th:field="*{status}" placeholder="진행상태"></input>
-            <p th:if="${#fields.hasErrors('status')}"
-               th:errors="*{status}">진행상태를 입력하세요</p>
+            <div>진행 상태</div>
+<!--            <select name="statusOpt">-->
+<!--            <option th:each="status : ${T(com.example.seoultechInvestment.Enum.ProgressStatus).values()}"-->
+<!--            th:value="${status}" th:text="${status}"></option>-->
+<!--            </select>-->
+            <input type="radio" th:field="*{status}" th:value="SUCCESS">SUCCESS
+            <input type="radio" th:field="*{status}" th:value="FAIL">FAIL
         </div>
+        <br>
         <button type="submit">제출</button>
     </form>
 </div>
