@@ -1,6 +1,6 @@
 # netlify.toml
 [[redirects]]
 from = "/*"
-to = "/index.html"
-#to = "src/main/resources/templates/index.html"
+#to = "/index.html"
+to = "src/main/resources/templates/index.html"
 status = 200
