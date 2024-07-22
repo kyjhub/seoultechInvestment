@@ -25,6 +25,10 @@ public class HomeController {
         }
         return "index";
     }
+    @GetMapping("/index")
+    public String getHome(){
+        return "index";
+    }
 
     @GetMapping("/join")
     public String authEmail() {
