@@ -23,7 +23,7 @@ public class HomeController {
                 return "homeOfAdmin";
             } else return "stInvestmentHome";
         }
-        return "home";
+        return "index";
     }
 
     @GetMapping("/join")
