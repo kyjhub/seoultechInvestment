@@ -1,5 +1,6 @@
 package com.example.seoultechInvestment.repository;
 
+import com.example.seoultechInvestment.entity.Investment;
 import com.example.seoultechInvestment.entity.Stock;
 import jakarta.persistence.NoResultException;
 import lombok.extern.slf4j.Slf4j;
@@ -23,20 +24,21 @@ import java.util.UUID;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class StockRepositoryUnitTest {
     @Autowired
-    private StockRepository stockRepository;
+    private InvestmentRepository investmentRepository;
 
     @Test
     @Order(1)
-    @DisplayName("save, findByTicker 메서드 단위 테스트")
+    @DisplayName("findOnGoingInvestments 메서드 단위 테스트")
     public void findByTicker() {
         //given
-        Stock stock = Stock.builder().tickerName("ETHUSDT").enrollDate(LocalDate.of(2024, 3, 15)).tp(4600L)
-                .sellPrice(4000L).rateOfReturn(30L).build();
+        Investment ethusdt = Investment.builder().enrollDate(LocalDate.of(2024, 3, 15)).stock(new Stock("ETHUSDT")).entryPrice(3100)
+                .tp(6000).build();
         //when
-        stockRepository.save(stock);
+        investmentRepository.save(ethusdt);
         //then
-        Stock findStock = stockRepository.findById(stock.getId()).get();
-        Assertions.assertThat(stock).isSameAs(findStock);
+        List<Investment> onGoingInvestments = investmentRepository.findOnGoingInvestments();
+        Investment onGoingStock = onGoingInvestments.get(0);
+        Assertions.assertThat(ethusdt).isSameAs(onGoingStock);
     }
 
     @Test
@@ -44,18 +46,18 @@ class StockRepositoryUnitTest {
     @DisplayName("findAll 메서드 단위 테스트")
     public void findALl() {
         //given
-        Stock stock1 = Stock.builder().tickerName("ETHUSDT").enrollDate(LocalDate.of(2024, 3, 15)).tp(4600L)
-                .build();
-        Stock stock2 = Stock.builder().tickerName("s&p500인버스").enrollDate(LocalDate.of(2024, 3, 29)).tp(10000L)
-                .build();
-        HashSet<Stock> stocks = new HashSet<>(Arrays.asList(stock1, stock2));
+        Investment ethusdt = Investment.builder().enrollDate(LocalDate.of(2024, 5, 15)).stock(new Stock("ETHUSDT")).entryPrice(3100)
+                .tp(6000).earningRate(120).build();
+        Investment kodaq150 = Investment.builder().enrollDate(LocalDate.of(2024, 6, 15)).stock(new Stock("kosdaq150")).entryPrice(1350)
+                .tp(2000).earningRate(100).build();
+        HashSet<Investment> invts = new HashSet<>(Arrays.asList(ethusdt, kodaq150));
         //when
-        stockRepository.save(stock1);
-        stockRepository.save(stock2);
+        investmentRepository.save(ethusdt);
+        investmentRepository.save(kodaq150);
         //then
-        List<Stock> findAllStocks = stockRepository.findAll();
-        for (Stock stock : findAllStocks) {
-            if (!stocks.contains(stock)) {
+        List<Investment> endedInvestments = investmentRepository.findEndedInvestments();
+        for (Investment invt : endedInvestments) {
+            if (!invts.contains(invt)) {
                 throw new NullPointerException();
             } else continue;
         }
