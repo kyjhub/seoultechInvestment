@@ -1,8 +1,8 @@
 package com.example.seoultechInvestment.repository;
 
+import com.example.seoultechInvestment.Enum.ProgressStatus;
 import com.example.seoultechInvestment.entity.Investment;
 import com.example.seoultechInvestment.entity.Stock;
-import jakarta.persistence.NoResultException;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
@@ -29,10 +29,10 @@ class StockRepositoryUnitTest {
     @Test
     @Order(1)
     @DisplayName("findOnGoingInvestments 메서드 단위 테스트")
-    public void findByTicker() {
+    public void findOnGoingInvestments() {
         //given
         Investment ethusdt = Investment.builder().enrollDate(LocalDate.of(2024, 3, 15)).stock(new Stock("ETHUSDT")).entryPrice(3100)
-                .tp(6000).build();
+                .tp(6000).status(ProgressStatus.ONGOING).build();
         //when
         investmentRepository.save(ethusdt);
         //then
@@ -43,13 +43,13 @@ class StockRepositoryUnitTest {
 
     @Test
     @Order(2)
-    @DisplayName("findAll 메서드 단위 테스트")
-    public void findALl() {
+    @DisplayName("findEndedInvestments 메서드 단위 테스트")
+    public void findEndedInvestments() {
         //given
         Investment ethusdt = Investment.builder().enrollDate(LocalDate.of(2024, 5, 15)).stock(new Stock("ETHUSDT")).entryPrice(3100)
-                .tp(6000).earningRate(120).build();
+                .tp(6000).earningRate(120).holdTerm("100D").sellPrice(6400).status(ProgressStatus.SUCCESS).build();
         Investment kodaq150 = Investment.builder().enrollDate(LocalDate.of(2024, 6, 15)).stock(new Stock("kosdaq150")).entryPrice(1350)
-                .tp(2000).earningRate(100).build();
+                .tp(2000).earningRate(100).holdTerm("100D").sellPrice(1900).status(ProgressStatus.SUCCESS).build();
         HashSet<Investment> invts = new HashSet<>(Arrays.asList(ethusdt, kodaq150));
         //when
         investmentRepository.save(ethusdt);
@@ -65,77 +65,20 @@ class StockRepositoryUnitTest {
 
     @Test
     @Order(3)
-    @DisplayName("findUndefinedStocks 메서드 단위 테스트")
-    public void findOnGoingStocks() {
+    @DisplayName("findFailInvestments 메서드 단위 테스트")
+    public void findFailInvestments() {
         //given
-        Stock stock1 = Stock.builder().tickerName("01234").enrollDate(LocalDate.of(2024, 3, 15)).tp(4600L)
-                .build();
-        Stock stock2 = Stock.builder().tickerName("06088").enrollDate(LocalDate.of(2024, 3, 29)).tp(10000L)
-                .build();
-        Stock stock3 = Stock.builder().tickerName("03588").enrollDate(LocalDate.of(2024, 3, 29)).tp(4000L)
-                .sellPrice(4000L).rateOfReturn(0D).build();
-        stockRepository.save(stock1);
-        stockRepository.save(stock2);
-        stockRepository.save(stock3);
+        Investment ethusdt = Investment.builder().enrollDate(LocalDate.of(2024, 5, 15)).stock(new Stock("ETHUSDT")).entryPrice(3100)
+                .tp(6000).earningRate(-30).holdTerm("100D").sellPrice(2500).status(ProgressStatus.FAIL).build();
+        Investment kosdaq150 = Investment.builder().enrollDate(LocalDate.of(2024, 5, 15)).stock(new Stock("kosdaq150")).entryPrice(1350)
+                .tp(2000).earningRate(-40).holdTerm("100D").sellPrice(1000).status(ProgressStatus.FAIL).build();
+        investmentRepository.save(ethusdt);
+        investmentRepository.save(kosdaq150);
         //when
-        List<Stock> undefinedStocks = stockRepository.findOnGoingStocks();
+        List<Investment> invts = investmentRepository.findFailInvestments();
         //then
-        Long n = undefinedStocks.stream().filter(undefinedStock -> undefinedStock.getSellPrice() != null)
-                .filter(undefinedStock -> Double.valueOf(undefinedStock.getEarningRate()) != null)
+        Long n = invts.stream().filter(failedInvt -> failedInvt.getStatus() == ProgressStatus.FAIL)
                 .count();
-        Assertions.assertThat(n).isEqualTo(0);
-    }
-
-    @Test
-    @Order(4)
-    @DisplayName("delete 메서드 단위 테스트")
-    public void delete() {
-        //given
-        Stock stock = Stock.builder().tickerName("ETHUSDT").enrollDate(LocalDate.of(2024, 3, 15)).tp(4600L)
-                .build();
-        stockRepository.save(stock);
-        //when
-        UUID deleteUuid = stockRepository.delete(stock);
-        //then
-        Assertions.assertThatThrownBy(() -> stockRepository.findById(deleteUuid)).isInstanceOf(NoResultException.class);
-    }
-
-    @Test
-    @Order(5)
-    @DisplayName("비즈니스로직 단위 테스트")
-    public void businessLogicUnitTest() {
-        //given
-        Stock stock1 = Stock.builder().tickerName("ETHUSDT").enrollDate(LocalDate.of(2024, 3, 15)).tp(4600L)
-                .build();
-        //when
-        stock1.initSellPrice(4000L);
-        stock1.initRateOfReturn(30D);
-        //then
-        Long findSellPrice = stock1.getSellPrice();
-        Assertions.assertThat(4000L).isEqualTo(findSellPrice);
-        double findRateOfReturn = stock1.getEarningRate();
-        Assertions.assertThat(30D).isEqualTo(findRateOfReturn);
-    }
-
-    @Test
-    @Order(6)
-    @DisplayName("findRecentStocks 메서드 단위 테스트")
-    public void findRecentStockTest(){
-        //when
-        log.info("올해 연도 : " + Integer.toString(LocalDate.now().getYear()));
-        Stock stock1 = Stock.builder().tickerName("ETHUSDT").enrollDate(LocalDate.now()).tp(6000L)
-                .predictedPeriod("5months")
-                .build();
-        Stock stock2 = Stock.builder().tickerName("BTCUSDT").enrollDate(LocalDate.of(2023, 3, 5)).tp(20000L)
-                .predictedPeriod("5months")
-                .build();
-        stockRepository.save(stock1);
-        stockRepository.save(stock2);
-
-        //then
-        log.info("나왔어야할 결과 : " + stockRepository.findAll());
-        log.info("쿼리 결과 : "+ stockRepository.findRecentStocks());
-
-        Assertions.assertThat(stockRepository.findRecentStocks().size()).isEqualTo(1);
+        Assertions.assertThat(n).isEqualTo(2);
     }
 }

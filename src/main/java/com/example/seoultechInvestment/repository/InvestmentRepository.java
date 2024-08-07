@@ -22,13 +22,6 @@ public class InvestmentRepository {
                 .setParameter("status", ProgressStatus.ONGOING)
                 .getResultList();
     }
-
-    public List<Investment> findAccomplishedInvestments(){
-        return (List<Investment>) entityManager.createQuery("select i from Investment i where i.status=:status")
-                .setParameter("status", ProgressStatus.SUCCESS)
-                .getResultList();
-    }
-
     public List<Investment> findFailInvestments() {
         return (List<Investment>) entityManager.createQuery("select i from Investment i where i.status=:status")
                 .setParameter("status", ProgressStatus.FAIL)
