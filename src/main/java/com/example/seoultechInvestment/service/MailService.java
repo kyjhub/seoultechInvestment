@@ -13,8 +13,8 @@ import java.util.Random;
 public class MailService {
     @Autowired
     private JavaMailSender mailSender;
-    @Autowired
-    private RedisUtil redisUtil;
+//    @Autowired
+//    private RedisUtil redisUtil;
 
     private int athNumber;
 
@@ -60,16 +60,6 @@ public class MailService {
             // 이러한 경우 MessagingException이 발생
             e.printStackTrace();//e.printStackTrace()는 예외를 기본 오류 스트림에 출력하는 메서드
         }
-        redisUtil.setDataExpire(mailAcc, String.valueOf(athNumber), 90L);
+//        redisUtil.setDataExpire(mailAcc, String.valueOf(athNumber), 90L);
     }
-
-//    public boolean checkAthNum(String mailAcc, String athNum) {
-//        if (redisUtil.getData(mailAcc) == null) {
-//            return false;
-//        } else if (redisUtil.getData(mailAcc).equals(athNum)) {
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
 }
