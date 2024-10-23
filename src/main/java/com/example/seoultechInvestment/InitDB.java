@@ -45,13 +45,13 @@ public class InitDB {
                 .status(ProgressStatus.SUCCESS).build();
 
         log.info("진행중 투자종목 초기화 실행");
-        Investment prebuiltOnGoingInv = Investment.builder().stock(Stock.builder().tickerName("iova").build())
-                .status(ProgressStatus.ONGOING).tp(80)
-                .entryPrice(8.49).enrollDate(LocalDate.of(2024, 6, 16))
+        Investment prebuiltOnGoingInv = Investment.builder().stock(Stock.builder().tickerName("BTCUSDT").build())
+                .status(ProgressStatus.ONGOING).tp(140000)
+                .entryPrice(57000).enrollDate(LocalDate.of(2024, 6, 16))
                 .build();
-        Investment prebuiltOnGoingInv2 = Investment.builder().stock(Stock.builder().tickerName("pfe").build())
-                .status(ProgressStatus.ONGOING).tp(36)
-                .entryPrice(35).enrollDate(LocalDate.of(2023, 5, 13))
+        Investment prebuiltOnGoingInv2 = Investment.builder().stock(Stock.builder().tickerName("SOLUSDT").build())
+                .status(ProgressStatus.ONGOING).tp(300)
+                .entryPrice(150).enrollDate(LocalDate.of(2024, 5, 13))
                 .build();
         investmentRepository.save(prebuiltEndedInv);
         investmentRepository.save(prebuiltEndedInv2);
