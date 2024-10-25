@@ -28,7 +28,8 @@ public class InvestmentService {
         Investment enrollInvestment = Investment.builder().tp(enrollDTO.getTp())
                 .entryPrice(enrollDTO.getEntryPrice())
                 .enrollDate(enrollDTO.getEnrollDate())
-                .stock(stock).build();
+                .stock(stock).status(ProgressStatus.ONGOING)
+                .build();
         investmentRepository.save(enrollInvestment);
     }
 

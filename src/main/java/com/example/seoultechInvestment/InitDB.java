@@ -29,6 +29,9 @@ public class InitDB {
         Member initMember = Member.builder().stId(21101165L).Department("컴퓨터공학과").password("1234")
                 .stGalleryNickname("곽붕이").name("권용준").build();
         memberRepository.save(initMember);
+
+        log.info("session loginMember 생성");
+
     }
 
     @EventListener(ApplicationReadyEvent.class)
