@@ -22,6 +22,7 @@ import java.util.List;
 public class InvestmentService {
     private final InvestmentRepository investmentRepository;
 
+    /** 종목 등록**/
     @Transactional
     public void enroll(EnrollDTO enrollDTO) {
         Stock stock = new Stock(enrollDTO.getTickerName());

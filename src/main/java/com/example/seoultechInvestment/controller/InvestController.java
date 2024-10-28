@@ -27,13 +27,14 @@ public class InvestController {
         return "enrollStock";
     }
 
+    /** 신규 추천 종목 등록 **/
     @PostMapping("/stock/enroll")
     public String enrollStock(@Valid EnrollDTO enrollDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             for (ObjectError error : bindingResult.getFieldErrors()) {
                 log.error(error.toString());
             }
-            log.info("stock.html 로 연결");
+            log.info("enrollStock.html 로 연결");
             return "/enrollStock";
         }
 
@@ -43,6 +44,7 @@ public class InvestController {
         return "/stInvestmentHome";
     }
 
+    /** 진행중인 투자 종목 조회 **/
     @GetMapping("/stock/onGoing")
     @ResponseBody
     public List<OnGoingInvDTO> presentStock() {
