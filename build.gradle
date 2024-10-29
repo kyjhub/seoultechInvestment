@@ -44,6 +44,8 @@ dependencies {
 	//==================================================================================================
 	//redis 추가
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	//telegram bot
+	implementation 'org.telegram:telegrambots:6.7.0'
 }
 
 tasks.named('test') {
