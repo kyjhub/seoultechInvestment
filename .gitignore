@@ -35,3 +35,8 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# telegram bot security
+# .gitgnore에 파일 입력하면 깃허브에 푸시해도 가지 않음
+application-security.yml
+application.yml
