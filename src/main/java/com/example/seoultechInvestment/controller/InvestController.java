@@ -1,16 +1,21 @@
 package com.example.seoultechInvestment.controller;
 
 import com.example.seoultechInvestment.DTO.*;
+import com.example.seoultechInvestment.entity.TelegramMessage;
 import com.example.seoultechInvestment.service.InvestmentService;
 import com.example.seoultechInvestment.service.TelegramService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONObject;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -43,7 +48,24 @@ public class InvestController {
         EnrollDTO enrollDTO1 = enrollDTO.toBuilder().enrollDate(LocalDate.now()).build();
         investmentService.enroll(enrollDTO1);
         /* 종목등록 알람을 텔레그램으로 전송 */
-//        telegramService.sendEnrollStockAlarm(enrollDTO1);
+        try {
+            JSONObject jsonTelegramMessage = new JSONObject();
+            jsonTelegramMessage.put("티커명", enrollDTO.getTickerName());
+            jsonTelegramMessage.put("진입가", enrollDTO.getEntryPrice());
+            jsonTelegramMessage.put("최소 목표가", enrollDTO.getTp());
+
+            RestTemplate restTemplate = new RestTemplate();
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.set("Content-Type", "application/json");
+
+            HttpEntity<JSONObject> httpEntity = new HttpEntity<>(jsonTelegramMessage, httpHeaders);
+            restTemplate.postForEntity("url", httpEntity, String.class);
+
+            log.info("jsonTelegramMessage = " + jsonTelegramMessage.toString());
+
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
 
         return "/stInvestmentHome";
     }
