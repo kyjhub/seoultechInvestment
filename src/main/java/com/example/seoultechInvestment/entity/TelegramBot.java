@@ -1,16 +1,12 @@
-package com.example.seoultechInvestment.config;
-
+package com.example.seoultechInvestment.entity;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
-@Configuration
 @PropertySource("classpath:application-security.yml")
-public class TelegramConfig {
+public class TelegramBot {
     @Value("${telegramBot.token}")
-    String Token;
+    private String Token;
     @Value("${telegramBot.chatId}")
-    String chatId;
-    String text;
+    private String chatId;
 }

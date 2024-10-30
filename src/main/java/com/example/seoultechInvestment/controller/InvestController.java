@@ -2,6 +2,7 @@ package com.example.seoultechInvestment.controller;
 
 import com.example.seoultechInvestment.DTO.*;
 import com.example.seoultechInvestment.service.InvestmentService;
+import com.example.seoultechInvestment.service.TelegramService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,7 @@ import java.util.List;
 public class InvestController {
 
     private final InvestmentService investmentService;
+    private final TelegramService telegramService;
 
     @GetMapping("/stock")
     public String enrollStock(Model model) {
@@ -40,6 +42,8 @@ public class InvestController {
 
         EnrollDTO enrollDTO1 = enrollDTO.toBuilder().enrollDate(LocalDate.now()).build();
         investmentService.enroll(enrollDTO1);
+        /* 종목등록 알람을 텔레그램으로 전송 */
+//        telegramService.sendEnrollStockAlarm(enrollDTO1);
 
         return "/stInvestmentHome";
     }
