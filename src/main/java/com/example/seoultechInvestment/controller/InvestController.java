@@ -1,9 +1,8 @@
 package com.example.seoultechInvestment.controller;
 
 import com.example.seoultechInvestment.DTO.*;
-import com.example.seoultechInvestment.entity.TelegramMessage;
+import com.example.seoultechInvestment.entity.TelegramBot;
 import com.example.seoultechInvestment.service.InvestmentService;
-import com.example.seoultechInvestment.service.TelegramService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +25,6 @@ import java.util.List;
 public class InvestController {
 
     private final InvestmentService investmentService;
-    private final TelegramService telegramService;
 
     @GetMapping("/stock")
     public String enrollStock(Model model) {
@@ -47,8 +45,10 @@ public class InvestController {
 
         EnrollDTO enrollDTO1 = enrollDTO.toBuilder().enrollDate(LocalDate.now()).build();
         investmentService.enroll(enrollDTO1);
+
         /* 종목등록 알람을 텔레그램으로 전송 */
         try {
+            TelegramBot telegramBot = new TelegramBot();
             JSONObject jsonTelegramMessage = new JSONObject();
             jsonTelegramMessage.put("티커명", enrollDTO.getTickerName());
             jsonTelegramMessage.put("진입가", enrollDTO.getEntryPrice());
@@ -58,9 +58,14 @@ public class InvestController {
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.set("Content-Type", "application/json");
 
+            String url = "https://api.telegram.org/bot"
+                    + telegramBot.getToken()
+                    + "sendMessage";
+
             HttpEntity<JSONObject> httpEntity = new HttpEntity<>(jsonTelegramMessage, httpHeaders);
             restTemplate.postForEntity("url", httpEntity, String.class);
 
+            log.info("send Telegram message");
             log.info("jsonTelegramMessage = " + jsonTelegramMessage.toString());
 
         } catch (Exception e) {
