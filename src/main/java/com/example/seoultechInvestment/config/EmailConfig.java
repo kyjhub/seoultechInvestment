@@ -1,5 +1,6 @@
 package com.example.seoultechInvestment.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,8 +11,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import java.util.Properties;
 
 @Configuration
-@PropertySource("classpath:application-security")
-@ConfigurationProperties(prefix = "naver-mail")
+@ConfigurationProperties(prefix = "application-security")
 public class EmailConfig {
     private String id;
     private String password;
@@ -20,8 +20,8 @@ public class EmailConfig {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();//JavaMailSender 의 구현체를 생성하고
         mailSender.setHost("smtp.naver.com");// 속성을 넣기 시작합니다. 이메일 전송에 사용할 SMTP 서버 호스트를 설정
         mailSender.setPort(465);// 465로 포트를 지정
-        mailSender.setUsername(id);//네이버 ID를 넣습니다.
-        mailSender.setPassword(password);//네이버 비밀번호를 넣습니다.
+        mailSender.setUsername(this.id);//네이버 ID를 넣습니다.
+        mailSender.setPassword(this.password);//네이버 비밀번호를 넣습니다.
         mailSender.setJavaMailProperties(getProperties());
 
         return mailSender;//빈으로 등록한다.
