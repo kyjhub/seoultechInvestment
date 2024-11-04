@@ -1,20 +1,24 @@
 package com.example.seoultechInvestment.config;
 
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-
 import java.util.Properties;
 
 @Configuration
-@ConfigurationProperties(prefix = "application-security")
+@PropertySource(value = "classpath:/application-security.yml")
+@Getter
 public class EmailConfig {
+
+    @Value("${naver-mail.id}")
     private String id;
+    @Value("${naver-mail.password}")
     private String password;
+
     @Bean
     public JavaMailSender mailSender() {//JAVA MAILSENDER 인터페이스를 구현한 객체를 빈으로 등록하기 위함.
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();//JavaMailSender 의 구현체를 생성하고
@@ -34,7 +38,7 @@ public class EmailConfig {
         javaMailProperties.put("mail.smtp.starttls.enable", "true");//STARTTLS(TLS를 시작하는 명령)를 사용하여 암호화된 통신을 활성화
         javaMailProperties.put("mail.debug", "true");//디버깅 정보 출력
         javaMailProperties.put("mail.smtp.ssl.trust", "smtp.naver.com");//smtp 서버의 ssl 인증서를 신뢰
-        javaMailProperties.setProperty("mail.smtp.ssl.enable","true"); // ssl 사용
+        javaMailProperties.setProperty("mail.smtp.ssl.enable", "true"); // ssl 사용
         return javaMailProperties;
     }
 }

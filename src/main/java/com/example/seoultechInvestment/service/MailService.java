@@ -1,6 +1,5 @@
 package com.example.seoultechInvestment.service;
 
-import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,7 @@ public class MailService {
     public void makeRandomNumber() {
         Random r = new Random();
         String randomNumber = "";
-        for(int i = 0; i < 6; i++) {
+        for (int i = 0; i < 6; i++) {
             randomNumber += Integer.toString(r.nextInt(10));
         }
 
@@ -42,7 +41,7 @@ public class MailService {
         String toMail = emailAccount;
         String title = "회원 가입 인증 이메일 입니다."; // 이메일 제목
         String content =
-                "seoultechInvestment를 방문해주셔서 감사합니다." + 	//html 형식으로 작성 !
+                "seoultechInvestment를 방문해주셔서 감사합니다." +    //html 형식으로 작성 !
                         "<br><br>" +
                         "인증 번호는 " + authNumber + "입니다." +
                         "<br>" +
