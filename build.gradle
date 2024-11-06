@@ -28,8 +28,8 @@ dependencies {
 	//==메일==
 	//Spring Boot에서 제공하는 편리한 이메일 전송 기능을 위한 의존성으로, 스프링 생태계 내에서 통합되고 설정이 간단하게 처리
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
-	implementation 'org.springframework:spring-context:6.0.7'
-	implementation 'org.springframework:spring-context-support:6.0.7'	// Spring Context Support
+	implementation 'org.springframework:spring-context'
+	implementation 'org.springframework:spring-context-support'	// Spring Context Support
 	implementation 'com.sun.mail:jakarta.mail:2.0.1'
 	//JavaMailApi를 직접 사용하기 위한 의존성
 //	implementation 'jakarta.mail:jakarta.mail-api:2.1.3'
