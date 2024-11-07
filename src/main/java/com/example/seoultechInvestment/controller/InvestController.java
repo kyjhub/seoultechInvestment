@@ -3,6 +3,7 @@ package com.example.seoultechInvestment.controller;
 import com.example.seoultechInvestment.DTO.*;
 import com.example.seoultechInvestment.entity.TelegramBot;
 import com.example.seoultechInvestment.service.InvestmentService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -49,9 +50,12 @@ public class InvestController {
         /* 종목등록 알람을 텔레그램으로 전송 */
         try {
             TelegramBot telegramBot = new TelegramBot();
+            ObjectMapper objectMapper = new ObjectMapper();
+            String enrollDTOJson = objectMapper.writeValueAsString(enrollDTO);
+
             JSONObject jsonTelegramMessage = new JSONObject();
             jsonTelegramMessage.put("chat_id", "-1002470361151");
-            jsonTelegramMessage.put("text", enrollDTO를, 객체로, 바꾼거);
+            jsonTelegramMessage.put("text", enrollDTOJson);
 //            jsonTelegramMessage.put("티커명", enrollDTO.getTickerName());
 //            jsonTelegramMessage.put("진입가", enrollDTO.getEntryPrice());
 //            jsonTelegramMessage.put("최소 목표가", enrollDTO.getTp());
