@@ -21,9 +21,25 @@ public class LoginService {
         return memberRepository.findByStId(loginStId).orElse(null);
     }
     public boolean administratorLogin(HttpSession session){
-        Member loginMember = (Member) session.getAttribute("loginMember");
-        if (loginMember.getStId()==21101165L && loginMember.getPassword()=="1234") {
+        Optional<Member> OploginMember =  Optional.ofNullable((Member)session.getAttribute("loginMember"));
+        if (OploginMember.isPresent()) {
+            Member loginMember = OploginMember.get();
+            if (loginMember.getStId()==21101165L && loginMember.getPassword()=="1234") {
                 return true;
+            }
+            else return false;
+        }
+        else return false;
+    }
+
+    public boolean generalMemberLogin(HttpSession session) {
+        Optional<Member> OploginMember =  Optional.ofNullable((Member)session.getAttribute("loginMember"));
+        if (OploginMember.isPresent()) {
+            Member loginMember = OploginMember.get();
+            if (loginMember.getStId()==21101165L && loginMember.getPassword()=="1234") {
+                return true;
+            }
+            else return false;
         }
         else return false;
     }

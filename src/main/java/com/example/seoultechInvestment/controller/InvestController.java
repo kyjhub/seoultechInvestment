@@ -50,9 +50,11 @@ public class InvestController {
         try {
             TelegramBot telegramBot = new TelegramBot();
             JSONObject jsonTelegramMessage = new JSONObject();
-            jsonTelegramMessage.put("티커명", enrollDTO.getTickerName());
-            jsonTelegramMessage.put("진입가", enrollDTO.getEntryPrice());
-            jsonTelegramMessage.put("최소 목표가", enrollDTO.getTp());
+            jsonTelegramMessage.put("chat_id", "-1002470361151");
+            jsonTelegramMessage.put("text", enrollDTO를, 객체로, 바꾼거);
+//            jsonTelegramMessage.put("티커명", enrollDTO.getTickerName());
+//            jsonTelegramMessage.put("진입가", enrollDTO.getEntryPrice());
+//            jsonTelegramMessage.put("최소 목표가", enrollDTO.getTp());
 
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders httpHeaders = new HttpHeaders();
@@ -60,15 +62,16 @@ public class InvestController {
 
             String url = "https://api.telegram.org/bot"
                     + telegramBot.getToken()
-                    + "sendMessage";
+                    + "/sendMessage";
 
             HttpEntity<JSONObject> httpEntity = new HttpEntity<>(jsonTelegramMessage, httpHeaders);
-            restTemplate.postForEntity("url", httpEntity, String.class);
+            restTemplate.postForEntity(url, httpEntity, String.class);
 
             log.info("send Telegram message");
             log.info("jsonTelegramMessage = " + jsonTelegramMessage.toString());
 
         } catch (Exception e) {
+            log.error("텔레그램 코드 에러 발생");
             log.error(e.getMessage());
         }
 

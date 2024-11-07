@@ -21,7 +21,7 @@ public class HomeController {
         if (session != null) {
             if (loginService.administratorLogin(session)) {
                 return "homeOfAdmin";
-            } else return "stInvestmentHome";
+            } else return "index";
         }
         return "index";
     }
