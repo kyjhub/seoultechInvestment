@@ -1,9 +1,8 @@
 package com.example.seoultechInvestment.controller;
 
 import com.example.seoultechInvestment.DTO.*;
-import com.example.seoultechInvestment.entity.TelegramBot;
+import com.example.seoultechInvestment.config.TelegramConfig;
 import com.example.seoultechInvestment.service.InvestmentService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +25,7 @@ import java.util.List;
 public class InvestController {
 
     private final InvestmentService investmentService;
+    private final TelegramConfig telegramConfig;
 
     @GetMapping("/stock")
     public String enrollStock(Model model) {
@@ -49,24 +49,26 @@ public class InvestController {
 
         /* 종목등록 알람을 텔레그램으로 전송 */
         try {
-            TelegramBot telegramBot = new TelegramBot();
-            ObjectMapper objectMapper = new ObjectMapper();
-            String enrollDTOJson = objectMapper.writeValueAsString(enrollDTO);
-
             JSONObject jsonTelegramMessage = new JSONObject();
-            jsonTelegramMessage.put("chat_id", "-1002470361151");
+            jsonTelegramMessage.put("chat_id", telegramConfig.getChatId());
+
+            JSONObject enrollDTOJson = new JSONObject();
+
+            enrollDTOJson.put("최소 목표가", enrollDTO.getTp());
+            enrollDTOJson.put("진입가", enrollDTO.getEntryPrice());
+            enrollDTOJson.put("주식명", enrollDTO.getTickerName());
+
             jsonTelegramMessage.put("text", enrollDTOJson);
-//            jsonTelegramMessage.put("티커명", enrollDTO.getTickerName());
-//            jsonTelegramMessage.put("진입가", enrollDTO.getEntryPrice());
-//            jsonTelegramMessage.put("최소 목표가", enrollDTO.getTp());
 
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.set("Content-Type", "application/json");
 
             String url = "https://api.telegram.org/bot"
-                    + telegramBot.getToken()
+                    + telegramConfig.getToken()
                     + "/sendMessage";
+
+            log.info("url : " + url);
 
             HttpEntity<JSONObject> httpEntity = new HttpEntity<>(jsonTelegramMessage, httpHeaders);
             restTemplate.postForEntity(url, httpEntity, String.class);
