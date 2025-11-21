@@ -17,8 +17,9 @@ public class SignUpDTO {
     private String Department;
     @NotBlank(message = "비밀번호는 필수입니다.")
     private String password;
-    //학교 이메일도 필요
-    private String stGalleryNickname; //cam empty
+    @NotBlank(message = "학교이메일은 필수입니다.")
+    private String stEmail;
+//    private String stNickname; //cam empty
 
 
 }

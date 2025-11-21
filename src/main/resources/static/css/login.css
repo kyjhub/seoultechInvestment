@@ -1,0 +1,6 @@
+/* login.css - 로그인 페이지 전용 스타일 */
+
+/* 로그인 버튼 위에 적절한 여백을 추가하여 균형을 맞춥니다. */
+.container .button-primary {
+    margin-top: 24px;
+}

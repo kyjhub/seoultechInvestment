@@ -1,5 +1,6 @@
 package com.example.seoultechInvestment.repository;
 
+import com.example.seoultechInvestment.Enum.Role;
 import com.example.seoultechInvestment.entity.Member;
 import jakarta.persistence.NoResultException;
 import lombok.extern.slf4j.Slf4j;
@@ -29,8 +30,8 @@ class MemberRepositoryUnitTest {
     public void findByStId() {
         log.info("findByStId 테스트 실행");
         //given
-        Member member = Member.builder().stId(21101165L).name("권용준").Department("컴퓨터공학과").stGalleryNickname("권용준")
-                .password("1234").build();
+        Member member = Member.builder().stId(21101165L).name("권용준").Department("컴퓨터공학과")
+                .password("1234").role("ROLE_ADMIN").build();
         //when
         memberRepository.save(member);
         //then
@@ -48,9 +49,9 @@ class MemberRepositoryUnitTest {
     public void findAll() {
         log.info("findAll 테스트 실행");
         //given
-        Member member1 = Member.builder().stId(21101165L).name("권용준").Department("컴퓨터공학과").stGalleryNickname("권용준").password("1234").build();
-        Member member2 = Member.builder().stId(21101164L).name("김곽붕").Department("컴퓨터공학과").stGalleryNickname("김곽붕").password("5678").build();
-        Member member3 = Member.builder().stId(21101163L).name("인곽붕").Department("컴퓨터공학과").stGalleryNickname("인곽붕").password("91011").build();
+        Member member1 = Member.builder().stId(21101165L).name("권용준").Department("컴퓨터공학과").password("1234").build();
+        Member member2 = Member.builder().stId(21101164L).name("김곽붕").Department("컴퓨터공학과").password("5678").build();
+        Member member3 = Member.builder().stId(21101163L).name("인곽붕").Department("컴퓨터공학과").password("91011").build();
         HashSet<Member> members = new HashSet<>(Arrays.asList(member1, member2, member3));
         //when
         memberRepository.save(member1);
@@ -71,7 +72,7 @@ class MemberRepositoryUnitTest {
     public void delete() {
         log.info("delete 테스트 실행");
         //given
-        Member member1 = Member.builder().stId(21101165L).name("권용준").Department("컴퓨터공학과").stGalleryNickname("권용준").build();
+        Member member1 = Member.builder().stId(21101165L).name("권용준").Department("컴퓨터공학과").build();
         Long stId = member1.getStId();
         memberRepository.save(member1);
         //when

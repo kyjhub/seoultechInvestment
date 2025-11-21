@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -21,13 +22,14 @@ import java.time.LocalDate;
 public class InitDB {
     private final MemberRepository memberRepository;
     private final InvestmentRepository investmentRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @EventListener(ApplicationReadyEvent.class)
     @Transactional
-    public void initMember(){
+    public void initAdmin(){
         log.info("Member 초기화 실행");
-        Member initMember = Member.builder().stId(21101165L).Department("컴퓨터공학과").password("1234")
-                .stGalleryNickname("곽붕이").name("권용준").build();
+        Member initMember = Member.builder().stId(21101165L).Department("컴퓨터공학과").password(passwordEncoder.encode("1234"))
+                .role("ROLE_ADMIN").name("권용준").build();
         memberRepository.save(initMember);
 
         log.info("session loginMember 생성");

@@ -1,0 +1,14 @@
+/* admin-home.css - 관리자 홈 페이지 전용 스타일 */
+
+.description {
+    font-size: 16px;
+    color: #6e6e73; /* 보조 텍스트 색상 */
+    margin-bottom: 32px; /* 버튼 그룹과의 간격을 확보 */
+}
+
+.button-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column; /* 버튼을 세로로 나열 */
+    gap: 16px; /* 버튼 사이의 간격 */
+}

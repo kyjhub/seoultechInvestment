@@ -1,12 +1,8 @@
 package com.example.seoultechInvestment.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
+import com.example.seoultechInvestment.Enum.Role;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,17 +12,25 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Member {
     @Id
-    private Long stId;
+    private Long stId;  // = 데베pk = 계정id
     private String name;
     private String Department;
-    private String stGalleryNickname; //cam empty
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private Role role;
+//    private String nickname; //닉네임은 나중에 필요할 때 추가하자.
     private String password;
+    private String stEmail;
+
+    // Role을 string으로 넘겨주는거 유의!!!!
     @Builder
-    Member(Long stId, String name, String Department, String stGalleryNickname, String password) {
+    Member(Long stId, String name, String Department, String password,
+           String role, String stEmail) {
+        this.stEmail = stEmail;
         this.stId = stId;
         this.name = name;
         this.Department = Department;
-        this.stGalleryNickname = stGalleryNickname;
         this.password = password;
+        this.role = Role.valueOf(role);
     }
 }

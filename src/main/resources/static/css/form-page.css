@@ -1,0 +1,56 @@
+/* form-page.css - 폼 페이지 공통 스타일 */
+
+/* 폼 제출 버튼 위에 적절한 여백 추가 */
+.container .button-primary {
+    margin-top: 24px;
+}
+
+/* Thymeleaf 유효성 검사 에러 메시지 스타일 */
+.error-message {
+    color: #d12727; /* 빨간색으로 경고 표시 */
+    font-size: 13px;
+    margin-top: 6px;
+    margin-bottom: 0; /* 아래쪽 여백 제거 */
+    text-align: left;
+}
+
+/* 라디오 버튼 그룹 스타일 */
+.radio-group {
+    display: flex;
+    gap: 20px; /* 라디오 버튼 사이 간격 */
+    margin-top: 8px;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 400; /* 일반 굵기 */
+}
+
+/* 기본 라디오 버튼 숨기기 */
+.radio-label input[type="radio"] {
+    display: none;
+}
+
+/* 커스텀 라디오 버튼 스타일 (체크 안 됐을 때) */
+.radio-label span::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #d2d2d7;
+    background-color: #ffffff;
+    vertical-align: middle;
+    margin-right: 8px;
+    transition: all 0.2s;
+}
+
+/* 커스텀 라디오 버튼 스타일 (체크 됐을 때) */
+.radio-label input[type="radio"]:checked + span::before {
+    background-color: #007aff;
+    border-color: #007aff;
+    box-shadow: 0 0 0 3px white inset; /* 토스 앱의 체크 스타일 */
+}

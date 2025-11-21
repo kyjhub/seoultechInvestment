@@ -1,45 +1,128 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>결과 기록</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1 style="text-align: center">수익률 등록</h1>-->
+<!--<div style="text-align: center">-->
+
+<!--    <form action="/admin/stock/result/enroll" name="resultStock" th:object="${endedInv}" method="post">-->
+<!--        <div>-->
+<!--            <label th:for="name">종목명</label>-->
+<!--            <input type="text" th:field="*{tickerName}" placeholder="종목명"></input>-->
+<!--            <p th:if="${#fields.hasErrors('tickerName')}"-->
+<!--               th:errors="*{tickerName}">종목명 입력하세요</p>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <label th:for="holdTerm">보유 기간</label>-->
+<!--            <input type="text" th:field="*{holdTerm}" placeholder="보유 기간"></input>-->
+<!--            <p th:if="${#fields.hasErrors('sellPrice')}"-->
+<!--               th:errors="*{holdTerm}">보유기간을 입력하세요</p>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <label th:for="sellPrice">매도가</label>-->
+<!--            <input type="number" onfocus="if(this.value == 0.0) this.value=''"-->
+<!--                   th:field="*{sellPrice}" placeholder="매도가"></input>-->
+<!--            <p th:if="${#fields.hasErrors('sellPrice')}"-->
+<!--               th:errors="*{sellPrice}">매도가 입력하세요</p>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <div>투자 결과</div>-->
+<!--&lt;!&ndash;            <select name="statusOpt">&ndash;&gt;-->
+<!--&lt;!&ndash;            <option th:each="status : ${T(com.example.seoultechInvestment.Enum.ProgressStatus).values()}"&ndash;&gt;-->
+<!--&lt;!&ndash;            th:value="${status}" th:text="${status}"></option>&ndash;&gt;-->
+<!--&lt;!&ndash;            </select>&ndash;&gt;-->
+<!--            <input type="radio" th:field="*{status}" th:value="SUCCESS">SUCCESS-->
+<!--            <input type="radio" th:field="*{status}" th:value="FAIL">FAIL-->
+<!--        </div>-->
+<!--        <br>-->
+<!--        <button type="submit">제출</button>-->
+<!--    </form>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
-<html lang="en">
+<!-- Thymeleaf와 Spring Security 네임스페이스 추가 -->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>결과 기록</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>수익률 등록 - stInvestment</title>
+
+    <!-- 1. 공통 CSS 파일 -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- 2. 이 페이지 전용 CSS 파일 -->
+    <link rel="stylesheet" href="/css/form-page.css">
 </head>
 <body>
-<h1 style="text-align: center">수익률 등록</h1>
-<div style="text-align: center">
 
-    <form action="/stock/result/enroll" name="resultStock" th:object="${endedInv}" method="post">
-        <div>
-            <label th:for="name">종목명</label>
-            <input type="text" th:field="*{tickerName}" placeholder="종목명"></input>
-            <p th:if="${#fields.hasErrors('tickerName')}"
-               th:errors="*{tickerName}">종목명 입력하세요</p>
+<div class="container">
+    <h1>수익률 등록</h1>
+
+    <!--
+      - th:object를 사용하여 폼과 서버에서 받은 endedInv 객체를 연결합니다.
+      - novalidate 속성은 브라우저의 기본 유효성 검사를 비활성화하여,
+        Thymeleaf의 th:errors 메시지가 일관되게 보이도록 도와줍니다.
+    -->
+    <form action="/admin/stock/result/enroll" method="post" th="http://www.thymeleaf.org" th:object="${endedInv}" novalidate>
+
+        <!-- 종목명 입력 그룹 -->
+        <div class="input-group">
+            <label th:for="tickerName">종목명</label>
+            <input type="text" th:field="*{tickerName}" placeholder="종목명을 입력하세요">
+            <!-- ▼▼▼▼▼ Thymeleaf 에러 처리 로직 추가 ▼▼▼▼▼ -->
+            <p class="error-message" th:if="${#fields.hasErrors('tickerName')}" th:errors="*{tickerName}">
+<!--                종목명 에러 메시지-->
+            </p>
         </div>
-        <div>
+
+        <!-- 보유 기간 입력 그룹 -->
+        <div class="input-group">
             <label th:for="holdTerm">보유 기간</label>
-            <input type="text" th:field="*{holdTerm}" placeholder="보유 기간"></input>
-            <p th:if="${#fields.hasErrors('sellPrice')}"
-               th:errors="*{holdTerm}">보유기간을 입력하세요</p>
+            <input type="text" th:field="*{holdTerm}" placeholder="예: 3개월, 1년 등">
+            <!-- ▼▼▼▼▼ Thymeleaf 에러 처리 로직 추가 ▼▼▼▼▼ -->
+            <p class="error-message" th:if="${#fields.hasErrors('holdTerm')}" th:errors="*{holdTerm}">
+<!--                보유 기간 에러 메시지-->
+            </p>
         </div>
-        <div>
+
+        <!-- 매도가 입력 그룹 -->
+        <div class="input-group">
             <label th:for="sellPrice">매도가</label>
-            <input type="number" onfocus="if(this.value == 0.0) this.value=''"
-                   th:field="*{sellPrice}" placeholder="매도가"></input>
-            <p th:if="${#fields.hasErrors('sellPrice')}"
-               th:errors="*{sellPrice}">매도가 입력하세요</p>
+            <input type="number" th:field="*{sellPrice}" placeholder="매도 가격을 숫자로 입력하세요"
+                   onfocus="if(this.value == '0.0') this.value=''">
+            <!-- ▼▼▼▼▼ Thymeleaf 에러 처리 로직 추가 ▼▼▼▼▼ -->
+            <p class="error-message" th:if="${#fields.hasErrors('sellPrice')}" th:errors="*{sellPrice}">
+<!--                매도가 에러 메시지-->
+            </p>
         </div>
-        <div>
-            <div>투자 결과</div>
-<!--            <select name="statusOpt">-->
-<!--            <option th:each="status : ${T(com.example.seoultechInvestment.Enum.ProgressStatus).values()}"-->
-<!--            th:value="${status}" th:text="${status}"></option>-->
-<!--            </select>-->
-            <input type="radio" th:field="*{status}" th:value="SUCCESS">SUCCESS
-            <input type="radio" th:field="*{status}" th:value="FAIL">FAIL
+
+        <!-- 투자 결과 라디오 버튼 그룹 -->
+        <div class="input-group">
+            <label>투자 결과</label>
+            <div class="radio-group">
+                <label class="radio-label">
+                    <input type="radio" th:field="*{status}" th:value="SUCCESS">
+                    <span>SUCCESS</span>
+                </label>
+                <label class="radio-label">
+                    <input type="radio" th:field="*{status}" th:value="FAIL">
+                    <span>FAIL</span>
+                </label>
+            </div>
+            <!-- 라디오 버튼에 대한 에러 메시지도 필요한 경우 추가할 수 있습니다.
+            <p class="error-message" th:if="${#fields.hasErrors('status')}" th:errors="*{status}"></p>
+            -->
         </div>
-        <br>
-        <button type="submit">제출</button>
+
+        <!-- 제출 버튼 -->
+        <button type="submit" class="button button-primary">제출</button>
+
     </form>
 </div>
+
 </body>
 </html>

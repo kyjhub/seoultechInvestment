@@ -1,0 +1,34 @@
+/* landing.css - 랜딩 페이지 전용 스타일 (크기 확장 버전) */
+
+/* 컨테이너의 최대 너비와 내부 여백을 늘려 상자 자체를 키웁니다. */
+.container {
+    max-width: 480px; /* 기존 400px에서 확장 */
+    padding: 60px 50px;   /* 기존 40px에서 상하, 좌우 여백 확장 */
+}
+
+/* 메인 타이틀을 더 굵고 크게 만들어 강조합니다. */
+.container h1 {
+    font-size: 44px; /* 기존 36px에서 확장 */
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+/* 부제(태그라인) 텍스트를 키워 가독성을 높입니다. */
+.tagline {
+    font-size: 18px; /* 기존 16px에서 확장 */
+    color: #6e6e73;
+    margin-bottom: 48px; /* 버튼 그룹과의 간격을 더 확보 */
+}
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* 버튼 사이의 간격을 조금 더 넓게 조정 */
+}
+
+/* 버튼 내부의 글자 크기와 버튼 자체의 세로 길이를 키웁니다. */
+.button-group .button {
+    font-size: 18px; /* 기존 16px에서 확장 */
+    padding-top: 16px;
+    padding-bottom: 16px;
+}

@@ -58,6 +58,8 @@ public class InvestmentService {
     public void modify(EndedInvDTOfromFront endedInvDTOfromFront) {
         List<Investment> onGoingInvs = investmentRepository.findOnGoingInvestments();
         String findName = endedInvDTOfromFront.getTickerName();
+
+        //elseThrow() 예외처리 커스텀해야함
         Investment invToModify = onGoingInvs.stream().filter(inv -> findName.equals(inv.getStock()
                         .getTickerName())).findAny()
                         .orElseThrow();

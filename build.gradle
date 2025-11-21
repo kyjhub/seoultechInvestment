@@ -54,6 +54,10 @@ dependencies {
 	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 	//ClassNotFoundException : javax.xml.bind.annotation.XmlElement 해결하기 위해
 	implementation 'javax.xml.bind:jaxb-api:2.3.1'
+
+	//spring Security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6' // Thymeleaf에서 인증 정보를 사용하기 위함
 }
 
 

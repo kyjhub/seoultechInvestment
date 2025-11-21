@@ -1,0 +1,132 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <style>-->
+<!--        h1 { text-align: center}-->
+<!--        div { text-align: center}-->
+<!--        table {-->
+<!--            margin-left:auto;-->
+<!--            margin-right:auto;-->
+<!--        }-->
+
+<!--        table, td, th {-->
+<!--            border-collapse : collapse;-->
+<!--            border : 1px solid black;-->
+<!--        }-->
+<!--    </style>-->
+<!--    <title>Title</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>진행중인 투자 종목</h1>-->
+<!--&lt;!&ndash;    <div style="text-align: center">&ndash;&gt;-->
+
+<!--&lt;!&ndash;            <button onclick="location.href='http://localhost:8080/performanceList'">이전 추천종목 성과</button>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+<!--    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>-->
+<!--    <script>-->
+<!--        let title = {-->
+<!--            "enrollDate":"등록일",-->
+<!--            "tickerName":"종목명(트레이딩뷰 기준)",-->
+<!--            "entryPrice":"진입가",-->
+<!--            "tp":"최소 도달가"-->
+<!--        }-->
+
+<!--        async function getData(){-->
+<!--            try {-->
+<!--                let response = await axios.get("http://localhost:8080/stock/onGoing",{-->
+<!--                    headers: {'Content-type' : 'application/json'}-->
+<!--                });-->
+<!--                return response.data;-->
+<!--            }catch (err){-->
+<!--                console.log(err);-->
+<!--            }-->
+<!--        }-->
+
+<!--         getData().then(listObj => {-->
+
+<!--             let $screen = document.createElement('div');-->
+
+<!--             let $table = document.createElement('table');-->
+<!--             // $table.setAttribute("border", "1px solid black");-->
+
+<!--             for(let i in title)-->
+<!--             {-->
+<!--                 let $th = document.createElement('th');-->
+<!--                 let $tr = document.createElement('tr');-->
+<!--                 $tr.innerHTML = title[i];-->
+<!--                 $th.append($tr);-->
+<!--                 $table.append($th);-->
+<!--             }-->
+
+<!--             listObj.map(list => {-->
+<!--                 console.log(list);-->
+<!--                 let $tr = document.createElement('tr');-->
+<!--                 for(let i in list){-->
+<!--                     let $td = document.createElement('td');-->
+<!--                     $td.innerHTML = list[i];-->
+<!--                     $tr.append($td);-->
+<!--                     $table.append($tr);-->
+<!--                 }-->
+<!--             })-->
+
+<!--             $screen.appendChild($table);-->
+<!--             document.body.appendChild($table);-->
+
+<!--             let $btn = document.createElement('button');-->
+<!--             $btn.setAttribute('onclick', 'location.href=\'http://localhost:8080/performanceList\'');-->
+<!--             $btn.innerHTML='이전 추천종목 성과';-->
+
+<!--             $screen.appendChild(document.createElement('br'));-->
+<!--             $screen.appendChild($btn);-->
+
+<!--             document.body.appendChild($screen);-->
+<!--         })-->
+
+
+<!--        </script>-->
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>진행중인 투자 종목 - stInvestment</title>
+
+    <!-- 1. 공통 CSS 파일 -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- 2. 테이블 페이지 전용 CSS 파일 (재사용) -->
+    <link rel="stylesheet" href="/css/table-page.css">
+</head>
+<body>
+
+<!-- 이전 페이지처럼 넓은 컨테이너를 사용합니다. -->
+<div class="container container-wide">
+    <h1>진행중인 투자 종목</h1>
+
+    <!-- JavaScript가 생성한 테이블이 삽입될 컨테이너 -->
+    <div id="stock-table-container" class="table-container">
+        <p class="loading-message">데이터를 불러오는 중입니다...</p>
+    </div>
+
+    <!--
+      버튼은 JavaScript로 만드는 것보다 HTML에 직접 배치하는 것이 더 효율적입니다.
+      a 태그를 버튼처럼 스타일링하여 페이지 이동을 처리합니다.
+    -->
+    <div class="button-container">
+        <a href="/performanceList" class="button button-secondary">이전 추천종목 성과 보기</a>
+    </div>
+</div>
+
+<!-- Axios 라이브러리 로드 -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<!-- 이 페이지의 동작을 담당할 JavaScript 파일 (아래 3번 항목 참조) -->
+<script src="/js/ongoing.js"></script>
+
+</body>
+</html>

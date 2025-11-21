@@ -3,6 +3,7 @@ package com.example.seoultechInvestment.controller;
 import com.example.seoultechInvestment.DTO.AthDTO;
 import com.example.seoultechInvestment.DTO.SignInDTO;
 import com.example.seoultechInvestment.DTO.SignUpDTO;
+import com.example.seoultechInvestment.Enum.Role;
 import com.example.seoultechInvestment.entity.Member;
 import com.example.seoultechInvestment.service.MailService;
 import com.example.seoultechInvestment.service.MemberService;
@@ -39,20 +40,12 @@ public class SignUpController {
             }
             return "redirect:/signUp";
         }
-        //멤버 등록
-        if (signUpDTO.getStGalleryNickname() != null) {
-            Member newMember = Member.builder().stId(signUpDTO.getStId()).name(signUpDTO.getName()).
-                    Department(signUpDTO.getDepartment()).stGalleryNickname(signUpDTO.getStGalleryNickname()).build();
-            memberService.enroll(newMember);
-        } else {
-            Member newMember = Member.builder().stId(signUpDTO.getStId()).name(signUpDTO.getName()).
-                    Department(signUpDTO.getDepartment()).build();
-            memberService.enroll(newMember);
-        }
+        memberService.enroll(signUpDTO);
 
         model.addAttribute("memberForm", new SignInDTO());
-        return "signIn";
+        return "login";
     }
+
     @PostMapping("/email")
     @ResponseBody
     public String getEmail(@RequestBody AthDTO athDTO) {

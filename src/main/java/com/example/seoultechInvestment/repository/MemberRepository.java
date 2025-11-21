@@ -18,13 +18,16 @@ public class MemberRepository {
         public void save(Member member) {
                 entityManager.persist(member);
         }
+
         public Optional<Member> findByStId(Long stId) {
                 return Optional.ofNullable((Member)entityManager.createQuery("select m from Member m where m.stId=:stId")
                         .setParameter("stId", stId).getSingleResult());
         }
+
         public List<Member> findAll() {
                 return entityManager.createQuery("select m from Member m").getResultList();
         }
+
         public Long delete(Member member) {
                 entityManager.remove(member);
                 return member.getStId();

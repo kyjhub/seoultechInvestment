@@ -1,0 +1,91 @@
+/* table-page.css - 테이블 페이지 전용 스타일 */
+
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* 화면이 좁을 때 가로 스크롤 생성 */
+    margin-top: 24px;
+}
+
+.table-container table {
+    width: 100%;
+    border-collapse: collapse; /* 테두리 사이 간격 제거 */
+    font-size: 15px;
+    text-align: left;
+}
+
+.table-container th,
+.table-container td {
+    padding: 12px 16px;
+    vertical-align: middle;
+}
+
+/* 테이블 헤더(th) 스타일 */
+.table-container thead th {
+    font-weight: 500; /* Semi-bold */
+    color: #6e6e73;
+    border-bottom: 1px solid #e5e5ea;
+    background-color: #f5f5f7;
+}
+
+/* 테이블 바디(td)의 각 행(tr) 스타일 */
+.table-container tbody tr {
+    border-bottom: 1px solid #f5f5f7; /* 매우 옅은 구분선 */
+}
+
+/* 마우스를 올렸을 때 행 배경색 변경 */
+.table-container tbody tr:hover {
+    background-color: #f5f5f7;
+}
+
+/* 로딩 메시지 스타일 */
+.loading-message {
+    color: #6e6e73;
+    padding: 40px 0;
+}
+
+/* 투자 결과(SUCCESS/FAIL)를 보여줄 태그 스타일 */
+.status-pill {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.status-success {
+    color: #30a46c;
+    background-color: #eaf6f0;
+}
+
+.status-fail {
+    color: #d12727;
+    background-color: #fbeaea;
+}
+
+/* table-page.css - 테이블 페이지 전용 스타일 */
+
+/*
+  ▼▼▼▼▼ 이 부분을 추가하세요. ▼▼▼▼▼
+  .container-wide 클래스가 적용된 컨테이너는 최대 너비를 900px로 확장합니다.
+  화면이 좁을 때를 대비해 양옆 여백도 조금 조정합니다.
+*/
+.container.container-wide {
+    max-width: 900px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+/* ▲▲▲▲▲ 추가 끝 ▲▲▲▲▲ */
+
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 24px;
+}
+
+/* table-page.css 파일 맨 아래에 추가 */
+
+.button-container {
+    margin-top: 24px;
+    text-align: right; /* 버튼을 오른쪽으로 정렬 */
+}

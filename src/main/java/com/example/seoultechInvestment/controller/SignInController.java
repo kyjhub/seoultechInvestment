@@ -1,12 +1,14 @@
 package com.example.seoultechInvestment.controller;
 
 import com.example.seoultechInvestment.DTO.SignInDTO;
+import com.example.seoultechInvestment.Enum.Role;
 import com.example.seoultechInvestment.entity.Member;
 import com.example.seoultechInvestment.service.LoginService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 //관리자 계정으로 로그인하면 다른 화면으로 들어가도록
 //일반회원과 관리자가 로그인하면 넘어가는 페이지가 다른 걸로
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class SignInController {
@@ -23,6 +26,8 @@ public class SignInController {
 
     @PostMapping("/login")
     public String login(@Valid SignInDTO signInDTO, BindingResult bindingResult, HttpServletRequest httpServletRequest) {
+
+        log.debug("==login postMapping 실행==");
 
         if (bindingResult.hasErrors()) {
             return "redirect:/login";
@@ -37,10 +42,13 @@ public class SignInController {
         session.setAttribute("loginMember", loginMember);
 
         // 관리자는 관리자용 화면으로 접속
-        if (loginMember.getStId() == 21101165L && loginMember.getPassword().equals("1234")) {
+        if (loginMember.getRole()== Role.ROLE_ADMIN &&
+                loginMember.getStId() == 21101165L &&
+                loginMember.getPassword().equals("1234")) {
+            log.debug("======관리자 계정 접속 확인======");
             return "homeOfAdmin";
         }
-        else return "stInvestmentHome";
+        else return "homeOfAdmin";
     }
 
     @PostMapping("/logout")

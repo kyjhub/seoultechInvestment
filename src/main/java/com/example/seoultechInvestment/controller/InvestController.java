@@ -27,14 +27,14 @@ public class InvestController {
     private final InvestmentService investmentService;
     private final TelegramConfig telegramConfig;
 
-    @GetMapping("/stock")
+    @GetMapping("/admin/items/add")
     public String enrollStock(Model model) {
         model.addAttribute("newStock", new EnrollDTO());
         return "enrollStock";
     }
 
     /** 신규 추천 종목 등록 **/
-    @PostMapping("/stock/enroll")
+    @PostMapping("/admin/stock/enroll")
     public String enrollStock(@Valid EnrollDTO enrollDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             for (ObjectError error : bindingResult.getFieldErrors()) {
@@ -81,7 +81,7 @@ public class InvestController {
             log.error(e.getMessage());
         }
 
-        return "/stInvestmentHome";
+        return "home";
     }
 
     /** 진행중인 투자 종목 조회 **/
@@ -105,13 +105,13 @@ public class InvestController {
 //        return ProgressStatus.values();
 //    }
 
-    @GetMapping("/stock/result/enroll")
+    @GetMapping("/admin/returns/add")
     public String getEnrollResultForm(Model model) {
         model.addAttribute("endedInv", new EndedInvDTOfromFront());
         return "enrollResult";
     }
 
-    @PostMapping("/stock/result/enroll")
+    @PostMapping("/admin/stock/result/enroll")
     public String EnrollResult(@ModelAttribute EndedInvDTOfromFront endedInvDTOfromFront) {
         investmentService.modify(endedInvDTOfromFront);
         return "performanceList";
