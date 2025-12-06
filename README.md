@@ -14,6 +14,38 @@
 3. **투자 정보:** 매수가/목표가 설정 및 과거 이력 조회 기능
 4. **클라우드 배포:** GCP 이용
 
+### 📂 Project Structure
+
+이 프로젝트는 **Layered Architecture**를 기반으로 역할과 책임을 명확히 분리하여 설계되었습니다.
+
+```bash
+src
+├── main
+│   ├── java/com/example/seoultechInvestment
+│   │   ├── config         # Security, Web MVC 등 프로젝트 전반의 설정 클래스
+│   │   ├── controller     # 클라이언트의 요청을 처리하는 Presentation Layer
+│   │   ├── DTO            # 계층 간 데이터 교환을 위한 객체 (Request/Response)
+│   │   ├── entity         # DB 테이블과 매핑되는 도메인 객체 (JPA Entity)
+│   │   ├── Enum           # 프로젝트 내에서 사용되는 상수 집합 (Role, Status 등)
+│   │   ├── Interceptor    # HTTP 요청 가로채기 및 전처리/후처리 담당
+│   │   ├── repository     # DB 접근을 담당하는 Data Access Layer (Spring Data JPA)
+│   │   ├── security       # UserDetails, Auth Provider 등 인증/인가 관련 로직
+│   │   ├── service        # 핵심 비즈니스 로직을 수행하는 Service Layer
+│   │   ├── validator      # 데이터 유효성 검증을 위한 커스텀 로직
+│   │   ├── InitDB         # 초기 데이터 세팅을 위한 클래스
+│   │   └── Application    # Spring Boot 실행 진입점
+│   │
+│   └── resources
+│       ├── static         # 정적 리소스 파일
+│       │   ├── css        # 스타일 시트
+│       │   ├── html       # 정적 HTML 페이지
+│       │   └── js         # 클라이언트 사이드 스크립트
+│       ├── templates      # 뷰 템플릿 파일
+│       ├── application.yml          # 프로젝트 핵심 설정 파일
+│       └── application-security.yml # 보안 관련 설정 분리
+```
+<br/>
+
 ### 🚀 Entity Relationship
 
 [![](https://mermaid.ink/img/pako:eNqdlN9KG0EUxl9lmKsI0ebP6jZ7V5MIYpOKSXtRAmXdHePS7I5MdmltFEQSkCpUUWlaklCrtEZyodZKCvaFMrPv0DObJpWaXti5mll-35zznXNmK9igJsEaJixl6UWm2wUHwcrlnyTn0Nra-DitoNnss3Qun0ln80hDBey_6_iHp3y3wbdPUCiqZccKuOD0dZl0Zjq9gCr9k1yPqVNElonm50Da657zb11_80QqBkTOZRYwxNatkrz-8EPv-y4SzSvePhDNGxSaTY2N4Ff0cvkVZSZI-I8qP9_gl1t-vTuCZLREZPDrHf-wgUKPUpnZ7IOnufTC8Nr1Qf593_-TftmlxsusbstI4vhGbDeR-FzjZ21-VvsXnoTaSzzgkPh5wPcbt9kU9RYhdcNjjDjuPLMMifv1qmh1eucbd7K_1ah7WQgIm9iLhL0AcEaCorUnqheitRvqXW3wLx3Yjd3RBC6GEgl-OkV99yN8gAe2OnAhvoKLGgIbvcv2CNjVWZEMPUN9_L3GCHowDIyYluFa1JFX17dE9wjxzSvxsR2SZW3X_bfdv9I39FJKd0negpYZjMDWlGcZbP-CHzVh9G4LpilMke4gqzxjOVZ5mcjB87dkXYJGH-8g8b7Dr_90BYdxkVkm1lzmkTC2CYMJhyMOelPA7jKxSQHLJ2WSJd0ruVIqZSu685xSe6Bk1CsuY21JL5Xh5K2YkObv1zr8CgNiEpaknuNibUpJBJdgrYJfYy2qRCYSijo5FVEVNZFQ4koYr2ItPjkRUSOqGk-okVgs8VBR1sP4TRAX-JgSiSkqSGLxaBQEUF-Xskz_bxH8NNZ_AaI3kSA?type=png)](https://mermaid.live/edit#pako:eNqdlN9KG0EUxl9lmKsI0ebP6jZ7V5MIYpOKSXtRAmXdHePS7I5MdmltFEQSkCpUUWlaklCrtEZyodZKCvaFMrPv0DObJpWaXti5mll-35zznXNmK9igJsEaJixl6UWm2wUHwcrlnyTn0Nra-DitoNnss3Qun0ln80hDBey_6_iHp3y3wbdPUCiqZccKuOD0dZl0Zjq9gCr9k1yPqVNElonm50Da657zb11_80QqBkTOZRYwxNatkrz-8EPv-y4SzSvePhDNGxSaTY2N4Ff0cvkVZSZI-I8qP9_gl1t-vTuCZLREZPDrHf-wgUKPUpnZ7IOnufTC8Nr1Qf593_-TftmlxsusbstI4vhGbDeR-FzjZ21-VvsXnoTaSzzgkPh5wPcbt9kU9RYhdcNjjDjuPLMMifv1qmh1eucbd7K_1ah7WQgIm9iLhL0AcEaCorUnqheitRvqXW3wLx3Yjd3RBC6GEgl-OkV99yN8gAe2OnAhvoKLGgIbvcv2CNjVWZEMPUN9_L3GCHowDIyYluFa1JFX17dE9wjxzSvxsR2SZW3X_bfdv9I39FJKd0negpYZjMDWlGcZbP-CHzVh9G4LpilMke4gqzxjOVZ5mcjB87dkXYJGH-8g8b7Dr_90BYdxkVkm1lzmkTC2CYMJhyMOelPA7jKxSQHLJ2WSJd0ruVIqZSu685xSe6Bk1CsuY21JL5Xh5K2YkObv1zr8CgNiEpaknuNibUpJBJdgrYJfYy2qRCYSijo5FVEVNZFQ4koYr2ItPjkRUSOqGk-okVgs8VBR1sP4TRAX-JgSiSkqSGLxaBQEUF-Xskz_bxH8NNZ_AaI3kSA)
