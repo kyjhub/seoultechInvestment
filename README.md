@@ -1,5 +1,47 @@
 # 📈 stInvestment (서울과기대 투자 정보 공유 서비스)
 
+## 📱 Service Screens
+
+
+### 1️⃣ Authentication (회원가입 및 인증)
+
+| **메인 화면** | **로그인** |
+| :---: | :---: |
+| <img src="https://github.com/user-attachments/assets/086cd397-20df-4bb5-83b9-5698d2e87861" width="100%"> | <img src="https://github.com/user-attachments/assets/c5ab357c-03bb-4433-8c6b-cbb467cda44e"> |
+| **메인 화면** | **로그인** |
+
+| **이메일 인증** |
+| :---: |
+| <img src="https://github.com/user-attachments/assets/821779e8-6594-462d-8331-d30b1e3b1ece"> |
+| **학교 이메일 인증번호 발송 및 검증** |
+
+<br/>
+
+### 2️⃣ Admin Features (관리자 기능)
+관리자는 직관적인 UI를 통해 투자 정보를 손쉽게 등록하고 관리할 수 있습니다.
+
+| **관리자 대시보드** | **투자 종목 등록** |
+| :---: | :---: |
+| <img src="https://github.com/user-attachments/assets/96200296-f9f8-4b8f-ada3-e6b53c3d66c4" width="100%"> | <img src="https://github.com/user-attachments/assets/1f4a5beb-eb68-4a65-bb65-00101853c341" width="100%"> |
+| **관리자 전용 메뉴 접근** | **종목명, 진입가, 목표가 등 예측 정보 등록** |
+
+| **수익률(결과) 등록** |
+| :---: |
+| <img src="https://github.com/user-attachments/assets/ba5fb739-e93d-4a39-9ec0-b87f01577cb6" width="60%"> |
+| **투자가 종료된 종목의 성공/실패 여부 입력** |
+
+<br/>
+
+### 3️⃣ User Features (사용자 조회)
+사용자는 관리자가 등록한 정보를 실시간으로 확인하고, 과거 성과를 조회할 수 있습니다.
+
+| **진행 중인 투자 목록** | **과거 성과 목록 (History)** |
+| :---: | :---: |
+| <img src="https://github.com/user-attachments/assets/22964415-26d9-4d85-b90f-77cfb47f6f23" width="100%"> | <img src="https://github.com/user-attachments/assets/9fb3f480-4e83-4dad-b4d6-1cac19220417" width="100%"> |
+| **현재 유효한 투자 정보와 목표가 확인** | **종료된 투자의 수익률 및 성공 여부 조회** |
+
+<br/>
+
 ### 🛠 Tech Stack
 - **Language:** Java 17
 - **Framework:** Spring Boot 3.x
@@ -27,7 +69,6 @@ src
 │   │   ├── DTO            # 계층 간 데이터 교환을 위한 객체 (Request/Response)
 │   │   ├── entity         # DB 테이블과 매핑되는 도메인 객체 (JPA Entity)
 │   │   ├── Enum           # 프로젝트 내에서 사용되는 상수 집합 (Role, Status 등)
-│   │   ├── Interceptor    # HTTP 요청 가로채기 및 전처리/후처리 담당
 │   │   ├── repository     # DB 접근을 담당하는 Data Access Layer (Spring Data JPA)
 │   │   ├── security       # UserDetails, Auth Provider 등 인증/인가 관련 로직
 │   │   ├── service        # 핵심 비즈니스 로직을 수행하는 Service Layer
