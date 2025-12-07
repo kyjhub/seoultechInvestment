@@ -22,17 +22,9 @@ public class HomeController {
 
         HttpSession session = httpServletRequest.getSession(false);
         if (session != null) {
-//            if (loginService.administratorLogin(session)) {
-//                return "homeOfAdmin";
-//            } else return "home";
             return "home";
         } else return "index";
     }
-//    @GetMapping("/index")
-//    public String getHome(){
-//
-//        return "index";
-//    }
 
     @GetMapping("/join")
     public String authEmail() {

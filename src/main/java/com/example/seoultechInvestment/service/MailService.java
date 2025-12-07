@@ -54,23 +54,13 @@ public class MailService {
     public void mailSend(String setFrom, String mailAcc, String title, String content) {
 
         try {
-            // MimeMessage message는 jakarta.mail.internet
-            //mailSender.createMimeMessage()가 javax.mail.internet
-            //대체 이게 뭔 상황이지...?
             MimeMessage message = mailSender.createMimeMessage();
             message.addRecipients(RecipientType.TO, mailAcc); //보내는 대상
             message.setSubject(title);
             message.setText(content, "utf-8");
             message.setFrom(new InternetAddress("harryjun43@naver.com", "관리자"));
             mailSender.send(message);
-//            MimeMessageHelper helper = new MimeMessageHelper(message,true,"utf-8");//이메일 메시지와 관련된 설정을 수행합니다.
-//            // true를 전달하여 multipart 형식의 메시지를 지원하고, "utf-8"을 전달하여 문자 인코딩을 설정
-//            message.addRecipients(Message.RecipientType.TO, mailAcc);
-//            message.setFrom(setFrom);//이메일의 발신자 주소 설정
-////            helper.setTo(mailAcc);//이메일의 수신자 주소 설정
-//            helper.setSubject(title);//이메일의 제목을 설정
-//            helper.setText(content,true);//이메일의 내용 설정 두 번째 매개 변수에 true를 설정하여 html 설정으로한다.
-//            mailSender.send(message);
+
         } catch (MessagingException e) {//이메일 서버에 연결할 수 없거나, 잘못된 이메일 주소를 사용하거나, 인증 오류가 발생하는 등 오류
             // 이러한 경우 MessagingException이 발생
             log.error("mailSender.createMimeMessage()에서 에러 발생");

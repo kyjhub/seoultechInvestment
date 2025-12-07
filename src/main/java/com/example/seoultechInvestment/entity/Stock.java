@@ -23,12 +23,4 @@ public class Stock{
     public Stock(String tickerName){
         this.tickerName = tickerName;
     }
-//    @Override
-//    public Stock clone() throws CloneNotSupportedException {
-//        Stock cloneStock = (Stock)super.clone();
-//        cloneStock.builder().tickerName(this.tickerName).
-//                build();
-//        cloneStock.id = this.id;    // id를 이렇게 넣어줘도 되는건가? 위험한거 아닌가?
-//        return cloneStock;
-//    }
 }

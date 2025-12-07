@@ -100,10 +100,6 @@ public class InvestController {
         return investmentService.findEndedInvestments();
     }
 
-//    @ModelAttribute("statuses")
-//    public ProgressStatus[] statuses() {
-//        return ProgressStatus.values();
-//    }
 
     @GetMapping("/admin/returns/add")
     public String getEnrollResultForm(Model model) {

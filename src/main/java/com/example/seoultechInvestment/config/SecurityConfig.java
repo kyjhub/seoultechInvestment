@@ -20,14 +20,13 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
     private final CustomeLoginSuccessHandler customeLoginSuccessHandler;
     /**
-     * 이 메소드는 정적 리소스(js, css, image 등)에 대한 보안을 완전히 무시하도록 설정합니다.
-     * 이것이 바로 302 리다이렉트 문제를 해결하는 핵심 부분입니다.
+     * 이 메소드는 정적 리소스(js, css, image 등)에 대한 보안을 완전히 무시하도록 설정
      */
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         // PathRequest.toStaticResources().atCommonLocations()는
-        // /css/**, /js/**, /images/**, /favicon.ico 등 일반적인 정적 리소스 경로를 자동으로 처리해줍니다.
-        // 여기에 사용자 정의 경로인 /html/** 를 명시적으로 추가할 수 있습니다.
+        // /css/**, /js/**, /images/**, /favicon.ico 등 일반적인 정적 리소스 경로를 자동으로 처리
+        // 여기에 사용자 정의 경로인 /html/** 를 명시적으로 추가
         return (web) -> web.ignoring()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
                 .requestMatchers("/html/**"); // 사용자 정의 폴더가 있다면 여기에 추가
@@ -82,7 +81,7 @@ public class SecurityConfig {
     }
 
     /**
-     * 비밀번호 암호화를 위한 PasswordEncoder 빈을 등록합니다.
+     * 비밀번호 암호화를 위한 PasswordEncoder 빈을 등록
      * Spring Security는 반드시 PasswordEncoder를 필요로 합니다.
      */
     @Bean

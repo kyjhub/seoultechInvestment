@@ -29,7 +29,7 @@ public class Investment {
     private LocalDate enrollDate;
     
     /** 투자 끝날 때 입력할 정보 **/
-    private double sellPrice; // 판매가 <= 이건 후에 판매하면 업데이트
+    private double sellPrice; // 판매가 <= 이건 매도하면 업데이트
     private String holdTerm; // "숫자D" 형식으로 제한, 이건 후에 판매하면 업데이트
     private double earningRate; // 수익률 <= 이것도 후에 판매하면 업데이트
 

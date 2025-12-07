@@ -28,8 +28,11 @@ public class InitDB {
     @Transactional
     public void initAdmin(){
         log.info("Member 초기화 실행");
-        Member initMember = Member.builder().stId(21101165L).Department("컴퓨터공학과").password(passwordEncoder.encode("1234"))
+        Member initAdmin = Member.builder().stId(21101165L).Department("컴퓨터공학과").password(passwordEncoder.encode("1234"))
                 .role("ROLE_ADMIN").name("권용준").build();
+        Member initMember = Member.builder().stId(00000000L).Department("컴퓨터공학과").password(passwordEncoder.encode("5678"))
+                .role("ROLE_USER").name("아무개").build();
+        memberRepository.save(initAdmin);
         memberRepository.save(initMember);
 
         log.info("session loginMember 생성");

@@ -1,7 +1,3 @@
-// postData.js 파일의 가장 위에 이 코드를 추가하세요.
-console.log("postData.js 파일이 성공적으로 연결 및 실행되었습니다.");
-alert("postData.js 파일 연결 성공!"); // 또는 더 확실하게 alert을 사용
-
 let inputEmail;
 let realAthNum;
 let inputAthNum;

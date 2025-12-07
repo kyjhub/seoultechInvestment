@@ -15,8 +15,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-//관리자 계정으로 로그인하면 다른 화면으로 들어가도록
-//일반회원과 관리자가 로그인하면 넘어가는 페이지가 다른 걸로
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -41,7 +39,8 @@ public class SignInController {
         HttpSession session = httpServletRequest.getSession();
         session.setAttribute("loginMember", loginMember);
 
-        // 관리자는 관리자용 화면으로 접속
+        // 관리자는 관리자용 화면으로 연결
+        // spring security가 처리해주기 때문에 필요없음
         if (loginMember.getRole()== Role.ROLE_ADMIN &&
                 loginMember.getStId() == 21101165L &&
                 loginMember.getPassword().equals("1234")) {
