@@ -1,7 +1,6 @@
 package com.example.seoultechInvestment.service;
 
 import com.example.seoultechInvestment.DTO.SignUpDTO;
-import com.example.seoultechInvestment.Enum.Role;
 import com.example.seoultechInvestment.entity.Member;
 import com.example.seoultechInvestment.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,25 +20,24 @@ public class MemberService {
     //회원가입
     @Transactional
     public void enroll(SignUpDTO signUpDTO) {
-        Long newStId = signUpDTO.getStId();
+        //중복 회원가입 확인
+        if (memberRepository.existsByStId(signUpDTO.getStId())) {
+            throw new IllegalStateException("이미 존재하는 회원입니다.");
+        }
         //비밀번호 암호화+디비에 저장할 member 생성
-        Member signUpMember = Member.builder().stId(newStId).name(signUpDTO.getName()).
+        Member signUpMember = Member.builder().stId(signUpDTO.getStId()).name(signUpDTO.getName()).
                 Department(signUpDTO.getDepartment()).role("ROLE_USER").
                 password(passwordEncoder.encode(signUpDTO.getPassword())).
                 stEmail(signUpDTO.getStEmail()).build();
-        List<Member> allMember = memberRepository.findAll();
-        for (Member m : allMember) {    //중복회원체크
-            if (m.getStId() == newStId) {
-                throw new IllegalStateException("이미 존재하는 회원입니다."); 
-            }
-        }
         memberRepository.save(signUpMember);
     }
+
     public Member findByStId(Long stId) {
         Optional<Member> findMemberbyStId = memberRepository.findByStId(stId);
         Member findMember = findMemberbyStId.get();
         return findMember;
     }
+
     public List<Member> findAll() {
         List<Member> findAllMember = memberRepository.findAll();
         return findAllMember;
