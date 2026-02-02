@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<!--
+    th:fragment="main-header":
+    이 부분을 'main-header'라는 이름의 조각으로 정의한다는 뜻입니다.
+    다른 파일에서 이 이름을 불러서 사용합니다.
+-->
+<header th:fragment="main-header" class="global-header">
+    <div class="header-content">
+        <!-- 왼쪽: 로고 (홈으로 이동) -->
+        <a href="/home" class="logo">stInvestment</a>
+
+        <!-- 오른쪽: 사용자 정보 및 로그아웃 -->
+        <div class="user-menu">
+            <!-- 로그인 한 경우에만 보임 -->
+            <div sec:authorize="isAuthenticated()" class="auth-items">
+                <span class="welcome-msg">
+                    <strong sec:authentication="name">사용자</strong>님
+                </span>
+                <a href="/logout" class="header-logout-btn">로그아웃</a>
+            </div>
+
+            <!-- 로그인 안 한 경우에만 보임 (혹시 몰라 추가) -->
+            <div sec:authorize="isAnonymous()" class="auth-items">
+                <a href="/login" class="header-login-btn">로그인</a>
+            </div>
+        </div>
+    </div>
+</header>
+</html>

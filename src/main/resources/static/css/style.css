@@ -3,14 +3,15 @@
 body {
     font-family: 'Noto Sans KR', sans-serif;
     background-color: #f5f5f7;
+    /* ▼▼▼ 수정된 부분 (레이아웃 구조 변경) ▼▼▼ */
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    flex-direction: column; /* 요소를 세로로 배치 (헤더 -> 컨텐츠 순서) */
+    min-height: 100vh;      /* 최소 높이를 화면 전체로 */
     margin: 0;
     color: #1d1d1f;
 }
 
+/* ▼▼▼ 수정된 부분 (컨테이너 위치 조정) ▼▼▼ */
 .container {
     background-color: #ffffff;
     padding: 40px;
@@ -19,6 +20,8 @@ body {
     width: 100%;
     max-width: 400px;
     text-align: center;
+    /* 화면 중앙 정렬 및 상단 여백 추가 (로그인 화면에서도 중앙 유지) */
+    margin: auto;
 }
 
 h1 {
@@ -39,7 +42,7 @@ label {
     margin-bottom: 8px;
 }
 
-/* ▼▼▼▼▼ 바로 이 부분에 type="password"를 추가했습니다 ▼▼▼▼▼ */
+.form-control, /* form-control 클래스 사용 권장 */
 input[type="email"],
 input[type="text"],
 input[type="password"] {
@@ -52,10 +55,7 @@ input[type="password"] {
     transition: border-color 0.3s;
 }
 
-/* ▼▼▼▼▼ focus 스타일에도 동일하게 추가했습니다 ▼▼▼▼▼ */
-input[type="email"]:focus,
-input[type="text"]:focus,
-input[type="password"]:focus {
+input:focus {
     outline: none;
     border-color: #007aff;
 }
@@ -69,6 +69,9 @@ input[type="password"]:focus {
     font-weight: 500;
     cursor: pointer;
     transition: background-color 0.3s;
+    text-decoration: none; /* a태그 버튼화 시 밑줄 제거 */
+    display: inline-block; /* a태그 버튼화 시 크기 적용 */
+    box-sizing: border-box;
 }
 
 .button-primary {
@@ -88,4 +91,73 @@ input[type="password"]:focus {
 
 .button-secondary:hover {
     background-color: #dcdce0;
+}
+
+/* ▼▼▼ 수정된 부분 (헤더 스타일 강화) ▼▼▼ */
+/* 헤더 전체 영역 */
+.global-header {
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid #d2d2d7;
+    padding: 0 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%; /* 가로 꽉 차게 설정 */
+    box-sizing: border-box; /* 패딩 포함 크기 계산 */
+}
+
+/* 헤더 내부 정렬 */
+.header-content {
+    max-width: 980px;
+    margin: 0 auto;
+    height: 52px;
+    display: flex;
+    justify-content: space-between; /* 로고는 왼쪽, 메뉴는 오른쪽 끝으로 */
+    align-items: center;
+}
+
+/* 로고 스타일 */
+.logo {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1d1d1f;
+    text-decoration: none;
+    transition: opacity 0.3s;
+}
+
+.logo:hover {
+    opacity: 0.7;
+}
+
+/* 사용자 메뉴 영역 */
+.auth-items {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 14px;
+}
+
+.welcome-msg {
+    color: #1d1d1f;
+}
+
+/* 로그아웃 버튼 */
+.header-logout-btn {
+    color: #007aff;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 12px;
+    transition: background-color 0.3s;
+}
+
+.header-logout-btn:hover {
+    background-color: #f5f5f7;
+}
+
+/* table-page.css 하단의 button-container 정렬을 위한 설정 */
+.button-container {
+    margin-top: 24px;
+    text-align: right;
 }

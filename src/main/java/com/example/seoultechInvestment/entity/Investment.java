@@ -18,7 +18,7 @@ import java.util.UUID;
 public class Investment {
     @Id
     @GeneratedValue
-    private UUID id;
+    private Long id;
 
     @Enumerated(EnumType.STRING)
     private ProgressStatus status;

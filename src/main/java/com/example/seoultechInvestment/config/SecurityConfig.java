@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configurers.CsrfConfig
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity // Spring Security 활성화
@@ -33,7 +34,7 @@ public class SecurityConfig {
     }
 
     /**
-     * HTTP 요청에 대한 보안 규칙을 설정합니다.
+     * HTTP 요청에 대한 보안 규칙을 설정한다.
      */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -77,12 +78,27 @@ public class SecurityConfig {
                         .invalidateHttpSession(true)
                 );
 
+        // 로그아웃 설정 수정
+        http.logout(logout -> logout
+                // [수정 1] 로그아웃 요청 경로 설정 (GET 방식 허용을 위해 AntPathRequestMatcher 사용) 원래 로그아웃은 post요청임
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+
+                // [기존] 로그아웃 성공 시 이동할 페이지
+                .logoutSuccessUrl("/")
+
+                // [기존] 세션 초기화
+                .invalidateHttpSession(true)
+
+                // [추가] 로그아웃 시 JSESSIONID 쿠키 삭제 (보안 강화)
+                .deleteCookies("JSESSIONID")
+        );
+
         return http.build();
     }
 
     /**
      * 비밀번호 암호화를 위한 PasswordEncoder 빈을 등록
-     * Spring Security는 반드시 PasswordEncoder를 필요로 합니다.
+     * Spring Security는 반드시 PasswordEncoder를 필요로 한다.
      */
     @Bean
     public PasswordEncoder passwordEncoder() {

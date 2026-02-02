@@ -21,11 +21,11 @@ public class MemberService {
     @Transactional
     public void enroll(SignUpDTO signUpDTO) {
         //중복 회원가입 확인
-        if (memberRepository.existsByStId(signUpDTO.getStId())) {
+        if (memberRepository.existsByStId(signUpDTO.getSn())) {
             throw new IllegalStateException("이미 존재하는 회원입니다.");
         }
         //비밀번호 암호화+디비에 저장할 member 생성
-        Member signUpMember = Member.builder().stId(signUpDTO.getStId()).name(signUpDTO.getName()).
+        Member signUpMember = Member.builder().stId(signUpDTO.getSn()).name(signUpDTO.getName()).
                 Department(signUpDTO.getDepartment()).role("ROLE_USER").
                 password(passwordEncoder.encode(signUpDTO.getPassword())).
                 stEmail(signUpDTO.getStEmail()).build();

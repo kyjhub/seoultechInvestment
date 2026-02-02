@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="/css/admin-home.css">
 </head>
 <body>
+
+<!-- 2. 로그아웃 헤더 적용 -->
+<div th:replace="~{fragments/logoutHeader :: main-header}"></div>
 
 <div class="container">
     <h1>관리자 홈</h1>

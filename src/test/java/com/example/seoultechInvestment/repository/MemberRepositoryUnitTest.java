@@ -1,6 +1,5 @@
 package com.example.seoultechInvestment.repository;
 
-import com.example.seoultechInvestment.Enum.Role;
 import com.example.seoultechInvestment.entity.Member;
 import jakarta.persistence.NoResultException;
 import lombok.extern.slf4j.Slf4j;
