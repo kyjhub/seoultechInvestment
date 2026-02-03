@@ -14,6 +14,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Component
@@ -45,21 +46,21 @@ public class InitDB {
         log.info("완성된 투자종목 초기화 실행");
         Investment prebuiltEndedInv = Investment.builder().enrollDate(LocalDate.of(2024, 3, 24))
                 .stock(Stock.builder().tickerName("엘지화학").build())
-                .holdTerm("180D").sellPrice(500000).earningRate(50)
+                .holdTerm("180D").sellPrice(new BigDecimal("500000")).earningRate(new BigDecimal("50"))
                 .status(ProgressStatus.SUCCESS).build();
         Investment prebuiltEndedInv2 = Investment.builder().enrollDate(LocalDate.of(2024, 7, 1))
                 .stock(Stock.builder().tickerName("233740").build())
-                .holdTerm("60D").sellPrice(11000).earningRate(13)
+                .holdTerm("60D").sellPrice(new BigDecimal("11000")).earningRate(new BigDecimal("13"))
                 .status(ProgressStatus.SUCCESS).build();
 
         log.info("진행중 투자종목 초기화 실행");
         Investment prebuiltOnGoingInv = Investment.builder().stock(Stock.builder().tickerName("BTCUSDT").build())
-                .status(ProgressStatus.ONGOING).tp(140000)
-                .entryPrice(57000).enrollDate(LocalDate.of(2024, 6, 16))
+                .status(ProgressStatus.ONGOING).tp(new BigDecimal("140000"))
+                .entryPrice(new BigDecimal("57000.00")).enrollDate(LocalDate.of(2024, 6, 16))
                 .build();
         Investment prebuiltOnGoingInv2 = Investment.builder().stock(Stock.builder().tickerName("SOLUSDT").build())
-                .status(ProgressStatus.ONGOING).tp(300)
-                .entryPrice(150).enrollDate(LocalDate.of(2024, 5, 13))
+                .status(ProgressStatus.ONGOING).tp(new BigDecimal("300"))
+                .entryPrice(new BigDecimal("150")).enrollDate(LocalDate.of(2024, 5, 13))
                 .build();
         investmentRepository.save(prebuiltEndedInv);
         investmentRepository.save(prebuiltEndedInv2);

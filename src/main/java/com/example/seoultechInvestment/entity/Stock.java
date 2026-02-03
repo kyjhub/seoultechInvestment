@@ -16,8 +16,8 @@ import java.util.UUID;
 @Builder
 public class Stock{
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String tickerName; //티커명은 트레이딩뷰 기준
 
     public Stock(String tickerName){

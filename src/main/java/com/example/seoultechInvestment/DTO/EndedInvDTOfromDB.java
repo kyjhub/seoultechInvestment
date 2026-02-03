@@ -10,6 +10,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
@@ -25,9 +26,9 @@ public class EndedInvDTOfromDB {
     @Pattern(regexp = "[0-9]*D$")
     private String holdTerm;
     @NotNull()
-    private double sellPrice;
+    private BigDecimal sellPrice;
     @NotNull
-    private double earningRate;
+    private BigDecimal earningRate;
     @NotNull
     @StatusPattern
     private ProgressStatus status;

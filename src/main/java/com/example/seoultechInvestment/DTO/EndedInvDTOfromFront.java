@@ -10,6 +10,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @Builder(toBuilder = true)
 @NoArgsConstructor
@@ -21,7 +23,7 @@ public class EndedInvDTOfromFront {
     @Pattern(regexp = "[0-9]*D$")
     private String holdTerm;
     @NotNull()
-    private double sellPrice;
+    private BigDecimal sellPrice;
 //    @NotNull
     @StatusPattern(message = "형식에 맞게 입력하세요")
     private ProgressStatus status;

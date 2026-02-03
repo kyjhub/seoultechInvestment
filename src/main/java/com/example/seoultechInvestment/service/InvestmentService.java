@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,15 +61,15 @@ public class InvestmentService {
         String findName = endedInvDTOfromFront.getTickerName();
 
         //elseThrow() 예외처리 커스텀해야함
-        Investment invToModify = onGoingInvs.stream().filter(inv -> findName.equals(inv.getStock()
+        Investment investmentToModify = onGoingInvs.stream().filter(inv -> findName.equals(inv.getStock()
                         .getTickerName())).findAny()
                         .orElseThrow();
-        double earningRate = endedInvDTOfromFront.getSellPrice() - invToModify.getEntryPrice();
-        invToModify.addInfoAfterEnd(
+        BigDecimal earningRate = endedInvDTOfromFront.getSellPrice().subtract(investmentToModify.getEntryPrice());
+        investmentToModify.addInfoAfterEnd(
                 endedInvDTOfromFront.getSellPrice(),
                 endedInvDTOfromFront.getHoldTerm(),
                 earningRate,
-                earningRate>0 ? ProgressStatus.SUCCESS : ProgressStatus.FAIL
+                earningRate.compareTo(new BigDecimal(0))>0 ? ProgressStatus.SUCCESS : ProgressStatus.FAIL
         );
 
         // 이걸 꼭 넣어야되는걸까?

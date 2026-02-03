@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
@@ -21,7 +22,7 @@ public class OnGoingInvDTO {
     @NotBlank(message = "종목명이 입력되지 않았습니다.")
     private String tickerName;
     @NotNull
-    private double entryPrice;
+    private BigDecimal entryPrice;
     @NotNull(message = "tp값이 입력되지 않았습니다.")
-    private double tp;
+    private BigDecimal tp;
 }

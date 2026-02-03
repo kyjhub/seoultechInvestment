@@ -16,7 +16,7 @@ public class StockRepository {
         entityManager.persist(stock);
     }
 
-    public UUID delete(Stock stock) {
+    public Long delete(Stock stock) {
         entityManager.remove(stock);
         return stock.getId();
     }

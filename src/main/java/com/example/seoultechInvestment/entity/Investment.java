@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -17,21 +18,21 @@ import java.util.UUID;
 @Builder
 public class Investment {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Enumerated(EnumType.STRING)
     private ProgressStatus status;
 
     /** 투자시작할 때 입력할 정보 **/
-    private double entryPrice;  // 추천 진입가 만약에 이 가격을 오지 않는다면
-    private double tp;    //최소 도달가
+    private BigDecimal entryPrice;  // 추천 진입가 만약에 이 가격을 오지 않는다면
+    private BigDecimal tp;    //최소 도달가
     private LocalDate enrollDate;
     
     /** 투자 끝날 때 입력할 정보 **/
-    private double sellPrice; // 판매가 <= 이건 매도하면 업데이트
+    private BigDecimal sellPrice; // 판매가 <= 이건 매도하면 업데이트
     private String holdTerm; // "숫자D" 형식으로 제한, 이건 후에 판매하면 업데이트
-    private double earningRate; // 수익률 <= 이것도 후에 판매하면 업데이트
+    private BigDecimal earningRate; // 수익률 <= 이것도 후에 판매하면 업데이트
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(name="STOCK_ID")    // 다대일 단방향
@@ -51,7 +52,7 @@ public class Investment {
         return cloneStock;
     }
 
-    public void addInfoAfterEnd(double sellPrice, String holdTerm, double earningRate, ProgressStatus status) {
+    public void addInfoAfterEnd(BigDecimal sellPrice, String holdTerm, BigDecimal earningRate, ProgressStatus status) {
         this.sellPrice = sellPrice;
         this.earningRate = earningRate;
         this.holdTerm = holdTerm;

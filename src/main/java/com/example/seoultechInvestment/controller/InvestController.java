@@ -55,7 +55,7 @@ public class InvestController {
             JSONObject enrollDTOJson = new JSONObject();
 
             enrollDTOJson.put("최소 목표가", enrollDTO.getTp());
-            enrollDTOJson.put("진입가", enrollDTO.getEntryPrice());
+            enrollDTOJson.put("진입가", enrollDTO.getEntryPrice().toString());
             enrollDTOJson.put("주식명", enrollDTO.getTickerName());
 
             jsonTelegramMessage.put("text", enrollDTOJson);
