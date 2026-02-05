@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -19,6 +20,7 @@ public class Stock{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String tickerName; //티커명은 트레이딩뷰 기준
+    private BigDecimal currentPrice;
 
     public Stock(String tickerName){
         this.tickerName = tickerName;
