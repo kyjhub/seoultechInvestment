@@ -19,7 +19,9 @@ public class Stock{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
     private String tickerName; //티커명은 트레이딩뷰 기준
+    @Column(nullable = false)
     private BigDecimal currentPrice;
 
     public Stock(String tickerName){
