@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
@@ -18,13 +19,13 @@ public class AccountBalance {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    private double cashAmount;
+    private BigDecimal cashAmount;
 
-    public void withdraw(double amount) {
-        this.cashAmount -= amount;
+    public void withdraw(BigDecimal amount) {
+        this.cashAmount.subtract(amount);
     }
 
-    public void deposit(double amount) {
-        this.cashAmount += amount;
+    public void deposit(BigDecimal amount) {
+        this.cashAmount.add(amount);
     }
 }
