@@ -89,7 +89,7 @@ src
 
 ### 🚀 Entity Relationship
 
-<img width="4256" height="3292" alt="Image" src="https://github.com/user-attachments/assets/e42b59e8-4536-41fb-859e-6425eb365e62" />
+<img width="4528" height="3292" alt="Image" src="https://github.com/user-attachments/assets/2b73a08c-cbc0-4b8f-8e71-45d905892682" />
 
 ### 💡 ERD 상세 설명
 
