@@ -21,10 +21,12 @@ public class AccountBalance {
 
     private BigDecimal cashAmount;
 
+    //출금
     public void withdraw(BigDecimal amount) {
         this.cashAmount.subtract(amount);
     }
 
+    //입
     public void deposit(BigDecimal amount) {
         this.cashAmount.add(amount);
     }
