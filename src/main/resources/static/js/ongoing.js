@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Axios를 이용해 서버에서 데이터를 가져오는 함수
     async function getData() {
-        const response = await axios.get("http://localhost:8080/stock/onGoing");
+        const response = await axios.get("http://localhost:8080/api/investment/ongoing");
         return response.data;
     }
 

@@ -19,8 +19,16 @@ public class StockRepository {
                 .getSingleResult());
     }
 
-    public void save(Stock stock) {
+    public Optional<Stock> findByName(String tickerName) {
+        return Optional.of((Stock) entityManager.createQuery("select s from Stock s" +
+                        " where s.tickerName=:tickerName")
+                .setParameter("tickerName", tickerName)
+                .getSingleResult());
+    }
+
+    public Stock save(Stock stock) {
         entityManager.persist(stock);
+        return stock;
     }
 
     public Long delete(Stock stock) {

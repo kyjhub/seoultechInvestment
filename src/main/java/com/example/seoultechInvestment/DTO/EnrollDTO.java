@@ -22,5 +22,5 @@ public class EnrollDTO {
     @NotNull
     private BigDecimal entryPrice; // 추천 진입가
 
-    private LocalDate enrollDate;
+    private LocalDate startDate;
 }

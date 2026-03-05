@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>수익률 등록 (투자 종료) - stInvestment</title>
+
+    <!-- 1. 공통 CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- 2. 테이블 스타일 재사용 -->
+    <link rel="stylesheet" href="/css/table-page.css">
+    <!-- 3. 팝업(모달) 전용 CSS (새로 추가) -->
+    <link rel="stylesheet" href="/css/modal.css">
+</head>
+<body>
+
+<!-- 로그아웃 헤더 -->
+<div th:replace="~{fragments/logoutHeader :: main-header}"></div>
+
+<div class="container container-wide">
+    <h1>수익률 등록 (투자 종료)</h1>
+    <p class="description">종료할 투자 종목을 클릭하여 매도가를 입력하세요.</p>
+
+    <!-- 진행중인 투자 목록 테이블이 들어갈 곳 -->
+    <div id="admin-stock-table-container" class="table-container">
+        <p class="loading-message">진행 중인 투자 목록을 불러오는 중입니다...</p>
+    </div>
+
+    <div class="button-container">
+        <a href="/admin/home" class="button button-secondary">관리자 홈으로</a>
+    </div>
+</div>
+
+<!-- ▼▼▼▼▼ 매도가 입력 팝업 (모달) ▼▼▼▼▼ -->
+<div id="sellModal" class="modal-overlay hidden">
+    <div class="modal-window">
+        <h2 class="modal-title">투자 종료</h2>
+        <p class="modal-description">
+            <span id="displayTickerName" class="highlight"></span> 종목을 종료합니다.<br>
+            진입가: <span id="displayEntryPrice"></span>
+        </p>
+
+        <form id="sellForm">
+            <!--
+                [수정] ID 대신 종목명과 날짜를 식별자로 사용하기 위해 hidden input 변경
+                화면에 보여주는 용도(span)와 별개로, 폼 전송을 위한 값(input)을 따로 둡니다.
+            -->
+            <input type="hidden" id="modalTickerName" name="tickerName">
+            <input type="hidden" id="modalEnrollDate" name="enrollDate">
+
+            <div class="input-group">
+                <label for="sellPrice">최종 매도가</label>
+                <input type="number" id="modalSellPrice" name="sellPrice"
+                       placeholder="매도 가격을 입력하세요" class="form-control" required>
+            </div>
+
+            <div class="modal-buttons">
+                <button type="button" class="button button-secondary" onclick="closeModal()">취소</button>
+                <button type="submit" class="button button-primary">확인 (종료)</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Axios & JS -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/js/adminOngoing.js"></script>
+
+</body>
+</html>

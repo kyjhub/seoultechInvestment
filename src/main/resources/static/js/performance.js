@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Axios를 이용해 서버에서 데이터를 가져오는 함수
     async function getPerformanceList() {
-        const response = await axios.get("http://localhost:8080/stock/result", {
+        const response = await axios.get("http://localhost:8080/api/investment/result", {
             headers: {'Content-Type': 'application/json'}
         });
         return response.data;
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const header = `
             <thead>
                 <tr>
-                    <th>등록일</th>
+                    <th>진입날짜</th>
                     <th>종목명</th>
                     <th>보유 기간</th>
                     <th>매도가</th>
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <tr>
                 <td>${item.enrollDate}</td>
                 <td>${item.tickerName}</td>
-                <td>${item.holdTerm}</td>
+                <td>${item.holdTerm.years}Y ${item.holdTerm.months}M ${item.holdTerm.days}D</td>
                 <td>${item.sellPrice.toLocaleString()}</td>
                 <td>${item.earningRate}%</td>
                 <td>${createStatusPill(item.status)}</td>

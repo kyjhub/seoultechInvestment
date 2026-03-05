@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,24 +28,24 @@ public class InvestController {
     private final InvestmentService investmentService;
     private final TelegramConfig telegramConfig;
 
-    @GetMapping("/admin/items/add")
+    @GetMapping("/admin/investment/enroll")
     public String enrollStock(Model model) {
         model.addAttribute("newStock", new EnrollDTO());
-        return "enrollStock";
+        return "enrollInvestment";
     }
 
-    /** 신규 추천 종목 등록 **/
-    @PostMapping("/admin/stock/enroll")
+    /** (관리자)신규 투자 종목 등록 **/
+    @PostMapping("/admin/investment/enroll")
     public String enrollStock(@Valid EnrollDTO enrollDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             for (ObjectError error : bindingResult.getFieldErrors()) {
                 log.error(error.toString());
             }
             log.info("enrollStock.html 로 연결");
-            return "/enrollStock";
+            return "enrollInvestment";
         }
 
-        EnrollDTO enrollDTO1 = enrollDTO.toBuilder().enrollDate(LocalDate.now()).build();
+        EnrollDTO enrollDTO1 = enrollDTO.toBuilder().startDate(LocalDate.now()).build();
         investmentService.enroll(enrollDTO1);
 
         /* 종목등록 알람을 텔레그램으로 전송 */
@@ -81,35 +82,39 @@ public class InvestController {
             log.error(e.getMessage());
         }
 
-        return "home";
+        return "adminOngoingInvestmentList";
     }
 
-    /** 진행중인 투자 종목 조회 **/
-    @GetMapping("/stock/onGoing")
+    // (일반 사용자)진행중인 투자 종목 조회
+    @GetMapping("/api/investment/ongoing")
     @ResponseBody
     public List<OnGoingInvDTO> presentStock() {
         log.info("/stock/enroll is getMapped");
         List<OnGoingInvDTO> onGoingInvestments = investmentService.findOnGoingInvestments();
+        log.info("onGoingInvestments = " + onGoingInvestments);
         return onGoingInvestments;
     }
 
-    @GetMapping("/stock/result")
+    /** (일반 사용자)종료된 투자 조회**/
+    @GetMapping("/api/investment/result")
     @ResponseBody
     public List<EndedInvDTOfromDB> resultList() {
-        log.info("추천종목 성과 기록 요청");
+        log.info("투자 성과 기록 요청");
         return investmentService.findEndedInvestments();
     }
 
-
-    @GetMapping("/admin/returns/add")
+    // (관리자) 수익률 등록 버튼 누르면 등록 화면으로 연결
+    @GetMapping("/admin/investment/result/enroll")
     public String getEnrollResultForm(Model model) {
-        model.addAttribute("endedInv", new EndedInvDTOfromFront());
-        return "enrollResult";
+        model.addAttribute("endedInv", new InvestmentResultDTO());
+        return "adminOnGoingInvestmentList";
     }
 
-    @PostMapping("/admin/stock/result/enroll")
-    public String EnrollResult(@ModelAttribute EndedInvDTOfromFront endedInvDTOfromFront) {
-        investmentService.modify(endedInvDTOfromFront);
-        return "performanceList";
+    // (관리자) 수익률 등록 화면에서 등록시
+    @PostMapping("/admin/investment/result/enroll")
+    @ResponseBody
+    public ResponseEntity<String> EnrollResult(@RequestBody InvestmentResultDTO investmentResultDTO) {
+        investmentService.endInvestment(investmentResultDTO);
+        return ResponseEntity.ok("success");
     }
 }

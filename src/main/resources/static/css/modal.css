@@ -1,0 +1,68 @@
+/* modal.css - 팝업창 스타일 */
+
+/* 1. 배경을 어둡게 덮는 오버레이 */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* 반투명 검정 */
+    backdrop-filter: blur(5px); /* 배경 블러 효과 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000; /* 헤더보다 위에 뜨도록 설정 */
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+/* 숨김 상태일 때 클래스 */
+.modal-overlay.hidden {
+    display: none;
+    opacity: 0;
+}
+
+/* 2. 실제 팝업창 (흰색 박스) */
+.modal-window {
+    background-color: #ffffff;
+    padding: 32px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    transform: scale(1);
+    transition: transform 0.3s ease;
+}
+
+.modal-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    margin-top: 0;
+}
+
+.modal-description {
+    font-size: 15px;
+    color: #6e6e73;
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+
+.highlight {
+    color: #1d1d1f;
+    font-weight: 600;
+}
+
+/* 팝업 내부 버튼 그룹 */
+.modal-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.modal-buttons .button {
+    flex: 1; /* 버튼 너비 동일하게 */
+    margin: 0; /* 기존 마진 제거 */
+}

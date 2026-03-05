@@ -12,6 +12,9 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.Period;
+import java.util.HashMap;
+import java.util.Map;
 
 @Data
 @Builder(toBuilder = true)
@@ -22,10 +25,9 @@ public class EndedInvDTOfromDB {
     private LocalDate enrollDate;
     @NotBlank(message = "종목명이 입력되지 않았습니다.")
     private String tickerName;
-    @NotBlank
-    @Pattern(regexp = "[0-9]*D$")
-    private String holdTerm;
-    @NotNull()
+    @NotNull
+    private Map<String, Integer> holdTerm = new HashMap<>();
+    @NotNull
     private BigDecimal sellPrice;
     @NotNull
     private BigDecimal earningRate;

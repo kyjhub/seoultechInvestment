@@ -8,8 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Entity
 @Getter
@@ -27,11 +27,11 @@ public class Investment {
     /** 투자시작할 때 입력할 정보 **/
     private BigDecimal entryPrice;  // 추천 진입가 만약에 이 가격을 오지 않는다면
     private BigDecimal tp;    //최소 도달가
-    private LocalDate enrollDate;
+    private LocalDate startDate;
     
     /** 투자 끝날 때 입력할 정보 **/
     private BigDecimal sellPrice; // 판매가 <= 이건 매도하면 업데이트
-    private String holdTerm; // "숫자D" 형식으로 제한, 이건 후에 판매하면 업데이트
+    private LocalDate endDate;
     private BigDecimal earningRate; // 수익률 <= 이것도 후에 판매하면 업데이트
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
@@ -40,22 +40,29 @@ public class Investment {
 
     @Override
     public Investment clone() throws CloneNotSupportedException {
-        Investment cloneStock = (Investment) super.clone();
-        cloneStock.builder().enrollDate(this.enrollDate).
-                holdTerm(this.holdTerm).
+        Investment cloneInv = (Investment) super.clone();
+        cloneInv.builder().startDate(this.startDate).
+                endDate(this.endDate).
                 tp(this.tp).earningRate(this.earningRate).
                 sellPrice(this.sellPrice).
-                status(this.status).holdTerm(this.holdTerm).
+                status(this.status).
                 earningRate(this.earningRate).
                 build();
-        cloneStock.id = this.id;    // id를 이렇게 넣어줘도 되는건가? 위험한거 아닌가?
-        return cloneStock;
+        cloneInv.id = this.id;    // id를 이렇게 넣어줘도 되는건가? 위험한거 아닌가?
+        return cloneInv;
     }
 
-    public void addInfoAfterEnd(BigDecimal sellPrice, String holdTerm, BigDecimal earningRate, ProgressStatus status) {
+    //매도시 판매가 삽입
+    public void endInvestment(BigDecimal sellPrice) {
         this.sellPrice = sellPrice;
-        this.earningRate = earningRate;
-        this.holdTerm = holdTerm;
-        this.status = status;
+        this.endDate = LocalDate.now();
+        // 수익률은 소수점 2째자리까지 반올림해서 표시
+        this.earningRate = this.sellPrice.subtract(this.entryPrice).divide(this.entryPrice, 2, RoundingMode.HALF_UP)
+                .multiply(new BigDecimal(100));
+        if (this.sellPrice.compareTo(this.entryPrice) > 0) {
+            this.status = ProgressStatus.SUCCESS;
+        }else {
+            this.status = ProgressStatus.FAIL;
+        }
     }
 }
