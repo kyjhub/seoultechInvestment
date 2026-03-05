@@ -22,12 +22,12 @@
 
 | **관리자 대시보드** | **투자 종목 등록** |
 | :---: | :---: |
-| <img src="https://github.com/user-attachments/assets/96200296-f9f8-4b8f-ada3-e6b53c3d66c4" width="100%"> | <img src="https://github.com/user-attachments/assets/1f4a5beb-eb68-4a65-bb65-00101853c341" width="100%"> |
+| <img width="1710" height="950" alt="Image" src="https://github.com/user-attachments/assets/a29569cf-9a04-43e1-a19e-7920ae00d9a4" /> | <img width="1710" height="951" alt="Image" src="https://github.com/user-attachments/assets/3a44077b-199b-4a92-b72e-28527a5fae99" /> |
 | **관리자 전용 메뉴 접근** | **종목명, 진입가, 목표가 등 예측 정보 등록** |
 
-| **수익률(결과) 등록** |
-| :---: |
-| <img src="https://github.com/user-attachments/assets/ba5fb739-e93d-4a39-9ec0-b87f01577cb6" width="60%"> |
+| **수익률(결과) 등록** | **수익률 입력모달** |
+| :---: | :---: |
+| <img width="1710" height="949" alt="Image" src="https://github.com/user-attachments/assets/4c2ad840-ad70-4274-a2b8-2f562414eb72" /> | <img width="1709" height="951" alt="Image" src="https://github.com/user-attachments/assets/43385c24-6896-4e0d-ae0c-40fe98963811" /> |
 | **투자가 종료된 종목의 성공/실패 여부 입력** |
 
 <br/>
@@ -37,7 +37,7 @@
 
 | **진행 중인 투자 목록** | **과거 성과 목록 (History)** |
 | :---: | :---: |
-| <img src="https://github.com/user-attachments/assets/22964415-26d9-4d85-b90f-77cfb47f6f23" width="100%"> | <img src="https://github.com/user-attachments/assets/9fb3f480-4e83-4dad-b4d6-1cac19220417" width="100%"> |
+| <img width="1710" height="951" alt="Image" src="https://github.com/user-attachments/assets/1121c87e-5e35-49ef-b662-5d84870ece70" /> | <img width="1710" height="952" alt="Image" src="https://github.com/user-attachments/assets/be469c25-b52d-4882-9b8b-0261a1cb9d43" /> |
 | **현재 유효한 투자 정보와 목표가 확인** | **종료된 투자의 수익률 및 성공 여부 조회** |
 
 <br/>
